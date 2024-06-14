@@ -1,8 +1,8 @@
-$(document).ready(function() {
+$(document).ready(function () {
     fetchProducts(); // 初始化頁面時拉取產品資料
 
     // 新增產品表單提交
-    $('#editProductForm').on('submit', function(e) {
+    $('#editProductForm').on('submit', function (e) {
         e.preventDefault();
         saveProduct();
     });
@@ -16,15 +16,19 @@ $(document).ready(function() {
 // 從API拉取產品資料
 function fetchProducts(page = 1) {
     $.ajax({
-        url: `/api/products?page=${page}`, // 替換成你的API URL
+        url: `http://10.0.103.168:8080/api/public/products?pageNumber=0&pageSize=7&sortBy=productId&sortOrder=asc`, // 替換成你的API URL
         method: 'GET',
         dataType: 'json',
-        success: function(response) {
-            renderTable(response.products); // 假設你的API返回的產品資料在 'products' 屬性下
-            renderPagination(response.totalPages, page); // 假設API返回的總頁數
+        headers: {
+            "Authorization": "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJpYXQiOjE3MTgzNDUwODcsImVtYWlsIjoiam9obi5kb2VAZXhhbXBsZS5jb20ifQ.fkz6asokV2pQ1tC8HbrI6SZkJviAGxT6mtZXoj_FE2Q" + ""
         },
-        error: function(err) {
-            console.error('Error fetching products:', err);
+        success: function (response) {
+            console.log(response);
+        },
+        error: function (err) {
+            // console.log(err);
+            renderTable(err.responseJSON.content); // 假設你的API返回的產品資料在 'products' 屬性下
+            renderPagination(err.responseJSON.totalPages, page); // 假設API返回的總頁數
         }
     });
 }
@@ -35,7 +39,7 @@ function renderTable(products) {
     tbody.empty();
 
     products.forEach(product => {
-        product.productVariants.forEach(variant => {
+        product.variantDTOs.forEach(variant => {
             const row = `<tr>
                 <td>${product.productId}</td>
                 <td>${product.productName}</td>
@@ -72,7 +76,7 @@ function renderPagination(totalPages, currentPage) {
 function openAddProductModal() {
     $('#editProductForm')[0].reset();
     $('#editProductId').val('');
-    $('#editProductVariants').html(`
+    $('#editvariantDTOs').html(`
         <div class="variant form-group">
             <label>顏色</label>
             <input type="text" class="form-control variant-color" required>
@@ -89,14 +93,14 @@ function openAddProductModal() {
 // 編輯產品
 function editProduct(productId, variantId) {
     const product = products.find(p => p.productId === productId);
-    const variant = product.productVariants.find(v => v.variantId === variantId);
+    const variant = product.variantDTOs.find(v => v.variantId === variantId);
 
     $('#editProductId').val(product.productId);
     $('#editProductName').val(product.productName);
     $('#editProductDescription').val(product.description);
     $('#editProductPrice').val(product.productPrice);
-    
-    $('#editProductVariants').html(`
+
+    $('#editvariantDTOs').html(`
         <div class="form-group">
             <label>顏色</label>
             <input type="text" class="form-control" value="${variant.color}" disabled>
@@ -120,14 +124,14 @@ function saveProduct() {
     const productName = $('#editProductName').val();
     const productDescription = $('#editProductDescription').val();
     const productPrice = $('#editProductPrice').val();
-    const inventory = $('#editProductVariants input[type="number"]').val();
+    const inventory = $('#editvariantDTOs input[type="number"]').val();
 
     const productData = {
         productId,
         productName,
         description: productDescription,
         productPrice: parseInt(productPrice),
-        productVariants: $('#editProductVariants>div.variant').map(function() {
+        variantDTOs: $('#editvariantDTOs>div.variant').map(function () {
             return {
                 color: $(this).find('.variant-color').val(),
                 size: $(this).find('.variant-size').val(),
@@ -143,11 +147,11 @@ function saveProduct() {
             method: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(productData),
-            success: function(response) {
+            success: function (response) {
                 $('#editProductModal').modal('hide');
                 fetchProducts(); // 重新拉取產品資料
             },
-            error: function(err) {
+            error: function (err) {
                 console.error('Error saving product:', err);
             }
         });
@@ -158,11 +162,11 @@ function saveProduct() {
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(productData),
-            success: function(response) {
+            success: function (response) {
                 $('#editProductModal').modal('hide');
                 fetchProducts(); // 重新拉取產品資料
             },
-            error: function(err) {
+            error: function (err) {
                 console.error('Error saving product:', err);
             }
         });
@@ -175,10 +179,10 @@ function deleteProduct(productId, variantId) {
         $.ajax({
             url: `/api/products/${productId}/variants/${variantId}`,
             method: 'DELETE',
-            success: function(response) {
+            success: function (response) {
                 fetchProducts(); // 重新拉取產品資料
             },
-            error: function(err) {
+            error: function (err) {
                 console.error('Error deleting product:', err);
             }
         });
@@ -187,7 +191,7 @@ function deleteProduct(productId, variantId) {
 
 // 新增產品分支（顏色、尺寸、庫存）輸入區域
 function addVariantFields() {
-    $('#editProductVariants').append(`
+    $('#editvariantDTOs').append(`
         <div class="variant form-group">
             <label>顏色</label>
             <input type="text" class="form-control variant-color" required>
