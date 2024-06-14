@@ -16,7 +16,7 @@ $(document).ready(function () {
 // 從API拉取產品資料
 function fetchProducts(page = 1) {
     $.ajax({
-        url: `http://10.0.103.168:8080/api/public/products?pageNumber=${page - 1}&pageSize=5&sortBy=productId&sortOrder=asc`, // 替換成你的API URL
+        url: `http://10.0.103.168:8080/api/public/products?pageNumber=${page - 1}&pageSize=30&sortBy=productId&sortOrder=asc`, // 替換成你的API URL
         method: 'GET',
         dataType: 'json',
         headers: {
@@ -41,22 +41,22 @@ function renderTable(products) {
     products.forEach(product => {
         // console.log(product);        
         product.productVariants.forEach(variant => {
-            // console.log(variant);
-            const row = `<tr>
-                <td>${product.productId}</td>
-                <td>${product.productName}</td>
-                <td><img src="${variant.image}" alt="${product.productName}" width="50"></td>
-                <td><button class="btn btn-info" onclick="showDescription('${product.description}')">顯示描述</button></td>
-                <td>${product.productPrice}</td>
-                <td>${variant.color}</td>
-                <td>${variant.size}</td>
-                <td>${variant.inventory}</td>
-                <td>
-                    <button class="btn btn-sm btn-warning" onclick="editProduct(${product.productId}, ${variant.variantId})">編輯</button>
-                    <button class="btn btn-sm btn-danger" onclick="deleteProduct(${product.productId}, ${variant.variantId})">刪除</button>
-                </td>
-            </tr>`;
-            tbody.append(row);
+            console.log(variant.image);
+            // const row = `<tr>
+            //     <td>${product.productId}</td>
+            //     <td>${product.productName}</td>
+            //     <td><img src="${variant.image}" alt="${product.productName}" width="50"></td>
+            //     <td><button class="btn btn-info" onclick="showDescription('${product.description}')">顯示描述</button></td>
+            //     <td>${product.productPrice}</td>
+            //     <td>${variant.color}</td>
+            //     <td>${variant.size}</td>
+            //     <td>${variant.inventory}</td>
+            //     <td>
+            //         <button class="btn btn-sm btn-warning" onclick="editProduct(${product.productId}, ${variant.variantId})">編輯</button>
+            //         <button class="btn btn-sm btn-danger" onclick="deleteProduct(${product.productId}, ${variant.variantId})">刪除</button>
+            //     </td>
+            // </tr>`;
+            // tbody.append(row);
         });
     });
 }
