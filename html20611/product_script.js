@@ -16,7 +16,7 @@ $(document).ready(function () {
 // 從API拉取產品資料
 function fetchProducts(page = 1) {
     $.ajax({
-        url: `http://10.0.103.168:8080/api/public/products?pageNumber=0&pageSize=7&sortBy=productId&sortOrder=asc`, // 替換成你的API URL
+        url: `http://10.0.103.168:8080/api/public/products?pageNumber=${page - 1}&pageSize=5&sortBy=productId&sortOrder=asc`, // 替換成你的API URL
         method: 'GET',
         dataType: 'json',
         headers: {
@@ -34,17 +34,19 @@ function fetchProducts(page = 1) {
 }
 
 // 渲染產品列表
+//先繞產品 再繞變體
 function renderTable(products) {
     const tbody = $('#product-table-body');
     tbody.empty();
-
     products.forEach(product => {
-        product.variantDTOs.forEach(variant => {
+        // console.log(product);        
+        product.productVariants.forEach(variant => {
+            // console.log(variant);
             const row = `<tr>
                 <td>${product.productId}</td>
                 <td>${product.productName}</td>
                 <td><img src="${variant.image}" alt="${product.productName}" width="50"></td>
-                <td>${product.description.replace(/\n/g, '<br>')}</td>
+                <td><button class="btn btn-info" onclick="showDescription('${product.description}')">顯示描述</button></td>
                 <td>${product.productPrice}</td>
                 <td>${variant.color}</td>
                 <td>${variant.size}</td>
@@ -58,7 +60,6 @@ function renderTable(products) {
         });
     });
 }
-
 // 渲染分頁控制
 function renderPagination(totalPages, currentPage) {
     const pagination = $('#pagination');
@@ -76,7 +77,7 @@ function renderPagination(totalPages, currentPage) {
 function openAddProductModal() {
     $('#editProductForm')[0].reset();
     $('#editProductId').val('');
-    $('#editvariantDTOs').html(`
+    $('#editproductVariants').html(`
         <div class="variant form-group">
             <label>顏色</label>
             <input type="text" class="form-control variant-color" required>
@@ -93,14 +94,14 @@ function openAddProductModal() {
 // 編輯產品
 function editProduct(productId, variantId) {
     const product = products.find(p => p.productId === productId);
-    const variant = product.variantDTOs.find(v => v.variantId === variantId);
+    const variant = product.productVariants.find(v => v.variantId === variantId);
 
     $('#editProductId').val(product.productId);
     $('#editProductName').val(product.productName);
     $('#editProductDescription').val(product.description);
-    $('#editProductPrice').val(product.productPrice);
+    $('#editproductPrice').val(product.productPrice);
 
-    $('#editvariantDTOs').html(`
+    $('#editproductVariants').html(`
         <div class="form-group">
             <label>顏色</label>
             <input type="text" class="form-control" value="${variant.color}" disabled>
@@ -123,15 +124,15 @@ function saveProduct() {
     const productId = $('#editProductId').val();
     const productName = $('#editProductName').val();
     const productDescription = $('#editProductDescription').val();
-    const productPrice = $('#editProductPrice').val();
-    const inventory = $('#editvariantDTOs input[type="number"]').val();
+    const productPrice = $('#editproductPrice').val();
+    const inventory = $('#editproductVariants input[type="number"]').val();
 
     const productData = {
         productId,
         productName,
         description: productDescription,
         productPrice: parseInt(productPrice),
-        variantDTOs: $('#editvariantDTOs>div.variant').map(function () {
+        productVariants: $('#editproductVariants>div.variant').map(function () {
             return {
                 color: $(this).find('.variant-color').val(),
                 size: $(this).find('.variant-size').val(),
@@ -143,7 +144,7 @@ function saveProduct() {
     if (productId) {
         // 更新現有的產品資料
         $.ajax({
-            url: `/api/products/${productId}`,
+            url: `http://10.0.103.168:8080/api/admin/products/{productId}`,
             method: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(productData),
@@ -158,16 +159,16 @@ function saveProduct() {
     } else {
         // 新建產品資料
         $.ajax({
-            url: '/api/products',
+            url: 'http://10.0.103.168:8080/api/admin/categories/${categoryId}/product',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(productData),
             success: function (response) {
-                $('#editProductModal').modal('hide');
-                fetchProducts(); // 重新拉取產品資料
+                // console.error('Error saving product:', err);                
             },
             error: function (err) {
-                console.error('Error saving product:', err);
+                $('#editProductModal').modal('hide');
+                fetchProducts(); // 重新拉取產品資料
             }
         });
     }
@@ -180,10 +181,12 @@ function deleteProduct(productId, variantId) {
             url: `/api/products/${productId}/variants/${variantId}`,
             method: 'DELETE',
             success: function (response) {
-                fetchProducts(); // 重新拉取產品資料
+                // console.error('Error deleting product:', err);
+
             },
             error: function (err) {
-                console.error('Error deleting product:', err);
+                fetchProducts(); // 重新拉取產品資料
+
             }
         });
     }
@@ -191,7 +194,7 @@ function deleteProduct(productId, variantId) {
 
 // 新增產品分支（顏色、尺寸、庫存）輸入區域
 function addVariantFields() {
-    $('#editvariantDTOs').append(`
+    $('#editproductVariants').append(`
         <div class="variant form-group">
             <label>顏色</label>
             <input type="text" class="form-control variant-color" required>
@@ -202,4 +205,9 @@ function addVariantFields() {
             <button type="button" class="btn btn-danger" onclick="$(this).parent().remove()">移除</button>
         </div>
     `);
+}
+// 顯示產品描述
+function showDescription(description) {
+    $('#descriptionModalBody').html(description.replace(/\n/g, '<br>'));
+    $('#descriptionModal').modal('show');
 }

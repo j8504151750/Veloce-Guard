@@ -285,13 +285,13 @@
                                 <li class="breadcrumb-item active" aria-current="page">所有商品</li>
                             </ol>
                         </nav>
-        
+
                         <div class="mb-3 mb-md-4 d-flex justify-content-between">
                             <div class="h3 mb-0">商品</div>
                             <button class="btn btn-primary" data-toggle="modal" data-target="#editProductModal"
                                 onclick="openAddProductModal()">新增商品</button>
                         </div>
-        
+
                         <div class="table-responsive-xl">
                             <table class="table text-nowrap mb-0">
                                 <thead>
@@ -314,7 +314,8 @@
                             <div class="card-footer d-block d-md-flex align-items-center d-print-none">
                                 <div class="d-flex mb-2 mb-md-0">顯示 1 到 8 共 24 項目</div>
                                 <nav class="d-flex ml-md-auto d-print-none" aria-label="Pagination">
-                                    <ul class="pagination justify-content-end font-weight-semi-bold mb-0" id="pagination">
+                                    <ul class="pagination justify-content-end font-weight-semi-bold mb-0"
+                                        id="pagination">
                                         <!-- 動態插入分頁控制項 -->
                                     </ul>
                                 </nav>
@@ -324,9 +325,10 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Edit/Add Product Modal -->
-        <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="editProductModalLabel" aria-hidden="true">
+        <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog"
+            aria-labelledby="editProductModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -347,26 +349,46 @@
                                 <textarea class="form-control" id="editProductDescription" required></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="editProductPrice">價格</label>
-                                <input type="number" class="form-control" id="editProductPrice" required>
+                                <label for="editproductPrice">價格</label>
+                                <input type="number" class="form-control" id="editproductPrice" required>
                             </div>
                             <div class="form-group">
                                 <label for="editProductImage">產品照片</label>
                                 <input type="file" class="form-control" id="editProductImage" name="image">
                             </div>
                             <h5>產品分支</h5>
-                            <div id="editvariantDTOs"></div>
+                            <div id="editproductVariants"></div>
                             <button type="submit" class="btn btn-primary">保存變更</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        </main>
-        <script src="product_script.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="public/graindashboard/js/graindashboard.js"></script>
-        <script src="public/graindashboard/js/graindashboard.vendor.js"></script>
+        <!-- Product Description Modal -->
+        <div class="modal fade" id="descriptionModal" tabindex="-1" role="dialog"
+            aria-labelledby="descriptionModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="descriptionModalLabel">產品描述</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="descriptionModalBody">
+                        <!-- 這裡會動態插入產品描述 -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="product_script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="public/graindashboard/js/graindashboard.js"></script>
+    <script src="public/graindashboard/js/graindashboard.vendor.js"></script>
 </body>
 
 </html>
