@@ -6,6 +6,10 @@
     <title>商品管理 | Veloce Guard</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="public/img/favicon.ico">
+
     <link rel="stylesheet" href="public/graindashboard/css/graindashboard.css">
 </head>
 
@@ -190,12 +194,10 @@
                         <li class="side-nav-menu-item">
                             <a class="side-nav-menu-link" href="order-edit.html">新增訂單</a>
                         </li>
-
                     </ul>
                     <!-- End Pages: subPages -->
                 </li>
                 <!-- End 訂單 -->
-
 
                 <!-- Title -->
                 <li class="sidebar-heading h6">商品相關</li>
@@ -257,7 +259,6 @@
                 </li>
                 <!-- End 優惠卷 -->
 
-
                 <!-- Settings -->
                 <li class="side-nav-menu-item">
                     <a class="side-nav-menu-link media align-items-center" href="settings.html">
@@ -268,9 +269,6 @@
                     </a>
                 </li>
                 <!-- End Settings -->
-
-
-
             </ul>
         </aside>
         <!-- End Sidebar Nav -->
@@ -298,12 +296,8 @@
                                     <tr>
                                         <th class="font-weight-semi-bold border-top-0 py-2">產品ID</th>
                                         <th class="font-weight-semi-bold border-top-0 py-2">產品名稱</th>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">產品快照</th>
                                         <th class="font-weight-semi-bold border-top-0 py-2">產品描述</th>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">產品價格</th>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">產品顏色</th>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">產品尺寸</th>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">產品庫存</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">產品分支</th>
                                         <th class="font-weight-semi-bold border-top-0 py-2">操作</th>
                                     </tr>
                                 </thead>
@@ -352,14 +346,11 @@
                                 <label for="editproductPrice">價格</label>
                                 <input type="number" class="form-control" id="editproductPrice" required>
                             </div>
-                            <div class="form-group">
-                                <label for="editProductImage">產品照片</label>
-                                <input type="file" class="form-control" id="editProductImage" name="image">
-                            </div>
                             <h5>產品分支</h5>
                             <div id="editproductVariants"></div>
                             <button type="submit" class="btn btn-primary">保存變更</button>
                         </form>
+                        <button type="button" class="btn btn-secondary mt-3" onclick="addVariantFields()">新增分支</button>
                     </div>
                 </div>
             </div>
@@ -383,6 +374,27 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <!-- Product Variants Modal -->
+        <div class="modal fade" id="variantsModal" tabindex="-1" role="dialog" aria-labelledby="variantsModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="variantsModalLabel">產品分支</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="variantsModalBody">
+                        <!-- 這裡會動態插入產品變體 -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </main>
     <script src="product_script.js"></script>

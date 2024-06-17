@@ -1,0 +1,152 @@
+[
+  {
+    "firstName": "John",
+    "lastName": "Doe",
+    "mobileNumber": "0912345678",
+    "email": "john.doe@example.com",
+    "password": "password123",
+    "address": {
+      "street": "123 Main St",
+      "buildingName": "Building A",
+      "city": "Taichung",
+      "state": "TX",
+      "country": "Taiwan",
+      "pincode": "123456"
+    }
+  },
+  {
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "mobileNumber": "0923456789",
+    "email": "jane.smith@example.com",
+    "password": "password456",
+    "address": {
+      "street": "456 Elm St",
+      "buildingName": "Building B",
+      "city": "Kaohsiung",
+      "state": "CA",
+      "country": "Taiwan",
+      "pincode": "234567"
+    }
+  },
+  {
+    "firstName": "Alice",
+    "lastName": "Johnson",
+    "mobileNumber": "0934567890",
+    "email": "alice.johnson@example.com",
+    "password": "password789",
+    "address": {
+      "street": "789 Oak St",
+      "buildingName": "Building C",
+      "city": "Taipei",
+      "state": "NY",
+      "country": "Taiwan",
+      "pincode": "345678"
+    }
+  },
+  {
+    "firstName": "Bob",
+    "lastName": "Brown",
+    "mobileNumber": "0945678901",
+    "email": "bob.brown@example.com",
+    "password": "password012",
+    "address": {
+      "street": "101 Pine St",
+      "buildingName": "Building D",
+      "city": "Tainan",
+      "state": "FL",
+      "country": "Taiwan",
+      "pincode": "456789"
+    }
+  },
+  {
+    "firstName": "Charlie",
+    "lastName": "Davis",
+    "mobileNumber": "0956789012",
+    "email": "charlie.davis@example.com",
+    "password": "password345",
+    "address": {
+      "street": "202 Maple St",
+      "buildingName": "Building E",
+      "city": "Hsinchu",
+      "state": "IL",
+      "country": "Taiwan",
+      "pincode": "567890"
+    }
+  },
+  {
+    "firstName": "David",
+    "lastName": "Miller",
+    "mobileNumber": "0967890123",
+    "email": "david.miller@example.com",
+    "password": "password678",
+    "address": {
+      "street": "303 Cedar St",
+      "buildingName": "Building F",
+      "city": "Taichung",
+      "state": "OH",
+      "country": "Taiwan",
+      "pincode": "678900"
+    }
+  },
+  {
+    "firstName": "Eve",
+    "lastName": "Wilson",
+    "mobileNumber": "0978901234",
+    "email": "eve.wilson@example.com",
+    "password": "password901",
+    "address": {
+      "street": "404 Birch St",
+      "buildingName": "Building G",
+      "city": "Kaohsiung",
+      "state": "PA",
+      "country": "Taiwan",
+      "pincode": "789010"
+    }
+  },
+  {
+    "firstName": "Frank",
+    "lastName": "Moore",
+    "mobileNumber": "0989012345",
+    "email": "frank.moore@example.com",
+    "password": "password234",
+    "address": {
+      "street": "505 Walnut St",
+      "buildingName": "Building H",
+      "city": "Taipei",
+      "state": "MI",
+      "country": "Taiwan",
+      "pincode": "890123"
+    }
+  },
+  {
+    "firstName": "Grace",
+    "lastName": "Taylor",
+    "mobileNumber": "0990123456",
+    "email": "grace.taylor@example.com",
+    "password": "password567",
+    "address": {
+      "street": "606 Chestnut St",
+      "buildingName": "Building I",
+      "city": "Tainan",
+      "state": "GA",
+      "country": "Taiwan",
+      "pincode": "901233"
+    }
+  },
+  {
+    "firstName": "Hank",
+    "lastName": "Anderson",
+    "mobileNumber": "0911234567",
+    "email": "hank.anderson@example.com",
+    "password": "password890",
+    "address": {
+      "street": "707 Spruce St",
+      "buildingName": "Building J",
+      "city": "Hsinchu",
+      "state": "NC",
+      "country": "Taiwan",
+      "pincode": "012345"
+    }
+  }
+]
