@@ -1,0 +1,168 @@
+/* 保持頁面布局滿高 */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #2d2d2d; /* 背景設置為黑色 */
+}
+
+/* 設定主體元素的彈性布局 */
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    background-color: #ffffff; /* 背景設置為白色 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    color: #000000; /* 字體顏色設置為黑色 */
+}
+
+h2 {
+    text-align: center;
+    color: #000000; /* 標題顏色設置為黑色 */
+}
+
+/* 美化步驟指示器 */
+.progressbar {
+    display: flex;
+    justify-content: space-between;
+    counter-reset: step;
+    margin-bottom: 20px;
+    padding-left: 0;
+    list-style-type: none;
+    color: #75809C; /* 默認顏色設置為藍灰色 */
+}
+
+.progressbar li {
+    position: relative;
+    text-align: center;
+    flex: 1 0 auto;
+    transition: color 0.5s;
+}
+
+.progressbar li:before {
+    counter-increment: step;
+    content: counter(step);
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    display: block;
+    text-align: center;
+    background: #75809C; /* 背景設置為藍灰色 */
+    border-radius: 50%;
+    margin: 0 auto 10px auto;
+}
+
+.progressbar li:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: #75809C; /* 背景設置為藍灰色 */
+    top: 15px;
+    left: 50%;
+    z-index: -1;
+}
+
+.progressbar li:first-child:after {
+    left: 25%;
+    width: 25%;
+}
+
+.progressbar li:last-child:after {
+    left: 0;
+    width: 25%;
+}
+
+.progressbar li.active:before,
+.progressbar li.active:after {
+    background: #a1b0d6; /* 活動步驟顏色設置為藍灰色 */
+    color: #ffffff; /* 活動步驟字體顏色設置為白色 */
+}
+
+.cart-header, .cart-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-color: #75809C; /* 邊框顏色設置為藍灰色 */
+}
+
+.cart-footer {
+    border-top: 1px solid #75809C; /* 邊框顏色設置為藍灰色 */
+}
+
+.cart-picture {
+    height: 60px;
+    width: 60px;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #000000; /* 標籤顏色設置為黑色 */
+}
+
+button[type="submit"], .button-container button {
+    width: 48%;
+    color: #ffffff; /* 按鈕字體顏色設置為白色 */
+}
+
+.button-container {
+    display: flex;
+    justify-content: center; /* 按鈕居中對齊 */
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.button-container .btn {
+    flex: 0 0 auto;
+}
+
+.btn-primary, .btn-secondary, .btn-success, .btn-danger, .btn-warning {
+    background-color: #75809C;
+    border-color: #75809C;
+    color: #ffffff;
+}
+
+/* 控制數量的樣式 */
+.quantity-controls {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-controls .quantity-input {
+    width: 50px;
+    text-align: center;
+    border: 1px solid #75809C; /* 邊框顏色設置為藍灰色 */
+    border-left: 0;
+    border-right: 0;
+}
+
+.quantity-controls .btn-quantity {
+    width: 30px;
+    height: 30px;
+    margin: 0 5px;
+    background-color: #75809C;
+    border-color: #75809C;
+    color: #ffffff;
+}
+
+/* 顯示與隱藏 */
+.d-none {
+    display: none;
+}
+
+/* 按鈕懸停和點擊顏色設置 */
+
+.btn-primary:hover, .btn-secondary:hover, .btn-success:hover, .btn-danger:hover, .btn-warning:hover,
+.btn-primary:focus, .btn-secondary:focus, .btn-success:focus, .btn-danger:focus, .btn-warning:focus,
+.btn-primary:active, .btn-secondary:active, .btn-success:active, .btn-danger:active, .btn-warning:active {
+    background-color: #ffffff; /* 懸停和點擊時顏色設置為白色 */
+    color: #75809C; /* 懸停和點擊時字體顏色設置為藍灰色 */
+    border-color: #75809C; /* 懸停和點擊時邊框顏色設置為藍灰色 */
+}
