@@ -1,4 +1,8 @@
-
+@font-face {
+	font-family: 'Taipei';
+	src: url('../Font/Taipei.ttf') ,
+		  
+  }
 /* Remove the default bottom border from nav-tabs */
 .nav-tabs {
     border-bottom: none;
@@ -312,6 +316,9 @@
     background-positon-x: 0px;
   }
 }
-
+a:hover{
+  color:#ffffff;
+  text-decoration: none;
+}
 
 /* -----------------------------FOOTER----------------------------------- */
