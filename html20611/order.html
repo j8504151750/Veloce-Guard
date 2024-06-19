@@ -2,23 +2,18 @@
 <html lang="en">
 
 <head>
-    <!-- Title -->
-    <title>訂單 | Veloce Guard</title>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta charset="UTF-8">
+    <title>訂單管理 | Veloce Guard</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="public/img/favicon.ico">
 
-    <!-- Template -->
     <link rel="stylesheet" href="public/graindashboard/css/graindashboard.css">
 </head>
 
 <body class="has-sidebar has-fixed-sidebar-and-header">
-    <!-- Header -->
     <header class="header bg-body">
         <nav class="navbar flex-nowrap p-0">
             <div class="navbar-brand-wrapper d-flex align-items-center col-auto">
@@ -139,8 +134,6 @@
             </div>
         </nav>
     </header>
-    <!-- End Header -->
-
     <main class="main">
         <!-- Sidebar Nav -->
         <aside id="sidebar" class="js-custom-scroll side-nav">
@@ -193,261 +186,196 @@
                         <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
                     </a>
 
-                    <!-- Pages: subPages -->
-                    <ul id="subPages" class="side-nav-menu side-nav-menu-second-level mb-0">
-                        <li class="side-nav-menu-item">
-                            <a class="side-nav-menu-link" href="order.html">所有訂單</a>
-                        </li>
-                        <li class="side-nav-menu-item">
-                            <a class="side-nav-menu-link" href="order-edit.html">新增訂單</a>
-                        </li>
-               
-                    </ul>
-                    <!-- End Pages: subPages -->
-                </li>
-                <!-- End 訂單 -->
-
-
-                <!-- Title -->
-                <li class="sidebar-heading h6">商品相關</li>
-                <!-- End Title -->
-
-                <!-- 商品 -->
-                <li class="side-nav-menu-item side-nav-has-menu ">
-                    <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subitems">
-                        <span class="side-nav-menu-icon d-flex mr-3">
-                            <i class="gd-package"></i>
-                        </span>
-                        <span class="side-nav-fadeout-on-closed media-body">商品</span>
-                        <span class="side-nav-control-icon d-flex">
-                            <i class="gd-angle-right side-nav-fadeout-on-closed"></i>
-                        </span>
-                        <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
-                    </a>
-
-                    <!-- subitems -->
-                    <ul id="subitems" class="side-nav-menu side-nav-menu-second-level mb-0">
-                        <li class="side-nav-menu-item active">
-                            <a class="side-nav-menu-link" href="product.html">所有商品</a>
-                        </li>
-                        <li class="side-nav-menu-item">
-                            <a class="side-nav-menu-link" href="product-edit.html">新增商品</a>
-                        </li>
-                    </ul>
-                    <!--  subitems -->
-                </li>
-                <!-- End 商品 -->
-
-                <!-- Title -->
-                <li class="sidebar-heading h6">優惠卷相關</li>
-                <!-- End Title -->
-                
-                <!-- 優惠卷 -->
-                <li class="side-nav-menu-item side-nav-has-menu ">
-                    <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subticket">
-                        <span class="side-nav-menu-icon d-flex mr-3">
-                            <i class="gd-money"></i>
-                        </span>
-                        <span class="side-nav-fadeout-on-closed media-body">優惠卷</span>
-                        <span class="side-nav-control-icon d-flex">
-                            <i class="gd-angle-right side-nav-fadeout-on-closed"></i>
-                        </span>
-                        <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
-                    </a>
-
-                    <!--  subticket -->
-                    <ul id="subticket" class="side-nav-menu side-nav-menu-second-level mb-0">
-                        <li class="side-nav-menu-item active">
-                            <a class="side-nav-menu-link" href="ticket.html">所有優惠卷</a>
-                        </li>
-                        <li class="side-nav-menu-item">
-                            <a class="side-nav-menu-link" href="ticket-edit.html">新增優惠卷</a>
-                        </li>
-                    </ul>
-                    <!-- subticket -->
-                </li>
-                <!-- End 優惠卷 -->
-
-
-                <!-- Settings -->
-                <li class="side-nav-menu-item">
-                    <a class="side-nav-menu-link media align-items-center" href="settings.html">
-                        <span class="side-nav-menu-icon d-flex mr-3">
-                            <i class="gd-settings"></i>
-                        </span>
-                        <span class="side-nav-fadeout-on-closed media-body">Settings</span>
-                    </a>
-                </li>
-                <!-- End Settings -->
-
-                
-
-            </ul>
-        </aside>
-        <!-- End Sidebar Nav -->
-
-        <div class="content">
-            <div class="py-4 px-3 px-md-4">
-                <div class="card mb-3 mb-md-4">
-
-                    <div class="card-body">
-                        <!-- Breadcrumb -->
-                        <nav class="d-none d-md-block" aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item">
-                                    <a href="order.html">訂單</a>
-                                </li>
-                                <li class="breadcrumb-item active" aria-current="page">所有訂單</li>
-                            </ol>
-                        </nav>
-                        <!-- End Breadcrumb -->
-
-                        <div class="mb-3 mb-md-4 d-flex justify-content-between">
-                            <div class="h3 mb-0">訂單</div>
-                        </div>
-
-
-                        <!-- Users -->
-                        <div class="table-responsive-xl">
-                            <table class="table text-nowrap mb-0">
-                                <thead>
-                                    <tr>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">訂單編號</th>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">訂單日期</th>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">客戶名稱</th>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">訂單總金額</th>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">訂單狀態</th>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">訂單詳情</th>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">訂單操作</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="user-table-body">
-    <!------------------------------------渲染會員從資料庫使用AJAX ------------------------------------------------>
-                                    <script>
-
-                                        $(document).ready(function () {
-                                            function fetchUsers(page = 1) {
-                                                $.ajax({
-                                                    url: 'http://10.0.103.168:8080/api/public/users/1', // 更改為你的 API URL
-                                                    method: 'GET',
-                                                    dataType: 'json',
-                                                    headers: {
-                                                        'Access-Control-Allow-Origin':'http://10.0.103.168:8080',
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJpYXQiOjE3MTc1NzEyMTgsImVtYWlsIjoiYmVhcjIwMDgwNkBnbWFpbC5jb20ifQ.h3iBEZedBEZjcvzryNAJwRVOjFPTHCovdzpuAiokDr8'
-            },
-                                                    success: function (response) {
-                                                        // const users = response.users;
-                                                        // const totalPages = response.totalPages;
-                                                        renderTable(response);
-                                                        // renderPagination(totalPages, page);
-                                                        // $('#pagination-info').text(`Showing ${response.from} to ${response.to} of ${response.total} Entries`);
-                                                    },
-                                                    error: function (err) {
-                                                        console.error('Error fetching users:', err);
-                                                    }
-                                                });
-                                            }
-
-                                            function renderTable(users) {
-                                                const tbody = $('#user-table-body');
-                                                tbody.empty();
-
-                                                users.forEach((user, index) => {
-                                                    const row = `
-                <tr>
-                    <td class="py-3">${index + 1}</td>
-                    <td class="align-middle py-3">
-                        <div class="d-flex align-items-center">
-                            <div class="position-relative mr-2">
-                                <span class="avatar-placeholder mr-md-2">${user.firstName.charAt(0)}</span>
+                                        <!-- Pages: subPages -->
+                                        <ul id="subPages" class="side-nav-menu side-nav-menu-second-level mb-0">
+                                            <li class="side-nav-menu-item active">
+                                                <a class="side-nav-menu-link" href="order.html">所有訂單</a>
+                                            </li>
+                                        </ul>
+                                        <!-- End Pages: subPages -->
+                                    </li>
+                                    <!-- End 訂單 -->
+                    
+                                    <!-- Title -->
+                                    <li class="sidebar-heading h6">商品相關</li>
+                                    <!-- End Title -->
+                    
+                                    <!-- 商品 -->
+                                    <li class="side-nav-menu-item side-nav-has-menu ">
+                                        <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subitems">
+                                            <span class="side-nav-menu-icon d-flex mr-3">
+                                                <i class="gd-package"></i>
+                                            </span>
+                                            <span class="side-nav-fadeout-on-closed media-body">商品</span>
+                                            <span class="side-nav-control-icon d-flex">
+                                                <i class="gd-angle-right side-nav-fadeout-on-closed"></i>
+                                            </span>
+                                            <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
+                                        </a>
+                    
+                                        <!-- subitems -->
+                                        <ul id="subitems" class="side-nav-menu side-nav-menu-second-level mb-0">
+                                            <li class="side-nav-menu-item">
+                                                <a class="side-nav-menu-link" href="product.html">所有商品</a>
+                                            </li>
+                                            <li class="side-nav-menu-item">
+                                                <a class="side-nav-menu-link" href="product-edit.html">新增商品</a>
+                                            </li>
+                                        </ul>
+                                        <!--  subitems -->
+                                    </li>
+                                    <!-- End 商品 -->
+                    
+                                    <!-- Title -->
+                                    <li class="sidebar-heading h6">優惠卷相關</li>
+                                    <!-- End Title -->
+                    
+                                    <!-- 優惠卷 -->
+                                    <li class="side-nav-menu-item side-nav-has-menu ">
+                                        <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subticket">
+                                            <span class="side-nav-menu-icon d-flex mr-3">
+                                                <i class="gd-money"></i>
+                                            </span>
+                                            <span class="side-nav-fadeout-on-closed media-body">優惠卷</span>
+                                            <span class="side-nav-control-icon d-flex">
+                                                <i class="gd-angle-right side-nav-fadeout-on-closed"></i>
+                                            </span>
+                                            <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
+                                        </a>
+                    
+                                        <!-- subticket -->
+                                        <ul id="subticket" class="side-nav-menu side-nav-menu-second-level mb-0">
+                                            <li class="side-nav-menu-item">
+                                                <a class="side-nav-menu-link" href="ticket.html">所有優惠卷</a>
+                                            </li>
+                                            <li class="side-nav-menu-item">
+                                                <a class="side-nav-menu-link" href="ticket-edit.html">新增優惠卷</a>
+                                            </li>
+                                        </ul>
+                                        <!-- subticket -->
+                                    </li>
+                                    <!-- End 優惠卷 -->
+                    
+                                    <!-- Settings -->
+                                    <li class="side-nav-menu-item">
+                                        <a class="side-nav-menu-link media align-items-center" href="settings.html">
+                                            <span class="side-nav-menu-icon d-flex mr-3">
+                                                <i class="gd-settings"></i>
+                                            </span>
+                                            <span class="side-nav-fadeout-on-closed media-body">Settings</span>
+                                        </a>
+                                    </li>
+                                    <!-- End Settings -->
+                                </ul>
+                            </aside>
+                            <!-- End Sidebar Nav -->
+                    
+                            <div class="content">
+                                <div class="py-4 px-3 px-md-4">
+                                    <div class="card mb-3 mb-md-4">
+                                        <div class="card-body">
+                                            <nav class="d-none d-md-block" aria-label="breadcrumb">
+                                                <ol class="breadcrumb">
+                                                    <li class="breadcrumb-item"><a href="order.html">訂單</a></li>
+                                                    <li class="breadcrumb-item active" aria-current="page">所有訂單</li>
+                                                </ol>
+                                            </nav>
+                    
+                                            <div class="mb-3 mb-md-4 d-flex justify-content-between">
+                                                <div class="h3 mb-0">訂單</div>
+                                            </div>
+                    
+                                            <div class="table-responsive-xl">
+                                                <table class="table text-nowrap mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="font-weight-semi-bold border-top-0 py-2">訂單編號</th>
+                                                            <th class="font-weight-semi-bold border-top-0 py-2">用戶ID</th>
+                                                            <th class="font-weight-semi-bold border-top-0 py-2">訂單日期</th>
+                                                            <th class="font-weight-semi-bold border-top-0 py-2">訂單總金額</th>
+                                                            <th class="font-weight-semi-bold border-top-0 py-2">訂單狀態</th>
+                                                            <th class="font-weight-semi-bold border-top-0 py-2">訂單詳細</th>
+                                                            <th class="font-weight-semi-bold border-top-0 py-2">操作</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="order-table-body">
+                                                        <!-- 動態插入訂單資料 -->
+                                                    </tbody>
+                                                </table>
+                                                <div class="card-footer d-block d-md-flex align-items-center d-print-none">
+                                                    <div class="d-flex mb-2 mb-md-0">顯示 1 到 8 共 24 項目</div>
+                                                    <nav class="d-flex ml-md-auto d-print-none" aria-label="Pagination">
+                                                        <ul class="pagination justify-content-end font-weight-semi-bold mb-0"
+                                                            id="pagination">
+                                                            <!-- 動態插入分頁控制項 -->
+                                                        </ul>
+                                                    </nav>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            ${user.firstName}
-                        </div>
-                    </td>
-                    <td class="py-3">${user.email}</td>
-                    <td class="py-3">${new Date(user.registerTime).toLocaleDateString()}</td>
-                    <td class="py-3">
-                        <span class="badge badge-pill badge-${user.status === 'Verified' ? 'success' : 'warning'}">${user.status}</span>
-                    </td>
-                    <td class="py-3">
-                        <div class="position-relative">
-                            <a class="link-dark d-inline-block" href="#">
-                                <i class="gd-pencil icon-text"></i>
-                            </a>
-                            <a class="link-dark d-inline-block" href="#">
-                                <i class="gd-trash icon-text"></i>
-                            </a>
-                        </div>
-                    </td>
-                </tr>`;
-                                                    tbody.append(row);
-                                                });
-                                            }
-
-                                            function renderPagination(totalPages, currentPage) {
-                                                const pagination = $('#pagination');
-                                                pagination.empty();
-
-                                                for (let i = 1; i <= totalPages; i++) {
-                                                    const activeClass = i === currentPage ? 'active' : '';
-                                                    pagination.append(`<li class="page-item ${activeClass}"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`);
-                                                }
-
-                                                $('.page-link').click(function (e) {
-                                                    e.preventDefault();
-                                                    const page = $(this).data('page');
-                                                    fetchUsers(page);
-                                                });
-                                            }
-
-                                            // Fetch initial data
-                                            fetchUsers();
-                                        });
-
-
-
-                                    </script>
-       <!-------------------------------------------- 結束渲染 -------------------------------------------------------->
-                                </tbody>
-                            </table>
-                            <div class="card-footer d-block d-md-flex align-items-center d-print-none">
-                                <div class="d-flex mb-2 mb-md-0">Showing 1 to 8 of 24 Entries</div>
-
-                                <nav class="d-flex ml-md-auto d-print-none" aria-label="Pagination">
-                                    <ul class="pagination justify-content-end font-weight-semi-bold mb-0">
-                                        <li class="page-item"> <a id="datatablePaginationPrev" class="page-link"
-                                                href="#!" aria-label="Previous"><i
-                                                    class="gd-angle-left icon-text icon-text-xs d-inline-block"></i></a>
-                                        </li>
-                                        <li class="page-item d-none d-md-block"><a id="datatablePaginationPage0"
-                                                class="page-link active" href="#!" data-dt-page-to="0">1</a></li>
-                                        <li class="page-item d-none d-md-block"><a id="datatablePagination1"
-                                                class="page-link" href="#!" data-dt-page-to="1">2</a></li>
-                                        <li class="page-item d-none d-md-block"><a id="datatablePagination2"
-                                                class="page-link" href="#!" data-dt-page-to="2">3</a></li>
-                                        <li class="page-item"> <a id="datatablePaginationNext" class="page-link"
-                                                href="#!" aria-label="Next"><i
-                                                    class="gd-angle-right icon-text icon-text-xs d-inline-block"></i></a>
-                                        </li>
-                                    </ul>
-                                </nav>
+                    
+                            <!-- Edit Order Modal -->
+                            <div class="modal fade" id="editOrderModal" tabindex="-1" role="dialog"
+                                aria-labelledby="editOrderModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editOrderModalLabel">編輯訂單</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="editOrderForm">
+                                                <input type="hidden" id="editOrderId">
+                                                <div class="form-group">
+                                                    <label for="editOrderStatus">訂單狀態</label>
+                                                    <select class="form-control" id="editOrderStatus" required>
+                                                        <option value="1">待付款</option>
+                                                        <option value="2">已付款</option>
+                                                        <option value="3">待出貨</option>
+                                                        <option value="4">已出貨</option>
+                                                        <option value="5">已送達</option>
+                                                        <option value="6">已完成</option>
+                                                        <option value="7">已取消</option>
+                                                        <option value="8">退貨/換貨</option>
+                                                    </select>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">保存變更</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <!-- End Users -->
-                    </div>
-                </div>
-
-
-            </div>
-
-     
-        </div>
-    </main>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="public/graindashboard/js/graindashboard.js"></script>
-    <script src="public/graindashboard/js/graindashboard.vendor.js"></script>
-
-</body>
-
-</html>
+                    
+                            <!-- Order Details Modal -->
+                            <div class="modal fade" id="orderDetailsModal" tabindex="-1" role="dialog" aria-labelledby="orderDetailsModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="orderDetailsModalLabel">訂單詳細</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body" id="orderDetailsModalBody">
+                                            <!-- 這裡會動態插入訂單詳細 -->
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </main>
+                        <script src="order_script.js"></script>
+                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                        <script src="public/graindashboard/js/graindashboard.js"></script>
+                        <script src="public/graindashboard/js/graindashboard.vendor.js"></script>
+                    </body>
+                    
+                    </html>

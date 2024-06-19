@@ -95,11 +95,12 @@ function showVariants(variantId) {
 function renderVariants(variantId) {
     const modalBody = $('#variantsModalBody');
     modalBody.empty();
-    variants.forEach(variant => {
+    variantId.forEach(variant => {
         const variantInfo = `<div class="variant-info">
             <p>顏色: ${variant.color}</p>
             <p>尺寸: ${variant.size}</p>
             <p>圖片: ${variant.image}</p>
+            <p>sku: ${variant.sku}</p>
             <p>庫存: ${variant.inventory}</p>
         </div>`;
         modalBody.append(variantInfo);
