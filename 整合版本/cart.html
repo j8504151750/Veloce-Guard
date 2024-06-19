@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V Shopping Cart</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/cart-styles.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container cart-container mt-5">
+        <!-- 步驟條 -->
+        <ul class="progressbar">
+            <li class="active">購物車</li>
+            <li>結帳資訊</li>
+            <li>完成</li>
+        </ul>
+
+        <!-- 購物車內容 -->
+        <div id="cart-step">
+            <h2>購物車</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>商品</th>
+                        <th>商品快照</th>
+                        <th>價格</th>
+                        <th>數量</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="cart-items">
+                    <!-- 商品 -->
+                    <tr>
+                        <!-- <td>ZX-15</td>
+                        <td><img class="cart-picture" src="https://shoplineimg.com/5be4227a02dd95000178fa71/645dd9f4cf1c520017ddb4d5/800x.webp?source_format=jpg
+                            " alt="商品照片"></td>
+                        <td>$1500</td>
+                        <td>
+                            <div class="quantity-controls">
+                                <button class="btn btn-outline-secondary btn-sm btn-quantity"
+                                    data-action="decrease">-</button>
+                                <input type="number" class="form-control quantity-input" value="1" min="1">
+                                <button class="btn btn-outline-secondary btn-sm btn-quantity"
+                                    data-action="increase">+</button>
+                            </div>
+                        </td>
+                        <td><button class="btn btn-secondary btn-sm" id="btn-remove">移除</button></td> -->
+                    </tr>
+                </tbody>
+            </table>
+            <div class="cart-footer">
+                <h4>商品總計: <span id="subtotal">$1500</span></h4>
+                <h4>運費: <span id="shipping-fee">$60</span></h4>
+                <h4>總金額: <span id="total-amount">$1560</span></h4>
+                <div class="button-container">
+                    <button class="btn btn-secondary" id="continue-shopping">繼續購物</button>
+                    <button class="btn btn-secondary" id="proceed-to-checkout">前往結帳</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 結帳頁面 -->
+        <div id="checkout-step" class="d-none">
+            <h2>結帳資訊</h2>
+            <form id="checkout-form">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>送貨地址</h4>
+                        <div class="form-group">
+                            <label for="full-name">姓名</label>
+                            <input type="text" class="form-control" id="full-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">地址</label>
+                            <input type="text" class="form-control" id="address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">城市</label>
+                            <input type="text" class="form-control" id="city" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="postal-code">郵遞區號</label>
+                            <input type="text" class="form-control" id="postal-code" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="country">國家</label>
+                            <input type="text" class="form-control" id="country" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>付款資訊</h4>
+                        <div class="form-group">
+                            <label for="payment-method">付款方式</label>
+                            <select class="form-control" id="payment-method">
+                                <option value="cod">貨到付款</option>
+                                <option value="atm">ATM轉帳</option>
+                                <option value="credit-card">信用卡</option>
+                            </select>
+                        </div>
+                        <div class="form-group payment-info d-none" id="credit-card-info">
+                            <label for="card-number">信用卡號碼</label>
+                            <input type="text" class="form-control" id="card-number">
+                            <label for="expiration-date">到期日</label>
+                            <input type="text" class="form-control" id="expiration-date" placeholder="MM/YY">
+                            <label for="cvv">CVV</label>
+                            <input type="text" class="form-control" id="cvv">
+                        </div>
+                        <div class="form-group payment-info d-none" id="atm-info">
+                            <label for="atm-account">轉帳帳號</label>
+                            <input type="text" class="form-control" id="atm-account">
+                        </div>
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button class="btn btn-secondary" id="back-to-cart">返回購物車</button>
+                    <button type="submit" class="btn btn-secondary">確認結帳</button>
+                </div>
+            </form>
+        </div>
+        <!-- 完成頁面 -->
+        <div id="finish-step" class="d-none text-center">
+            <h2>結帳完成</h2>
+            <p>感謝您的購買！</p>
+            <h4>訂單明細</h4>
+            <table class="table table-bordered" id="order-details-table">
+                <tbody id="order-details"></tbody>
+            </table>
+            <h4>訂單成立日期: <span id="order-date"></span></h4>
+        </div>
+
+        <!-- 確認彈出視窗 -->
+        <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmationModalLabel">確認結帳</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        您確定要進行結帳嗎？
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">返回付款頁面</button>
+                        <button type="button" class="btn btn-secondary" id="finalize-order">確認結帳</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 引入jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- 引入Bootstrap的JS文件 -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <!-- 引入自定義的JS文件 -->
+        <script src="/js/cart-script.js"></script>
+
+</body>
+
+</html>
