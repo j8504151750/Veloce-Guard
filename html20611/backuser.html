@@ -261,12 +261,12 @@
                             <table class="table text-nowrap mb-0">
                                 <thead>
                                     <tr>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">#</th>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">Name</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">會員ID</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">姓名</th>
                                         <th class="font-weight-semi-bold border-top-0 py-2">Email</th>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">Registration Date</th>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">Status</th>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">Actions</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">電話號碼</th>
+                                        <!-- <th class="font-weight-semi-bold border-top-0 py-2">Status</th> -->
+                                        <th class="font-weight-semi-bold border-top-0 py-2">操作</th>
                                     </tr>
                                 </thead>
                                 <tbody id="user-table-body">
@@ -276,23 +276,25 @@
                                         $(document).ready(function () {
                                             function fetchUsers(page = 1) {
                                                 $.ajax({
-                                                    url: 'http://10.0.103.168:8080/api/admin/users', // 更改為你的 API URL
+                                                    url: 'http://localhost:8080/api/admin/users?pageNumber=0&pageSize=10&sortBy=userId&sortOrder=asc', // 更改為你的 API URL
                                                     method: 'GET',
                                                     dataType: 'json',
                                                     headers: {
-                                                        'Access-Control-Allow-Origin':'http://10.0.103.168:8080',
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJpYXQiOjE3MTc1NzU5ODEsImVtYWlsIjoiYmVhcjIwMDgwNkBnbWFpbC5jb20ifQ.V_jAWG7fGaWLuj0Kj0CP0JWp35Q8MvwfojydgwKlW44'
+                                                        
+                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJpYXQiOjE3MTg4NjEzMjgsImVtYWlsIjoiam9obi5kb2VAZXhhbXBsZS5jb20ifQ.iUM0sEEZU9aHhhFM3rqAhw9VV2K_cvGrzg0ISC9lOiI'
             },
                                                     success: function (response) {
                                                         console.log(response)
                                                         // const users = response.users;
                                                         // const totalPages = response.totalPages;
-                                                        renderTable(response.content);
+                                                        // renderTable(response.content);
                                                         // renderPagination(totalPages, page);
                                                         // $('#pagination-info').text(`Showing ${response.from} to ${response.to} of ${response.total} Entries`);
                                                     },
                                                     error: function (err) {
                                                         console.error('Error fetching users:', err);
+                                                        renderTable(err.responseJSON.content); // 假設你的API返回的產品資料在 'products' 屬性下
+                                                        renderPagination(err.responseJSON.totalPages, page); // 假設API返回的總頁數
                                                     }
                                                 });
                                             }
@@ -301,10 +303,10 @@
                                                 const tbody = $('#user-table-body');
                                                 tbody.empty();
 
-                                                users.forEach((user, index) => {
+                                                users.forEach(user => {
                                                     const row = `
-                 <tr data-user-id="${user.id}">
-                    <td class="py-3">${index + 1}</td>
+                 <tr data-user-id="${user.userId}">
+                    <td class="py-3">${user.userId}</td>
                     <td class="align-middle py-3">
                         <div class="d-flex align-items-center">
                             <div class="position-relative mr-2">
@@ -314,10 +316,8 @@
                         </div>
                     </td>
                     <td class="py-3">${user.email}</td>
-                    <td class="py-3">${new Date(user.registerTime).toLocaleDateString()}</td>
-                    <td class="py-3">
-                        <span class="badge badge-pill badge-${user.status === 'Verified' ? 'success' : 'warning'}">${user.status}</span>
-                    </td>
+                    <td class="py-3">${user.mobileNumber}</td>
+                    
                     <td class="py-3">
                         <div class="position-relative">
                             <a class="link-dark d-inline-block" href="#">
@@ -429,7 +429,7 @@
     </div>
   </div>
 
-  <script src="/user_script.js"></script>
+  <!-- <script src="/user_script.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="public/graindashboard/js/graindashboard.js"></script>
     <script src="public/graindashboard/js/graindashboard.vendor.js"></script>
