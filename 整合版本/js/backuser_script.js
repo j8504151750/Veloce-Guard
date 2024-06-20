@@ -26,17 +26,19 @@ $(document).ready(function () {
             status: $('#editUserStatus').val(),
         };
 
+        // url: `http://10.0.103.168:8080/api/admin/users/${userId}`, // 更改為你的 API URL
         $.ajax({
-            url: `http://10.0.103.168:8080/api/admin/users/${userId}`, // 更改為你的 API URL
+            url: `/api/public/users/{userId}`, // 更改為你的 API URL
             method: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(updatedUser),
             success: function (response) {
-                $('#editUserModal').modal('hide');
-                fetchUsers(); // 重新獲取用戶數據並刷新表格
+                
+                console.error('Error updating user:', err);
             },
             error: function (err) {
-                console.error('Error updating user:', err);
+                $('#editUserModal').modal('hide');
+                fetchUsers(); // 重新獲取用戶數據並刷新表格
             }
         });
     });

@@ -48,7 +48,7 @@
                     </a>
                     <!-- End Side Nav Toggle -->
 
-                   
+
                     <!-- User Avatar -->
                     <div class="dropdown mx-3 dropdown ml-2 ml-auto">
                         <a id="profileMenuInvoker" class="header-complex-invoker" href="#" aria-controls="profileMenu"
@@ -116,10 +116,10 @@
                     <!-- Users: subUsers -->
                     <ul id="subUsers" class="side-nav-menu side-nav-menu-second-level mb-0">
                         <li class="side-nav-menu-item active">
-                            <a class="side-nav-menu-link" href="users.html">所有會員</a>
+                            <a class="side-nav-menu-link" href="/整合版本/backuser.html">所有會員</a>
                         </li>
                         <li class="side-nav-menu-item">
-                            <a class="side-nav-menu-link" href="user-edit.html">新增會員</a>
+                            <a class="side-nav-menu-link" href="/整合版本/backuser-edit.html">新增會員</a>
                         </li>
                     </ul>
                     <!-- End Users: subUsers -->
@@ -145,12 +145,8 @@
                     <!-- Pages: subPages -->
                     <ul id="subPages" class="side-nav-menu side-nav-menu-second-level mb-0">
                         <li class="side-nav-menu-item">
-                            <a class="side-nav-menu-link" href="order.html">所有訂單</a>
-                        </li>
-                        <li class="side-nav-menu-item">
-                            <a class="side-nav-menu-link" href="order-edit.html">新增訂單</a>
-                        </li>
-               
+                            <a class="side-nav-menu-link" href="/整合版本/backorder.html">所有訂單</a>
+                        </li>                        
                     </ul>
                     <!-- End Pages: subPages -->
                 </li>
@@ -177,7 +173,7 @@
                     <!-- subitems -->
                     <ul id="subitems" class="side-nav-menu side-nav-menu-second-level mb-0">
                         <li class="side-nav-menu-item active">
-                            <a class="side-nav-menu-link" href="product.html">所有商品</a>
+                            <a class="side-nav-menu-link" href="/整合版本/backproduct.html">所有商品</a>
                         </li>
                         <li class="side-nav-menu-item">
                             <a class="side-nav-menu-link" href="product-edit.html">新增商品</a>
@@ -190,7 +186,7 @@
                 <!-- Title -->
                 <li class="sidebar-heading h6">優惠卷相關</li>
                 <!-- End Title -->
-                
+
                 <!-- 優惠卷 -->
                 <li class="side-nav-menu-item side-nav-has-menu ">
                     <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subticket">
@@ -229,7 +225,7 @@
                 </li>
                 <!-- End Settings -->
 
-                
+
 
             </ul>
         </aside>
@@ -270,19 +266,20 @@
                                     </tr>
                                 </thead>
                                 <tbody id="user-table-body">
-    <!------------------------------------渲染會員從資料庫使用AJAX ------------------------------------------------>
+                                    <!------------------------------------渲染會員從資料庫使用AJAX ------------------------------------------------>
                                     <script>
 
+                                        // url: 'http://10.0.103.168:8080/api/admin/users', // 更改為你的 API URL
                                         $(document).ready(function () {
                                             function fetchUsers(page = 1) {
                                                 $.ajax({
-                                                    url: 'http://10.0.103.168:8080/api/admin/users', // 更改為你的 API URL
+                                                    url: '/api/admin/users', // 更改為你的 API URL
                                                     method: 'GET',
                                                     dataType: 'json',
                                                     headers: {
-                                                        'Access-Control-Allow-Origin':'http://10.0.103.168:8080',
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJpYXQiOjE3MTc1NzU5ODEsImVtYWlsIjoiYmVhcjIwMDgwNkBnbWFpbC5jb20ifQ.V_jAWG7fGaWLuj0Kj0CP0JWp35Q8MvwfojydgwKlW44'
-            },
+                                                        'Access-Control-Allow-Origin': 'http://10.0.103.168:8080',
+                                                        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJpYXQiOjE3MTc1NzU5ODEsImVtYWlsIjoiYmVhcjIwMDgwNkBnbWFpbC5jb20ifQ.V_jAWG7fGaWLuj0Kj0CP0JWp35Q8MvwfojydgwKlW44'
+                                                    },
                                                     success: function (response) {
                                                         console.log(response)
                                                         // const users = response.users;
@@ -356,7 +353,7 @@
 
 
                                     </script>
-       <!-------------------------------------------- 結束渲染 -------------------------------------------------------->
+                                    <!-------------------------------------------- 結束渲染 -------------------------------------------------------->
                                 </tbody>
                             </table>
                             <div class="card-footer d-block d-md-flex align-items-center d-print-none">
@@ -389,47 +386,48 @@
 
             </div>
 
-     
+
         </div>
     </main>
 
 
     <!-- Edit User Modal修改按鈕 -->
-<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+    <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editUserForm">
+                        <input type="hidden" id="editUserId">
+                        <div class="form-group">
+                            <label for="editUserName">Name</label>
+                            <input type="text" class="form-control" id="editUserName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editUserEmail">Email</label>
+                            <input type="email" class="form-control" id="editUserEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editUserStatus">Status</label>
+                            <select class="form-control" id="editUserStatus" required>
+                                <option value="Verified">Verified</option>
+                                <option value="Pending">Pending</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          <form id="editUserForm">
-            <input type="hidden" id="editUserId">
-            <div class="form-group">
-              <label for="editUserName">Name</label>
-              <input type="text" class="form-control" id="editUserName" required>
-            </div>
-            <div class="form-group">
-              <label for="editUserEmail">Email</label>
-              <input type="email" class="form-control" id="editUserEmail" required>
-            </div>
-            <div class="form-group">
-              <label for="editUserStatus">Status</label>
-              <select class="form-control" id="editUserStatus" required>
-                <option value="Verified">Verified</option>
-                <option value="Pending">Pending</option>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Save changes</button>
-          </form>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <script src="/user_script.js"></script>
+    <script src="/整合版本/js/backuser_script.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="public/graindashboard/js/graindashboard.js"></script>
     <script src="public/graindashboard/js/graindashboard.vendor.js"></script>

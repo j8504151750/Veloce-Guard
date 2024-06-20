@@ -8,20 +8,20 @@ $(document).ready(function () {
     });
 
     // 新增分支按鈕
-    $('#editProductModal').fi
-    nd('.modal-body').append(`
+    $('#editProductModal').find('.modal-body').append(`
         <button type="button" class="btn btn-secondary" onclick="addVariantFields()">新增分支</button>
     `);
 });
 
+// url: `http://10.0.103.168:8080/api/public/products?pageNumber=${page - 1}&pageSize=31&sortBy=productId&sortOrder=asc`, // 替換成你的API URL
 // 從API拉取產品資料
 function fetchProducts(page = 1) {
     $.ajax({
-        url: `http://10.0.103.168:8080/api/public/products?pageNumber=${page - 1}&pageSize=31&sortBy=productId&sortOrder=asc`, // 替換成你的API URL
+        url: `http://localhost:8080/api/public/products?pageNumber=${page - 1}&pageSize=31&sortBy=productId&sortOrder=asc`, // 替換成你的API URL
         method: 'GET',
         dataType: 'json',
         headers: {
-            "Authorization": "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJpYXQiOjE3MTgzNDUwODcsImVtYWlsIjoiam9obi5kb2VAZXhhbXBsZS5jb20ifQ.fkz6asokV2pQ1tC8HbrI6SZkJviAGxT6mtZXoj_FE2Q" + ""
+            "Authorization": "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJpYXQiOjE3MTg4NjM2MjYsImVtYWlsIjoiam9obi5kb2VAZXhhbXBsZS5jb20ifQ.uCsSFQ8QY4Px8M0Af2yapG0TF1cNBvDDfQrOz9Suyx4" + ""
         },
         success: function (response) {
             console.error('Error fetching products:', response);
@@ -34,10 +34,10 @@ function fetchProducts(page = 1) {
 }
 
 // 渲染產品列表
-function renderTable(products) {
+function renderTable(content) {
     const tbody = $('#product-table-body');
     tbody.empty();
-    products.forEach(product => {
+    content.forEach(product => {
         const row = `<tr>
             <td>${product.productId}</td>
             <td>${product.productName}</td>
@@ -73,33 +73,34 @@ function showDescription(description) {
     $('#descriptionModal').modal('show');
 }
 
+// url: `http://10.0.103.168:8080/api/public/products/${variantId}/variants`, // 替換成你的API URL
 // 顯示產品變體
-function showVariants(variantId) {
+function showVariants(productId) {
     $.ajax({
-        url: `http://10.0.103.168:8080/api/public/products/${variantId}/variants`, // 替換成你的API URL
+        url: `http://localhost:8080/api/public/${productId}/variants`, // 替換成你的API URL
         method: 'GET',
         dataType: 'json',
         headers: {
-            "Authorization": "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJpYXQiOjE3MTgzNDUwODcsImVtYWlsIjoiam9obi5kb2VAZXhhbXBsZS5jb20ifQ.fkz6asokV2pQ1tC8HbrI6SZkJviAGxT6mtZXoj_FE2Q" + ""
+            "Authorization": "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJpYXQiOjE3MTg4NjM2MjYsImVtYWlsIjoiam9obi5kb2VAZXhhbXBsZS5jb20ifQ.uCsSFQ8QY4Px8M0Af2yapG0TF1cNBvDDfQrOz9Suyx4" + ""
         },
         success: function (response) {
             // console.error('Error fetching variants:', response);
         },
         error: function (err) {
-            renderVariants(err); // 假設你的API返回的變體資料在response中
+            renderVariants(err.responseJSON.content); // 假設你的API返回的變體資料在response中
         }
     });
 }
 
 // 渲染產品變體
-function renderVariants(variantId) {
+function renderVariants(content) {
     const modalBody = $('#variantsModalBody');
     modalBody.empty();
-    variantId.forEach(variant => {
+    content.forEach(variant => {
         const variantInfo = `<div class="variant-info">
             <p>顏色: ${variant.color}</p>
             <p>尺寸: ${variant.size}</p>
-            <p>圖片: ${variant.image}</p>
+            <p>圖片: <img src="${variant.image}" alt="${variant.color}" /></p>
             <p>sku: ${variant.sku}</p>
             <p>庫存: ${variant.inventory}</p>
         </div>`;
@@ -149,10 +150,11 @@ function saveProduct() {
         productVariants: variants
     };
 
+    // url: `http://10.0.103.168:8080/api/admin/products/{productId}`,
     if (productId) {
         // 更新現有的產品資料
         $.ajax({
-            url: `http://10.0.103.168:8080/api/admin/products/{productId}`,
+            url: `http://localhost:8080/api/admin/products/${productId}`,
             method: 'PUT',
             contentType: false,
             processData: false,
@@ -168,7 +170,7 @@ function saveProduct() {
     } else {
         // 新建產品資料
         $.ajax({
-            url: '/api/admin/categories/{categoryId}/product',
+            url: 'http://localhost:8080/api/admin/categories/{categoryId}/product',
             method: 'POST',
             contentType: false,
             processData: false,
@@ -188,13 +190,13 @@ function saveProduct() {
 function deleteProduct(productId) {
     if (confirm('你確定要刪除這個產品嗎？')) {
         $.ajax({
-            url: `/api/admin/products/{productId}`,
+            url: `http://localhost:8080/api/admin/products/${productId}`,
             method: 'DELETE',
             success: function (response) {
-                fetchProducts(); // 重新拉取產品資料
+                console.error('Error deleting product:', response);
             },
             error: function (err) {
-                console.error('Error deleting product:', err);
+                fetchProducts(); // 重新拉取產品資料
             }
         });
     }
