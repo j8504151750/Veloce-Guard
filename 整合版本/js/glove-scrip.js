@@ -33,7 +33,7 @@ $(document).ready(function () {
             // console.log(products);
             // Loop through each product and append it to the product container
             $.each(products, function (index, product) {
-                if (index >= 0 && index < 10) {
+                if (index >= 10 && index < 20) {
                 // console.log(product.productName);
                 var firstVariantImage = product.productVariants.length > 0 ? product.productVariants[0].image : '默认图片URL';
 
@@ -46,7 +46,7 @@ $(document).ready(function () {
                         <div>${n}</div>
                         
                         </div><br>
-                        <input class="btn btn-secondary" type="button" value="加入購物車" style="width:100%; height:50px; margin-bottom:50px;">
+                        <input type="button" value="加入購物車" style="width:100%; height:50px; margin-bottom:50px;">
                         <br>
                     </div>
                 </div>`;
