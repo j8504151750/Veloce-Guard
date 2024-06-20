@@ -8,8 +8,7 @@ $(document).ready(function () {
     });
 
     // 新增分支按鈕
-    $('#editProductModal').fi
-    nd('.modal-body').append(`
+    $('#editProductModal').find('.modal-body').append(`
         <button type="button" class="btn btn-secondary" onclick="addVariantFields()">新增分支</button>
     `);
 });
