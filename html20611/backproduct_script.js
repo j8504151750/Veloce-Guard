@@ -17,7 +17,7 @@ $(document).ready(function () {
 // 從API拉取產品資料
 function fetchProducts(page = 1) {
     $.ajax({
-        url: `http://10.0.103.168:8080/api/public/products?pageNumber=${page - 1}&pageSize=31&sortBy=productId&sortOrder=asc`, // 替換成你的API URL
+        url: `http://localhost:8080/api/public/products?pageNumber=${page - 1}&pageSize=31&sortBy=productId&sortOrder=asc`, // 替換成你的API URL
         method: 'GET',
         dataType: 'json',
         headers: {
@@ -76,7 +76,7 @@ function showDescription(description) {
 // 顯示產品變體
 function showVariants(variantId) {
     $.ajax({
-        url: `http://10.0.103.168:8080/api/public/products/${variantId}/variants`, // 替換成你的API URL
+        url: `http://localhost:8080/api/public/products/${variantId}/variants`, // 替換成你的API URL
         method: 'GET',
         dataType: 'json',
         headers: {
@@ -152,7 +152,7 @@ function saveProduct() {
     if (productId) {
         // 更新現有的產品資料
         $.ajax({
-            url: `http://10.0.103.168:8080/api/admin/products/{productId}`,
+            url: `http://localhost:8080/api/admin/products/{productId}`,
             method: 'PUT',
             contentType: false,
             processData: false,
