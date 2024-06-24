@@ -3,7 +3,7 @@
 
 <head>
     <!-- Title -->
-    <title>會員 | Veloce Guard</title>
+    <title>聯絡我們 | Veloce Guard</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -65,7 +65,7 @@
 
                 <!-- 會員 -->
                 <li class="side-nav-menu-item side-nav-has-menu">
-                    <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subUsers">
+                    <a class="side-nav-menu-link media align-items-center" href="backuser.html" data-target="#subUsers">
                         <span class="side-nav-menu-icon d-flex mr-3">
                             <i class="gd-user"></i>
                         </span>
@@ -79,7 +79,7 @@
                     <!-- Users: subUsers -->
                     <ul id="subUsers" class="side-nav-menu side-nav-menu-second-level mb-0">
                         <li class="side-nav-menu-item active">
-                            <a class="side-nav-menu-link" href="users.html">所有會員</a>
+                            <a class="side-nav-menu-link" href="backuser.html">所有會員</a>
                         </li>
                     </ul>
                     <!-- End Users: subUsers -->
@@ -91,7 +91,7 @@
 
                 <!-- 訂單 -->
                 <li class="side-nav-menu-item side-nav-has-menu">
-                    <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subPages">
+                    <a class="side-nav-menu-link media align-items-center" href="backorder.html" data-target="#subPages">
                         <span class="side-nav-menu-icon d-flex mr-3">
                             <i class="gd-shopping-cart-full"></i>
                         </span>
@@ -123,7 +123,7 @@
 
                 <!-- 商品 -->
                 <li class="side-nav-menu-item side-nav-has-menu ">
-                    <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subitems">
+                    <a class="side-nav-menu-link media align-items-center" href="backproduct.html" data-target="#subitems">
                         <span class="side-nav-menu-icon d-flex mr-3">
                             <i class="gd-package"></i>
                         </span>
@@ -192,15 +192,15 @@
                         <nav class="d-none d-md-block" aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
-                                    <a href="#">會員</a>
+                                    <a href="#">聯絡我們</a>
                                 </li>
-                                <li class="breadcrumb-item active" aria-current="page">所有會員</li>
+                                <li class="breadcrumb-item active" aria-current="page">所有回饋</li>
                             </ol>
                         </nav>
                         <!-- End Breadcrumb -->
 
                         <div class="mb-3 mb-md-4 d-flex justify-content-between">
-                            <div class="h3 mb-0">會員</div>
+                            <div class="h3 mb-0">所有回饋</div>
                         </div>
 
 
@@ -209,85 +209,27 @@
                             <table class="table text-nowrap mb-0">
                                 <thead>
                                     <tr>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">會員ID</th>
+                                        
                                         <th class="font-weight-semi-bold border-top-0 py-2">姓名</th>
                                         <th class="font-weight-semi-bold border-top-0 py-2">Email</th>
                                         <th class="font-weight-semi-bold border-top-0 py-2">電話號碼</th>
                                         <!-- <th class="font-weight-semi-bold border-top-0 py-2">Status</th> -->
-                                        <th class="font-weight-semi-bold border-top-0 py-2">操作</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">內容</th>
                                     </tr>
                                 </thead>
                                 <tbody id="user-table-body">
-    <!------------------------------------渲染會員從資料庫使用AJAX ------------------------------------------------>
-                                    <script>
-
-                                        $(document).ready(function () {
-                                            function fetchUsers(page = 1) {
-                                                $.ajax({
-                                                    url: 'http://localhost:8080/api/admin/users?pageNumber=0&pageSize=10&sortBy=userId&sortOrder=asc', // 更改為你的 API URL
-                                                    method: 'GET',
-                                                    dataType: 'json',
-                                                    headers: {
-                                                        
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJpYXQiOjE3MTg4NjEzMjgsImVtYWlsIjoiam9obi5kb2VAZXhhbXBsZS5jb20ifQ.iUM0sEEZU9aHhhFM3rqAhw9VV2K_cvGrzg0ISC9lOiI'
-            },
-                                                    success: function (response) {
-                                                        console.log(response)
-                                                        // const users = response.users;
-                                                        // const totalPages = response.totalPages;
-                                                        // renderTable(response.content);
-                                                        // renderPagination(totalPages, page);
-                                                        // $('#pagination-info').text(`Showing ${response.from} to ${response.to} of ${response.total} Entries`);
-                                                    },
-                                                    error: function (err) {
-                                                        console.log(err);
-                                                        renderTable(err.responseJSON.content); // 假設你的API返回的產品資料在 'products' 屬性下
-                                                    }
-                                                });
-                                            }
-
-                                            function renderTable(users) {
-                                                const tbody = $('#user-table-body');
-                                                tbody.empty();
-
-                                                users.forEach(user => {
-                                                    const row = `
-                 <tr data-user-id="${user.userId}">
-                    <td class="py-3">${user.userId}</td>
-                    <td class="align-middle py-3">
-                        <div class="d-flex align-items-center">
-                            <div class="position-relative mr-2">
-                                <span class="avatar-placeholder mr-md-2">${user.firstName.charAt(0)}</span>
-                            </div>
-                            ${user.firstName}
-                        </div>
+                 <tr>
+                    <td class="py-3">劉德華</td>
+                    <td class="py-3">a@a.com</td>
+                    <td class="py-3">1234567890</td>
+                    <td class="py-3">評估人、事、物的優劣、善惡美醜、或合不合理，稱為「評價」。如：「讀者對這部文學作品有很高的評價。」、「要評價一個人，就必先對他有深入瞭解。」
+                        評估人、事、物的優劣、善惡美醜、或合不合理，稱為「評價」。如：「讀者對這部文學作品有很高的評價。」、「要評價一個人，就必先對他有深入瞭解。」
+                        評估人、事、物的優劣、善惡美醜、或合不合理，稱為「評價」。如：「讀者對這部文學作品有很高的評價。」、「要評價一個人，就必先對他有深入瞭解。」
                     </td>
-                    <td class="py-3">${user.email}</td>
-                    <td class="py-3">${user.mobileNumber}</td>
                     
-                    <td class="py-3">
-                        <div class="position-relative">
-                            <a class="link-dark d-inline-block" href="#">
-                                <i class="gd-pencil icon-text"></i>
-                            </a>
-                            <a class="link-dark d-inline-block" href="#">
-                                <i class="gd-trash icon-text"></i>
-                            </a>
-                        </div>
-                    </td>
-                </tr>`;
-                                                    tbody.append(row);
-                                                });
-                                            }
-
-                                            // Fetch initial data
-                                            fetchUsers();
-                                        });
-
-
-
-                                    </script>
-       <!-------------------------------------------- 結束渲染 -------------------------------------------------------->
+                   
+                    
+                </tr>
                                 </tbody>
                             </table>
                            
