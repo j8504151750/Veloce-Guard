@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/membership-css.css">
+    <!-- Custom Styles -->
+    <style>
+        .tab-container {
+            margin-left: auto;
+            width: 70%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header style="position: sticky; top: 0; z-index: 1000;">
+        <div class="logo-sidebar-container">
+
+            <!-- Logo Area -->
+            <div class="logo-area d-flex align-items-center">
+                <!-- Dropdown Navigation -->
+                <div class=" dropdown p-0 m-0">
+                    <a class="dropdown-btn btn btn-black btn-sm dropdown-toggle" href="#" role="button"
+                        id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">首頁</a>
+
+                    <a class="dropdown-btn btn btn-black btn-sm dropdown-toggle" href="#" role="button"
+                        id="dropdownMenuLink1" data-bs-toggle="dropdown" aria-expanded="false">產品</a>
+
+                    <a class="dropdown-btn btn btn-black btn-sm dropdown-toggle" href="#" role="button"
+                        id="dropdownMenuLink1" data-bs-toggle="dropdown" aria-expanded="false">聯絡我們</a>
+
+                </div>
+
+                <!-- Logo Text -->
+                <div class="logo-name logo-text text-center"><a href="index.html">Veloce Guard</a></div>
+                <div class="header-btn d-flex align-items-center ">
+
+
+
+                    <!-- 購物車按鈕 -->
+                    <a href="shopcart.html" class="btn-search btn btn-black btn-sm me-2" data-bs-toggle="tooltip"
+                        data-bs-placement="bottom" title="購物車"><i class="fa fa-cart-arrow-down"></i></a>
+
+
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12 tab-container">
+                <!-- Main Tabs for Membership Page -->
+                <ul class="nav nav-tabs justify-content-end" style="margin-right: 50px;">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#orders">我的訂單</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#info">會員資料</a>
+                    </li>
+                </ul>
+
+
+                <div class="tab-content">
+                    <!-- My Orders Tab -->
+                    <div id="orders" class="container tab-pane active"><br>
+                        <h3>訂單資訊</h3> <br>
+                        
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Sample item row -->
+                                <tr>
+                                    <td>安全帽</td>
+                                    <td>3</td>
+                                    <td>$3000</td>
+                                </tr>
+                                <!-- More rows as needed -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Member Info Tab -->
+                    <div id="info" class="container tab-pane fade"><br>
+                        <h3 style="margin-left: 20px;">Member Information</h3>
+                        <div class="container mt-5">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>Name</th>
+                                        <td>John Doe</td>
+                                        <td><button class="btn btn-primary btn-sm">Edit</button></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Phone Number</th>
+                                        <td>+1234567890</td>
+                                        <td><button class="btn btn-primary btn-sm">Edit</button></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Address</th>
+                                        <td>1234 Street, City, Country</td>
+                                        <td><button class="btn btn-primary btn-sm">Edit</button></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Email</th>
+                                        <td>john.doe@example.com</td>
+                                        <td><button class="btn btn-primary btn-sm">Edit</button></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Password</th>
+                                        <td>*********</td>
+                                        <td><button class="btn btn-primary btn-sm">Edit</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+       <!-- FOOTER -->
+  <div class="footer-body">
+
+  
+    <footer class="footer">
+      <div class="waves">
+        <div class="wave" id="wave1"></div>
+        <div class="wave" id="wave2"></div>
+        <div class="wave" id="wave3"></div>
+        <div class="wave" id="wave4"></div>
+      </div>
+      <ul class="social-icon">
+        <li class="social-icon__item"><a class="social-icon__link" href="#">
+            <i class="fa-brands fa-square-facebook"></i>
+          </a></li>
+        <li class="social-icon__item"><a class="social-icon__link" href="#">
+            <i class="fa-brands fa-square-x-twitter"></i>
+          </a></li>
+        <li class="social-icon__item"><a class="social-icon__link" href="#">
+            <i class="fa-brands fa-line"></i>
+          </a></li>
+        <li class="social-icon__item"><a class="social-icon__link" href="#">
+            <i class="fa-brands fa-instagram"></i>
+          </a></li>
+      </ul>
+      <ul class="menu">
+        <li class="menu__item"><a class="menu__link" href="index.html">首頁</a></li>
+        <li class="menu__item"><a class="menu__link" href="product.html">安全帽</a></li>
+        <li class="menu__item"><a class="menu__link" href="glove.html">手套</a></li>
+        <li class="menu__item"><a class="menu__link" href="clothes.html">防摔衣</a></li>
+        <li class="menu__item"><a class="menu__link" href="#">會員中心</a></li>
+        <li class="menu__item"><a class="menu__link" href="cart.html">購物車</a></li>
+        <li class="menu__item"><a class="menu__link" href="connect.html">聯絡我們</a></li>
+  
+      </ul>
+  
+    </footer>
+  </div>
+    <!-- FOOTER -->
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
