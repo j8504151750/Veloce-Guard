@@ -11,9 +11,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/jsonwebtoken@8.5.1"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
 </head>
 
-<body>
+<body> 
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const token = localStorage.getItem('jwt-token'); // 從 Local Storage 中讀取 jwt-token
+    if (token) {
+        console.log('Current JWT Token:', token); // 在控制台中顯示 jwt-token
+        // 在這裡使用 token 進行相應的操作
+        const decodedToken = jwt.decode(token, { complete: true });
+        console.log('Decoded JWT Token:', decodedToken);
+    } else {
+        console.error('JWT Token not found');
+    }
+    // 你的其他 AJAX 請求代碼
+});
+  </script>
 
   <!-- MENU -->
   <div class="navigation">
@@ -232,7 +249,7 @@
 
   <!-- FOOTER -->
 
-
+  
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

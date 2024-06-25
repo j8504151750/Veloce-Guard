@@ -29,13 +29,14 @@ password.onchange = validatePassword;
 confirm_password.onkeyup = validatePassword;
 
 
+
 // "註冊"資料到後端
 document.getElementById('registerform').addEventListener('submit', function(event) {
   event.preventDefault(); // Prevent the default form submission
 
   const firstname = document.getElementById('firstname_signup').value;
   const lastname = document.getElementById('lastname_signup').value;
-  const country = document.getElementById('country_signup').value;
+  
   const city = document.getElementById('city_signup').value;
   const street = document.getElementById('street_signup').value;
   const pincode = document.getElementById('pincode_signup').value;
@@ -58,28 +59,86 @@ document.getElementById('registerform').addEventListener('submit', function(even
         buildingName: "aaaaa",
         city: city,
         state: "aa",
-        country: country,
+        country: "taiwan",
         pincode: pincode
       }
   };
 
+  
+
    // Use fetch to send the data to the server
-   fetch('http://10.0.103.168:8080/api/register', {  
+   fetch('http://localhost:8080/api/register', {  
     method: 'POST',
     headers: {
-        'Content-Type': 'application/json',
-        'Accress-COntrol-Allow-Origin': '*'
+        'Content-Type': 'application/json'
     },
     body: JSON.stringify(data), 
-})
-.then(response => response.json()) 
-.then(data => {
-    console.log('Success:', data); 
-})
-.catch((error) => {
-    console.error('Error:', error);
+  })
+  .then(response => {
+    if (!response.ok) {
+      // 如果服务器响应的 HTTP 状态码表示失败
+      return response.json().then(errorData => {
+        console.log(errorData);
+        
+        let errorMessage = '輸入錯誤請檢查: ';
+        if (errorData.firstName) {
+          errorMessage += `${errorData.firstName}\n`;
+        }
+        if (errorData.lastName) {
+          errorMessage += `${errorData.lastName}\n`;
+        }
+        if (errorData.pincode) {
+          errorMessage += `${errorData.pincode}\n`;
+        }
+        if (errorData.mobileNumber) {
+          errorMessage += `${errorData.mobileNumber}\n`;
+        }
+        if (errorData.street) {
+          errorMessage += `${errorData.street}\n`;
+        }
+        if (errorData.email) {
+          errorMessage += `${errorData.email}\n`;
+        }
+        if (errorData.message) {
+          errorMessage += `${errorData.message}\n`;
+        }
+        if (errorData.city) {
+          errorMessage += `${errorData.city}\n`;
+        }
+        // 可以根據需要添加更多的錯誤處理
+        alert(errorMessage);
+    
+        throw new Error(errorMessage);
+      });
+    }
+    // 如果响应状态码为成功
+    return response.json();
+  })
+  .then(data => {
+    console.log('Success response data:', data); // 輸出成功回應的資料
+      if(data['jwt-token']) {
+        console.log('Registration successful, redirecting...'); // 確認 success 為 true
+        localStorage.setItem('jwt-token', data['jwt-token']);
+        window.location.href = 'index.html';
+      } else {
+          // 这里处理逻辑上的成功，但实际操作失败的情况
+        console.log('Registration logic success but operation failed:', data);
+
+          if(data.message) {
+            alert(data.message);
+          }
+        
+      }
+  })
+  .catch((error) => {
+      // 这里捕获所有的错误，包括网络错误、JSON解析错误和上面抛出的错误
+      console.error('Error:', error);
+      
+  });
 });
-});
+
+
+
 
 //"登入"資訊傳到後端
 // Handle the login form submission
@@ -96,28 +155,27 @@ document.getElementById('userform').addEventListener('submit', function(event) {
   };
 
   // Use the fetch API to send the login data to your server endpoint
-  fetch('http://10.0.103.168:8080/api/login', {  // Adjust '/login' with your actual login route on the server
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(loginData),
-  })
-  .then(response => response.json())
+  fetch('http://localhost:8080/api/login', {  
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(loginData),
+})
+.then(response => response.json())
   .then(data => {
-      console.log('Login Success:', data);
-    //   window.location.href = '/'
-    //   if (data.success) {
-    //       // Redirect user or handle login success scenario
-    //       window.location.href = '/home'; // Example: redirect to home page after successful login
-    //   }
-    //   else {
-    //       // Handle login failure scenario
-    //       alert('Login failed. Please check your credentials.');
-    //   }
+    if (data['jwt-token']) {
+      console.log('Login successful, redirecting...'); // 確認成功
+      localStorage.setItem('jwt-token', data['jwt-token']); // 將 jwt-token 存入 Local Storage
+      console.log('Current JWT Token:', data);
+      window.location.href = 'index.html';
+    } else {
+      throw new Error('Login failed');
+    }
   })
   .catch((error) => {
-      console.error('Login Error:', error);
+    console.error('Login Error:', error);
   });
 });
+
 
