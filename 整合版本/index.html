@@ -1,261 +1,295 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Veloce Guard 品牌首頁</title>
+    <link rel="stylesheet" href="./css/index-styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Veloce Guard 品牌首頁</title>
-  <link rel="stylesheet" href="./css/index-styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/jsonwebtoken@8.5.1"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  
-</head>
+  <body>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const token = localStorage.getItem("jwt-token"); // 從 Local Storage 中讀取 jwt-token
+        if (token) {
+          const decodedToken = jwt_decode(token);
 
-<body> 
-  <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const token = localStorage.getItem('jwt-token'); // 從 Local Storage 中讀取 jwt-token
-    if (token) {
-        console.log('Current JWT Token:', token); // 在控制台中顯示 jwt-token
-        // 在這裡使用 token 進行相應的操作
-        const decodedToken = jwt.decode(token, { complete: true });
-        console.log('Decoded JWT Token:', decodedToken);
-    } else {
-        console.error('JWT Token not found');
-    }
-    // 你的其他 AJAX 請求代碼
-});
-  </script>
+          // 打印解析後的token
+          console.log("Decoded JWT Token:", decodedToken);
+        } else {
+          console.error("JWT Token not found");
+        }
+        // 你的其他 AJAX 請求代碼
+      });
+    </script>
 
-  <!-- MENU -->
-  <div class="navigation">
-    <input type="checkbox" id="navi-toggle" class="navigation__checkbox" />
+    <!-- MENU -->
+    <div class="navigation">
+      <input type="checkbox" id="navi-toggle" class="navigation__checkbox" />
 
-    <label for="navi-toggle" class="navigation__button">
-      <span class="navigation__icon">
-        <span class="navigation__icon-span">&nbsp;</span>
-        <span class="navigation__icon-span">&nbsp;</span>
-        <span class="navigation__icon-span">&nbsp;</span>
-        <span class="navigation__icon-span">&nbsp;</span>
-        <span class="navigation__icon-span">&nbsp;</span>
-        <span class="navigation__icon-span">&nbsp;</span>
-      </span>
-    </label>
+      <label for="navi-toggle" class="navigation__button">
+        <span class="navigation__icon">
+          <span class="navigation__icon-span">&nbsp;</span>
+          <span class="navigation__icon-span">&nbsp;</span>
+          <span class="navigation__icon-span">&nbsp;</span>
+          <span class="navigation__icon-span">&nbsp;</span>
+          <span class="navigation__icon-span">&nbsp;</span>
+          <span class="navigation__icon-span">&nbsp;</span>
+        </span>
+      </label>
 
-    <div class="navigation__background">&nbsp;</div>
+      <div class="navigation__background">&nbsp;</div>
 
-    <nav class="navigation__nav">
-      <ul class="navigation__list">
-        <li class="navigation__item ">
-          <a href="#" class="navigation__link">回到首頁   <i class="fa-solid fa-house"></i></a>
+      <nav class="navigation__nav">
+        <ul class="navigation__list">
+          <li class="navigation__item">
+            <a href="#" class="navigation__link"
+              >回到首頁 <i class="fa-solid fa-house"></i
+            ></a>
+          </li>
+          <li class="navigation__item">
+            <a href="product.html" class="navigation__link"
+              >安全帽 <i class="fa-solid fa-helmet-safety"></i
+            ></a>
+          </li>
+          <li class="navigation__item">
+            <a href="glove.html" class="navigation__link"
+              >手套 <i class="fa-solid fa-mitten"></i
+            ></a>
+          </li>
+          <li class="navigation__item">
+            <a href="clothes.html" class="navigation__link"
+              >防摔衣 <i class="fa-solid fa-shirt"></i
+            ></a>
+          </li>
+          <li class="navigation__item">
+            <a href="#" class="navigation__link"
+              >會員中心 <i class="fa-solid fa-user"></i
+            ></a>
+          </li>
+          <li class="navigation__item">
+            <a href="cart.html" class="navigation__link"
+              >購物車 <i class="fa-solid fa-cart-shopping"></i
+            ></a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <!-- MENU -->
+
+    <!-- 開場動畫跟影片 -->
+    <main class="container-open">
+      <div class="opening">
+        <span class="opening__mask--upper"></span>
+        <span class="opening__mask--under"></span>
+        <span class="opening__line"></span>
+        <img class="opening__logo" src="./images/V_LOGO_BW.webp" alt="" />
+      </div>
+      <div class="mainVisual">
+        <div class="section-open video-container">
+          <video autoplay muted loop id="bg-video">
+            <source src="./film/x15.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+    </main>
+    <!-- 開場動畫跟影片 -->
+
+    <div class="container">
+      <div class="intro-copy">
+        <p>加入『Veloce Guard』,</p>
+        <br />
+        <p>開啟您的安全騎行之旅,</p>
+        <br />
+        <p>我們期待成為您最堅強的後盾,</p>
+        <br />
+        <p>讓每一次騎行都成為無憂無慮的美好體驗.</p>
+        <br />
+      </div>
+
+      <div class="headers">
+        <section id="section-1">
+          <h2>Veloce Guard</h2>
+        </section>
+        <section id="section-2">
+          <h2>安全帽</h2>
+        </section>
+        <section id="section-3">
+          <h2>手套</h2>
+        </section>
+        <section id="section-4">
+          <h2>防摔衣</h2>
+        </section>
+        <section id="section-5">
+          <h2>會員中心</h2>
+        </section>
+        <section id="section-6">
+          <h2>聯絡我們</h2>
+        </section>
+        <section id="section-7">
+          <h2>最新優惠</h2>
+        </section>
+        <div class="spacer"></div>
+      </div>
+
+      <div class="section-previews">
+        <div class="img" id="preview-1">
+          <img src="./images/image01-1.jpeg" alt="" />
+        </div>
+        <div class="img" id="preview-2">
+          <img src="./images/image02-01.jpeg" alt="" />
+        </div>
+        <div class="img" id="preview-3">
+          <img src="./images/image03-01.jpeg" alt="" />
+        </div>
+        <div class="img" id="preview-4">
+          <img src="./images/image04-01.jpeg" alt="" />
+        </div>
+        <div class="img" id="preview-5">
+          <img src="./images/image05-02.jpeg" alt="" />
+        </div>
+        <div class="img" id="preview-6">
+          <img src="./images/image06-01.jpeg" alt="" />
+        </div>
+      </div>
+    </div>
+
+    <!-- 輪播圖 -->
+
+    <section class="collection">
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          <div class="content swiper-slide">
+            <img src="./images/10off.png" alt="" />
+            <div class="text-content">
+              <h3>9折優惠</h3>
+              <p>
+                輸入代碼，當購物車商品訂單滿3000元，即可享有整筆訂單9折優惠。
+              </p>
+            </div>
+          </div>
+          <div class="content swiper-slide">
+            <img src="./images/20off.png" alt="" />
+            <div class="text-content">
+              <h3>8折優惠</h3>
+              <p>
+                輸入代碼，當購物車商品訂單滿10000元，即可享有整筆訂單8折優惠。
+              </p>
+            </div>
+          </div>
+          <div class="content swiper-slide">
+            <img src="./images/get30.png" alt="" />
+            <div class="text-content">
+              <h3>滿額優惠</h3>
+              <p>
+                輸入代碼，當購物車商品訂單滿1000元，即可享有訂單金額折抵30元優惠。
+              </p>
+            </div>
+          </div>
+          <div class="content swiper-slide">
+            <img src="./images/get80.png" alt="" />
+            <div class="text-content">
+              <h3>滿額優惠</h3>
+              <p>
+                輸入代碼，當購物車商品訂單滿2000元，即可享有訂單金額折抵80元優惠。
+              </p>
+            </div>
+          </div>
+          <div class="content swiper-slide">
+            <img src="./images/shoei.jpg" alt="" />
+            <div class="text-content">
+              <h3>強打優惠</h3>
+              <p>
+                當購買SHOEI商品時，輸入優惠馬，即可享有訂單金額折抵1000元優惠
+              </p>
+            </div>
+          </div>
+          <div class="content swiper-slide">
+            <img src="./images/news.jpg" alt="" />
+            <div class="text-content">
+              <h3>最新消息</h3>
+              <p>更多上市消息</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+      <div class="waves">
+        <div class="wave" id="wave1"></div>
+        <div class="wave" id="wave2"></div>
+        <div class="wave" id="wave3"></div>
+        <div class="wave" id="wave4"></div>
+      </div>
+      <ul class="social-icon">
+        <li class="social-icon__item">
+          <a class="social-icon__link" href="#">
+            <i class="fa-brands fa-square-facebook"></i>
+          </a>
         </li>
-        <li class="navigation__item">
-          <a href="product.html" class="navigation__link">安全帽   <i class="fa-solid fa-helmet-safety"></i></a>
+        <li class="social-icon__item">
+          <a class="social-icon__link" href="#">
+            <i class="fa-brands fa-square-x-twitter"></i>
+          </a>
         </li>
-        <li class="navigation__item">
-          <a href="glove.html" class="navigation__link">手套   <i class="fa-solid fa-mitten"></i></a>
+        <li class="social-icon__item">
+          <a class="social-icon__link" href="#">
+            <i class="fa-brands fa-line"></i>
+          </a>
         </li>
-        <li class="navigation__item">
-          <a href="clothes.html" class="navigation__link">防摔衣   <i class="fa-solid fa-shirt"></i></a>
-        </li>
-        <li class="navigation__item">
-          <a href="#" class="navigation__link">會員中心   <i class="fa-solid fa-user"></i></a>
-        </li>
-        <li class="navigation__item">
-          <a href="cart.html" class="navigation__link">購物車   <i class="fa-solid fa-cart-shopping"></i></a>
+        <li class="social-icon__item">
+          <a class="social-icon__link" href="#">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
         </li>
       </ul>
-    </nav>
-  </div>
-  <!-- MENU -->
+      <ul class="menu">
+        <li class="menu__item"><a class="menu__link" href="#">首頁</a></li>
+        <li class="menu__item">
+          <a class="menu__link" href="product.html">安全帽</a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__link" href="glove.html">手套</a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__link" href="clothes.html">防摔衣</a>
+        </li>
+        <li class="menu__item"><a class="menu__link" href="#">會員中心</a></li>
+        <li class="menu__item">
+          <a class="menu__link" href="cart.html">購物車</a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__link" href="connect.html">聯絡我們</a>
+        </li>
+      </ul>
+    </footer>
 
-  <!-- 開場動畫跟影片 -->
-  <main class="container-open">
-    <div class="opening">
-      <span class="opening__mask--upper"></span>
-      <span class="opening__mask--under"></span>
-      <span class="opening__line"></span>
-      <img class="opening__logo" src="./images/V_LOGO_BW.webp" alt="">
-    </div>
-    <div class="mainVisual">
-      <div class=" section-open video-container">
-        <video autoplay muted loop id="bg-video">
-          <source src="./film/x15.mp4" type="video/mp4">
-        </video>
-      </div>
-    </div>
-  </main>
-  <!-- 開場動畫跟影片 -->
+    <!-- FOOTER -->
 
-
-
-
-  <div class="container">
-    <div class="intro-copy">
-      <p>加入『Veloce Guard』,</p>
-      <br />
-      <p>開啟您的安全騎行之旅,</p>
-      <br />
-      <p>我們期待成為您最堅強的後盾,</p>
-      <br />
-      <p>讓每一次騎行都成為無憂無慮的美好體驗.</p>
-      <br />
-    </div>
-
-
-    <div class="headers">
-      <section id="section-1">
-        <h2>Veloce Guard</h2>
-      </section>
-      <section id="section-2">
-        <h2>安全帽</h2>
-      </section>
-      <section id="section-3">
-        <h2>手套</h2>
-      </section>
-      <section id="section-4">
-        <h2>防摔衣</h2>
-      </section>
-      <section id="section-5">
-        <h2>會員中心</h2>
-      </section>
-      <section id="section-6">
-        <h2>聯絡我們</h2>
-      </section>
-      <section id="section-7">
-        <h2>最新優惠</h2>
-      </section>
-      <div class="spacer"></div>
-    </div>
-
-    <div class="section-previews">
-      <div class="img" id="preview-1">
-        <img src="./images/image01-1.jpeg" alt="" />
-      </div>
-      <div class="img" id="preview-2">
-        <img src="./images/image02-01.jpeg" alt="" />
-      </div>
-      <div class="img" id="preview-3">
-        <img src="./images/image03-01.jpeg" alt="" />
-      </div>
-      <div class="img" id="preview-4">
-        <img src="./images/image04-01.jpeg" alt="" />
-      </div>
-      <div class="img" id="preview-5">
-        <img src="./images/image05-02.jpeg" alt="" />
-      </div>
-      <div class="img" id="preview-6">
-        <img src="./images/image06-01.jpeg" alt="" />
-      </div>
-    </div>
-  </div>
-
-  <!-- 輪播圖 -->
-
-
-  <section class="collection">
-    <div class="swiper mySwiper">
-      <div class="swiper-wrapper">
-        <div class="content swiper-slide">
-          <img src="./images/10off.png" alt="">
-          <div class="text-content">
-            <h3>9折優惠</h3>
-            <p>輸入代碼，當購物車商品訂單滿3000元，即可享有整筆訂單9折優惠。</p>
-          </div>
-        </div>
-        <div class="content swiper-slide">
-          <img src="./images/20off.png" alt="">
-          <div class="text-content">
-            <h3>8折優惠</h3>
-            <p>輸入代碼，當購物車商品訂單滿10000元，即可享有整筆訂單8折優惠。</p>
-          </div>
-        </div>
-        <div class="content swiper-slide">
-          <img src="./images/get30.png" alt="">
-          <div class="text-content">
-            <h3>滿額優惠</h3>
-            <p>輸入代碼，當購物車商品訂單滿1000元，即可享有訂單金額折抵30元優惠。</p>
-          </div>
-        </div>
-        <div class="content swiper-slide">
-          <img src="./images/get80.png" alt="">
-          <div class="text-content">
-            <h3>滿額優惠</h3>
-            <p>輸入代碼，當購物車商品訂單滿2000元，即可享有訂單金額折抵80元優惠。</p>
-          </div>
-        </div>
-        <div class="content swiper-slide">
-          <img src="./images/shoei.jpg" alt="">
-          <div class="text-content">
-            <h3>強打優惠</h3>
-            <p>當購買SHOEI商品時，輸入優惠馬，即可享有訂單金額折抵1000元優惠</p>
-          </div>
-        </div>
-        <div class="content swiper-slide">
-          <img src="./images/news.jpg" alt="">
-          <div class="text-content">
-            <h3>最新消息</h3>
-            <p>更多上市消息</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-
-
-
-  <!-- FOOTER -->
-
-  <footer class="footer">
-    <div class="waves">
-      <div class="wave" id="wave1"></div>
-      <div class="wave" id="wave2"></div>
-      <div class="wave" id="wave3"></div>
-      <div class="wave" id="wave4"></div>
-    </div>
-    <ul class="social-icon">
-      <li class="social-icon__item"><a class="social-icon__link" href="#">
-          <i class="fa-brands fa-square-facebook"></i>
-        </a></li>
-      <li class="social-icon__item"><a class="social-icon__link" href="#">
-          <i class="fa-brands fa-square-x-twitter"></i>
-        </a></li>
-      <li class="social-icon__item"><a class="social-icon__link" href="#">
-          <i class="fa-brands fa-line"></i>
-        </a></li>
-      <li class="social-icon__item"><a class="social-icon__link" href="#">
-          <i class="fa-brands fa-instagram"></i>
-        </a></li>
-    </ul>
-    <ul class="menu">
-      <li class="menu__item"><a class="menu__link" href="#">首頁</a></li>
-      <li class="menu__item"><a class="menu__link" href="product.html">安全帽</a></li>
-      <li class="menu__item"><a class="menu__link" href="glove.html">手套</a></li>
-      <li class="menu__item"><a class="menu__link" href="clothes.html">防摔衣</a></li>
-      <li class="menu__item"><a class="menu__link" href="#">會員中心</a></li>
-      <li class="menu__item"><a class="menu__link" href="cart.html">購物車</a></li>
-      <li class="menu__item"><a class="menu__link" href="connect.html">聯絡我們</a></li>
-
-    </ul>
-
-  </footer>
-
-  <!-- FOOTER -->
-
-  
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="./js/index-script.js"></script>
-</body>
-
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="./js/index-script.js"></script>
+  </body>
 </html>
