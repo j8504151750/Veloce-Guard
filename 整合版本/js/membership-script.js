@@ -4,7 +4,7 @@ $(document).ready(function() {
 
     // order-info
     $.ajax({
-        url: 'http://localhost:8080/api/public/users/'+emailId+'orders',
+        url: 'http://localhost:8080/api/public/users/111/orders',
         type: 'GET',
         dataType: 'json', 
         headers:{
@@ -44,7 +44,7 @@ $(document).ready(function() {
  // Member-info
  $.ajax({
 
-    url: 'http://localhost:8080/api/admin/users/1',
+    url: 'http://localhost:8080/api/public/users/1',
     type: 'GET',
     dataType: 'json',
     headers: {
@@ -52,7 +52,7 @@ $(document).ready(function() {
     },
     success: function (data) {
         var memberInfo = $('#member-info');
-        memberInfo.empty(); // Clear any existing content
+        // memberInfo.empty(); // Clear any existing content
 
         // Append new rows with fetched data
         memberInfo.append(
@@ -74,7 +74,10 @@ $(document).ready(function() {
             )
         );
     },
-    error: function (user) {
+    // status: 302
+    error: function (error) {
+        console.log(error.responseJSON);
+        var users = error.responseJSON;
         var memberInfo = $('#member-info');
         memberInfo.empty(); // Clear any existing content
 
@@ -82,19 +85,19 @@ $(document).ready(function() {
         memberInfo.append(
             $('<tr>').append(
                 $('<th>').text('Name'),
-                $('<td>').text(user.firstName+user.lastName)
+                $('<td>').text(users.firstName+users.lastName)
             ),
             $('<tr>').append(
                 $('<th>').text('Phone Number'),
-                $('<td>').text(user.mobileNumber)
+                $('<td>').text(users.mobileNumber)
             ),
             $('<tr>').append(
                 $('<th>').text('Address'),
-                $('<td>').text(user.address.pincode+user.address.country+user.address.city+user.address.street)
+                $('<td>').text(users.address.pincode+users.address.country+users.address.city+users.address.street)
             ),
             $('<tr>').append(
                 $('<th>').text('Email'),
-                $('<td>').text(user.email)
+                $('<td>').text(users.email)
             )
         );
     }
