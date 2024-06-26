@@ -1,14 +1,14 @@
 $(document).ready(function() {
     // Example API endpoint; replace with actual endpoint URL
-    var apiEndpoint = 'http://localhost:8080/api/orders';
+   
 
     // order-info
     $.ajax({
-        url: 'URL',
+        url: 'http://localhost:8080/api/public/users/'+emailId+'orders',
         type: 'GET',
         dataType: 'json', 
         headers:{
-            'Authorization': 'Bearer '
+            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJpYXQiOjE3MTkzNzAxMDksImVtYWlsIjoiam9obi5kb2VAZXhhbXBsZS5jb20ifQ.ZtDAkSxwjs0knMxF-1GOEutn_4KmB_176TmFks8rrWo'
 
         },
         success: function(data) {
@@ -28,9 +28,9 @@ $(document).ready(function() {
             $.each(err, function(index, order) {
                 // Construct a row for each order
                 var row = $('<tr>').append(
-                    $('<td>').text(product.productName),
-                    $('<td>').text(product.quantity),
-                    $('<td>').text('$' + product.productPrice)
+                    $('<td>').text(order.productName),
+                    $('<td>').text(order.quantity),
+                    $('<td>').text('$' + order.productPrice)
                 );
 
                 // Append the row to the table body
@@ -43,11 +43,12 @@ $(document).ready(function() {
 
  // Member-info
  $.ajax({
-    url: memberInfoApiEndpoint,
+
+    url: 'http://localhost:8080/api/admin/users/1',
     type: 'GET',
     dataType: 'json',
     headers: {
-        'Authorization': 'Bearer '
+        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJpYXQiOjE3MTkzNzAxMDksImVtYWlsIjoiam9obi5kb2VAZXhhbXBsZS5jb20ifQ.ZtDAkSxwjs0knMxF-1GOEutn_4KmB_176TmFks8rrWo'
     },
     success: function (data) {
         var memberInfo = $('#member-info');
@@ -57,23 +58,23 @@ $(document).ready(function() {
         memberInfo.append(
             $('<tr>').append(
                 $('<th>').text('Name'),
-                $('<td>').text(data.name)
+                $('<td>').text(user.firstName+user.lastName)
             ),
             $('<tr>').append(
                 $('<th>').text('Phone Number'),
-                $('<td>').text(data.phoneNumber)
+                $('<td>').text(user.mobileNumber)
             ),
             $('<tr>').append(
                 $('<th>').text('Address'),
-                $('<td>').text(data.address)
+                $('<td>').text(user.address.pincode+user.address.country+user.address.city+user.address.street)
             ),
             $('<tr>').append(
                 $('<th>').text('Email'),
-                $('<td>').text(data.email)
+                $('<td>').text(user.email)
             )
         );
     },
-    error: function (err) {
+    error: function (user) {
         var memberInfo = $('#member-info');
         memberInfo.empty(); // Clear any existing content
 
@@ -81,15 +82,15 @@ $(document).ready(function() {
         memberInfo.append(
             $('<tr>').append(
                 $('<th>').text('Name'),
-                $('<td>').text(user.name)
+                $('<td>').text(user.firstName+user.lastName)
             ),
             $('<tr>').append(
                 $('<th>').text('Phone Number'),
-                $('<td>').text(user.phoneNumber)
+                $('<td>').text(user.mobileNumber)
             ),
             $('<tr>').append(
                 $('<th>').text('Address'),
-                $('<td>').text(user.address)
+                $('<td>').text(user.address.pincode+user.address.country+user.address.city+user.address.street)
             ),
             $('<tr>').append(
                 $('<th>').text('Email'),
