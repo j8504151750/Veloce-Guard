@@ -28,10 +28,12 @@
       document.addEventListener("DOMContentLoaded", function () {
         const token = localStorage.getItem("jwt-token"); // 從 Local Storage 中讀取 jwt-token
         if (token) {
+          console.log(token);
           const decodedToken = jwt_decode(token);
-
+          
           // 打印解析後的token
           console.log("Decoded JWT Token:", decodedToken);
+          console.log(decodedToken.email);
         } else {
           console.error("JWT Token not found");
         }
