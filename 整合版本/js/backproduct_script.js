@@ -1,20 +1,82 @@
 $(document).ready(function () {
+    
+
     fetchProducts(); // 初始化頁面時拉取產品資料
 
-    // 新增產品表單提交
-    $('#editProductForm').on('submit', function (e) {
+    // 新增產品表單(包含變體分支)提交
+    $('#addProductForm').on('submit', function (e) {
         e.preventDefault();
-        saveProduct();
+        saveProductWithVariants();
     });
 
-    // 新增分支按鈕
-    $('#editProductModal').find('.modal-body').append(`
-        <button type="button" class="btn btn-secondary" onclick="addVariantFields()">新增分支</button>
-    `);
+    // 編輯產品表單(只有主表)提交
+    $('#editProductForm').on('submit', function (e) {
+        e.preventDefault();
+        const productId = $('#editProductId').val();
+        const updatedProduct = {
+            productName: $('#editProductName').val(),
+            description: $('#editProductDescription').val(),
+            productPrice: $('#editProductPrice').val()
+        };
+
+        $.ajax({
+            url: `/api/admin/products/${productId}`,
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(updatedProduct),
+            success: function (response) {
+                // 處理成功響應
+                alert('產品更新成功！');
+                $('#editProductModal').modal('hide');
+                // 這裡可以添加代碼來更新前端顯示的產品資料
+            },
+            error: function (error) {
+                // 處理錯誤響應
+                alert('產品更新失敗，請重試。');
+            }
+        });
+    });
+
+
+    // 新增變體表單提交
+    $('#editVariantForm').on('submit', function (e) {
+        e.preventDefault();
+        saveVariant();
+    });
+    // 綁定保存分支變更按鈕
+    $('#variantsModalBody').on('click', '.btn-primary', function () {
+        saveVariant();
+    });
 });
 
-// url: `http://10.0.103.168:8080/api/public/products?pageNumber=${page - 1}&pageSize=31&sortBy=productId&sortOrder=asc`, // 替換成你的API URL
-// 從API拉取產品資料
+
+// 靜態數據
+const staticProducts = [
+    {
+        productId: 1,
+        productName: '產品A',
+        category: '類別1',
+        description: '這是產品A的描述',
+        productPrice: 1000,
+        productVariants: [
+            { color: '紅色', size: 'M', inventory: 10, sku: 'A-M-RED', image: 'path/to/image1.jpg' },
+            { color: '藍色', size: 'L', inventory: 5, sku: 'A-L-BLUE', image: 'path/to/image2.jpg' }
+        ]
+    },
+    {
+        productId: 2,
+        productName: '產品B',
+        category: '類別2',
+        description: '這是產品B的描述',
+        productPrice: 2000,
+        productVariants: [
+            { color: '綠色', size: 'S', inventory: 15, sku: 'B-S-GREEN', image: 'path/to/image3.jpg' },
+            { color: '黃色', size: 'XL', inventory: 8, sku: 'B-XL-YELLOW', image: 'path/to/image4.jpg' }
+        ]
+    }
+];
+
+// 從API數據拉取產品資料
 function fetchProducts(page = 1) {
     $.ajax({
         url: `http://localhost:8080/api/public/products?pageNumber=${page - 1}&pageSize=31&sortBy=productId&sortOrder=asc`, // 替換成你的API URL
@@ -34,13 +96,15 @@ function fetchProducts(page = 1) {
 }
 
 // 渲染產品列表
-function renderTable(content) {
+function renderTable(products) {
     const tbody = $('#product-table-body');
     tbody.empty();
-    content.forEach(product => {
+    products.forEach(product => {
         const row = `<tr>
             <td>${product.productId}</td>
             <td>${product.productName}</td>
+            <td>${product.category}</td>
+            <td>${product.productPrice}</td>
             <td><button class="btn btn-info" onclick="showDescription('${product.description}')">顯示描述</button></td>
             <td>
                 <button class="btn btn-sm btn-primary" onclick="showVariants(${product.productId})">顯示分支</button>
@@ -87,103 +151,203 @@ function showVariants(productId) {
             // console.error('Error fetching variants:', response);
         },
         error: function (err) {
-            renderVariants(err.responseJSON.content); // 假設你的API返回的變體資料在response中
+            renderVariants(err.responseJSON); // 假設你的API返回的變體資料在response中
         }
     });
 }
 
-// 渲染產品變體
-function renderVariants(content) {
+// 渲染顯示產品變體
+function renderVariants(variants, productId) {
     const modalBody = $('#variantsModalBody');
     modalBody.empty();
-    content.forEach(variant => {
-        const variantInfo = `<div class="variant-info">
-            <p>顏色: ${variant.color}</p>
-            <p>尺寸: ${variant.size}</p>
-            <p>圖片: <img src="${variant.image}" alt="${variant.color}" /></p>
-            <p>sku: ${variant.sku}</p>
-            <p>庫存: ${variant.inventory}</p>
-        </div>`;
-        modalBody.append(variantInfo);
-    });
+    if (Array.isArray(variants)) {
+        variants.forEach((variant, index) => {
+            const variantInfo = `<div class="variant-info">
+                <p>顏色: ${variant.color}</p><br>
+                <p>尺寸: ${variant.size}</p><br>
+                <p>圖片: <img src="${variant.image}" alt="${variant.color}" style="width: 50px; height: 50px;"/></p><br>
+                <p>sku: ${variant.sku}</p><br>
+                <p>庫存: ${variant.inventory}</p><br>
+                <button class="btn btn-sm btn-warning" onclick="editVariant(${productId}, ${index})">編輯</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteVariant(${productId}, ${index})">刪除</button>
+            </div>`;
+            modalBody.append(variantInfo);
+        }); 
+    } else {
+        modalBody.append('<p>沒有找到任何變體。</p>');
+    }
+    modalBody.append(`
+        <button type="button" class="btn btn-secondary" onclick="addVariantFieldInModal()">新增分支</button>
+    `);
+
     $('#variantsModal').modal('show');
 }
 
-// 新增產品分支（顏色、尺寸、庫存）輸入區域
-function addVariantFields() {
-    $('#editproductVariants').append(`
-        <div class="variant form-group">
-            <label>顏色</label>
-            <input type="text" class="form-control variant-color" required>
-            <label>尺寸</label>
-            <input type="text" class="form-control variant-size" required>
-            <label>庫存</label>
-            <input type="number" class="form-control variant-inventory" required>
-            <label>產品照片</label>
-            <input type="file" class="form-control variant-image" name="image" required>
-            <button type="button" class="btn btn-danger" onclick="$(this).parent().remove()">移除</button>
+// 編輯產品變體
+function editVariant(productId, variantIndex) {
+    const product = staticProducts.find(p => p.productId === productId);
+    const variant = product.productVariants[variantIndex];
+
+    $('#editProductId').val(product.productId);
+    $('#editVariantIndex').val(variantIndex);
+    $('#editVariantColor').val(variant.color);
+    $('#editVariantSize').val(variant.size);
+    $('#editVariantInventory').val(variant.inventory);
+    $('#editVariantSku').val(variant.sku);
+    $('#editVariantImage').val('');
+
+    $('#variantModal').modal('show');
+}
+
+// 新增分支區塊並存儲分支資訊
+function addVariantField() {
+    // 動態新增分支區塊
+    const variantFieldHTML = `
+        <div class="variant-field">
+            <input type="text" class="form-control mb-2" placeholder="顏色" name="color[]">
+            <input type="text" class="form-control mb-2" placeholder="尺寸" name="size[]">
+            <input type="number" class="form-control mb-2" placeholder="庫存" name="inventory[]">
+            <input type="text" class="form-control mb-2" placeholder="SKU" name="sku[]">
+            <input type="file" class="form-control mb-2" name="image[]">
+            <button type="button" class="btn btn-danger mb-2" onclick="removeVariantField(this)">移除分支</button>
         </div>
-    `);
+    `;
+    $('#variantFieldsContainer').append(variantFieldHTML);
+}
+
+// 新增分支區塊到顯示分支的模態框中
+function addVariantFieldInModal() {
+    const variantFieldHTML = `
+        <div class="variant-field">
+            <input type="text" class="form-control mb-2" placeholder="顏色" name="modalColor[]">
+            <input type="text" class="form-control mb-2" placeholder="尺寸" name="modalSize[]">
+            <input type="number" class="form-control mb-2" placeholder="庫存" name="modalInventory[]">
+            <input type="text" class="form-control mb-2" placeholder="SKU" name="modalSku[]">
+            <input type="file" class="form-control mb-2" name="modalImage[]">
+            <button type="button" class="btn btn-danger mb-2" onclick="removeVariantField(this)">移除分支</button>
+            <button type="submit" class="btn btn-primary">保存分支變更</button>
+        </div>`;
+    $('#variantsModalBody').append(variantFieldHTML);
+
+    // 綁定保存分支變更按鈕
+    $('#variantsModalBody').find('.btn-primary').off('click').on('click', function () {
+        saveVariant();
+    });
+
+}
+
+
+// 移除分支區塊並更新分支資訊
+function removeVariantField(button) {
+    $(button).closest('.variant-field').remove();
+}
+
+// 保存變體
+function saveVariant() {
+    const productId = $('#editProductId').val();
+    const variantIndex = $('#editVariantIndex').val();
+    const color = $('#editVariantColor').val();
+    const size = $('#editVariantSize').val();
+    const inventory = $('#editVariantInventory').val();
+    const sku = $('#editVariantSku').val();
+    const image = $('#editVariantImage')[0].files[0] ? URL.createObjectURL($('#editVariantImage')[0].files[0]) : '';
+
+    const product = staticProducts.find(p => p.productId === parseInt(productId));
+    const variantData = { color, size, inventory, sku, image };
+
+    if (variantIndex) {
+        product.productVariants[variantIndex] = variantData;
+    } else {
+        product.productVariants.push(variantData);
+    }
+
+    $('#variantModal').modal('hide');
+    showVariants(productId);
+
+}
+
+// 刪除變體
+function deleteVariant(productId, variantIndex) {
+    const product = staticProducts.find(p => p.productId === productId);
+    product.productVariants.splice(variantIndex, 1);
+    showVariants(productId);
+}
+
+// 保存新增商品及分支
+function saveProductWithVariants() {
+    const productName = $('#addProductName').val();
+    const productCategory = $('#addProductCategory').val();
+    const productDescription = $('#addProductDescription').val();
+    const productPrice = $('#addProductPrice').val();
+
+    const productVariants = [];
+    $('#variantFieldsContainer .variant-field').each(function () {
+        const color = $(this).find('input[name="color[]"]').val();
+        const size = $(this).find('input[name="size[]"]').val();
+        const inventory = $(this).find('input[name="inventory[]"]').val();
+        const sku = $(this).find('input[name="sku[]"]').val();
+        const imageInput = $(this).find('input[name="image[]"]')[0];
+        const image = imageInput.files[0] ? URL.createObjectURL(imageInput.files[0]) : '';
+
+        productVariants.push({ color, size, inventory, sku, image });
+    });
+
+    const productData = {
+        productName,
+        category: productCategory,
+        description: productDescription,
+        productPrice: parseInt(productPrice),
+        productVariants
+    };
+
+    // 模擬保存產品及分支
+    setTimeout(() => {
+        staticProducts.push(productData);
+        console.log('Product with variants saved:', productData);
+        $('#addProductModal').modal('hide');
+        $('.modal-backdrop').remove(); // 移除半透明背景
+        fetchProducts(); // 重新拉取產品資料
+    }, 500);
+
 }
 
 // 保存產品
-function saveProduct() {
-    const productId = $('#editProductId').val();
-    const productName = $('#editProductName').val();
-    const productDescription = $('#editProductDescription').val();
-    const productPrice = $('#editproductPrice').val();
-
-    const variants = $('#editproductVariants .variant').map(function () {
-        const formData = new FormData();
-        formData.append('color', $(this).find('.variant-color').val());
-        formData.append('size', $(this).find('.variant-size').val());
-        formData.append('inventory', parseInt($(this).find('.variant-inventory').val()));
-        formData.append('image', $(this).find('.variant-image')[0].files[0]);
-        return formData;
-    }).get();
+function saveProduct(type) {
+    const productId = type === 'edit' ? $('#editProductId').val() : null;
+    const productName = type === 'edit' ? $('#editProductName').val() : $('#addProductName').val();
+    const productCategory = type === 'edit' ? $('#editProductCategory').val() : $('#addProductCategory').val();
+    const productDescription = type === 'edit' ? $('#editProductDescription').val() : $('#addProductDescription').val();
+    const productPrice = type === 'edit' ? $('#editProductPrice').val() : $('#addProductPrice').val();
 
     const productData = {
-        productId,
+        productId: productId ? parseInt(productId) : staticProducts.length + 1,
         productName,
+        category: productCategory,
         description: productDescription,
         productPrice: parseInt(productPrice),
-        productVariants: variants
+        productVariants: productId ? staticProducts.find(p => p.productId === parseInt(productId)).productVariants : []
     };
 
-    // url: `http://10.0.103.168:8080/api/admin/products/{productId}`,
     if (productId) {
         // 更新現有的產品資料
-        $.ajax({
-            url: `http://localhost:8080/api/admin/products/${productId}`,
-            method: 'PUT',
-            contentType: false,
-            processData: false,
-            data: productData,
-            success: function (response) {
-                console.error('Error saving product:', response);
-            },
-            error: function (err) {
-                $('#editProductModal').modal('hide');
-                fetchProducts(); // 重新拉取產品資料
-            }
-        });
+        const productIndex = staticProducts.findIndex(p => p.productId === parseInt(productId));
+        staticProducts[productIndex] = productData;
     } else {
         // 新建產品資料
-        $.ajax({
-            url: 'http://localhost:8080/api/admin/categories/{categoryId}/product',
-            method: 'POST',
-            contentType: false,
-            processData: false,
-            data: productData,
-            success: function (response) {
-                console.error('Error saving product:', response);
-            },
-            error: function (err) {
-                $('#editProductModal').modal('hide');
-                fetchProducts(); // 重新拉取產品資料
-            }
-        });
+        staticProducts.push(productData);
     }
+
+    // 模擬保存產品
+    setTimeout(() => {
+        console.log('Product saved:', productData);
+        if (type === 'edit') {
+            $('#editProductModal').modal('hide');
+        } else {
+            $('#addProductModal').modal('hide');
+            $('.modal-backdrop').remove(); // 移除半透明背景
+        }
+        fetchProducts(); // 重新拉取產品資料
+    }, 500);
 }
 
 // 刪除產品
@@ -202,32 +366,44 @@ function deleteProduct(productId) {
     }
 }
 
+
+
+
+// 這裡假設你已經有一個 `products` 變量存儲所有產品資料
 // 編輯產品
 function editProduct(productId) {
-    // 這裡假設你已經有一個 `products` 變量存儲所有產品資料
-    const product = products.find(p => p.productId === productId);
-
-    $('#editProductId').val(product.productId);
-    $('#editProductName').val(product.productName);
-    $('#editProductDescription').val(product.description);
-    $('#editproductPrice').val(product.productPrice);
-
-    $('#editproductVariants').html('');
-    product.productVariants.forEach(variant => {
-        $('#editproductVariants').append(`
-            <div class="variant form-group">
-                <label>顏色</label>
-                <input type="text" class="form-control variant-color" value="${variant.color}" required>
-                <label>尺寸</label>
-                <input type="text" class="form-control variant-size" value="${variant.size}" required>
-                <label>庫存</label>
-                <input type="number" class="form-control variant-inventory" value="${variant.inventory}" required>
-                <label>產品照片</label>
-                <input type="file" class="form-control variant-image" name="image" required>
-                <button type="button" class="btn btn-danger" onclick="$(this).parent().remove()">移除</button>
-            </div>
-        `);
+    // 定義全域變數來儲存產品資料
+    let beEditproduct = [];
+    // 獲取所有產品資料
+    $.ajax({
+        url: `/api/admin/products/${productId}`,  // 您的API端點
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            console.log('無法獲取產品資料:', data);
+        },
+        error: function (error) {
+            beEditproduct = error; // 將獲取到的產品資料儲存在全域變數中
+        }
     });
 
-    $('#editProductModal').modal('show');
+    const product = beEditproduct.find(p => p.productId === productId);
+    
+    if (product) {
+        $('#editProductId').val(product.productId);
+        $('#editProductName').val(product.productName);
+        $('#editProductDescription').val(product.description);
+        $('#editProductPrice').val(product.productPrice);
+
+        $('#editProductModal').modal('show');
+    } else {
+        alert('找不到產品資料');
+    }
 }
+// 開啟新增商品的 Modal
+function openAddProductModal() {
+    $('#addProductForm')[0].reset();
+    $('#variantFieldsContainer').empty(); // 清空分支欄位
+    $('.modal-backdrop').remove(); // 移除半透明背景
+}
+

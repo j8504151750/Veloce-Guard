@@ -8,27 +8,84 @@ $(document).ready(function () {
     });
 });
 
-// 從API拉取訂單資料
-function fetchOrders(page = 1) {
-    $.ajax({
-        url: `http://localhost:8080/api/admin/orders?page=${page}`,
-        method: 'GET',
-        success: function (response) {
-            console.error('Failed to fetch orders:', response);
+// 全局靜態數據
+const staticOrders = {
+    content: [
+        {
+            orderId: 1,
+            userId: 101,
+            orderDate: '2024-06-01',
+            totalAmount: 1500,
+            status: 1,
+            products: [
+                {
+                    productName: 'X-Fifteen X-15 素色 全罩式安全帽 頂級款 X15',
+                    productCategory: '全罩式',
+                    color: '白',
+                    size: 'M',
+                    quantity: 2,
+                    unitPrice: 21000,
+                    subtotal: 42000,
+                    image: 'https://shoplineimg.com/5be4227a02dd95000178fa71/645dd9f4cf1c520017ddb4d5/800x.webp?source_format=jpg'
+                },
+                {
+                    productName: 'X-Fifteen X-15 素色 全罩式安全帽 頂級款 X15',
+                    productCategory: '全罩式',
+                    color: '白',
+                    size: 'M',
+                    quantity: 2,
+                    unitPrice: 21000,
+                    subtotal: 42000,
+                    image: 'https://shoplineimg.com/5be4227a02dd95000178fa71/645dd9f4cf1c520017ddb4d5/800x.webp?source_format=jpg'
+                }
+
+            ],
+            recipientName: '張三',
+            recipientZip: '100',
+            recipientAddress: '台北市中正區中山南路21號',
+            recipientPhone: '0912345678',
+            paymentMethod: '貨到付款'
         },
-        error: function (error) {
-            renderTable(error.content);
-            renderPagination(error.totalPages, page);
+        {
+            orderId: 2,
+            userId: 102,
+            orderDate: '2024-06-02',
+            totalAmount: 2000,
+            status: 2,
+            products: [
+                {
+                    productName: '產品C',
+                    productCategory: '其他',
+                    color: '黑',
+                    size: 'L',
+                    quantity: 1,
+                    unitPrice: 2000,
+                    subtotal: 2000,
+                    sku: 'C-黑-L',
+                    image: 'https://via.placeholder.com/150'
+                }
+            ],
+            recipientName: '李四',
+            recipientZip: '200',
+            recipientAddress: '新北市板橋區中山路一段1號',
+            recipientPhone: '0987654321',
+            paymentMethod: '信用卡'
         }
-    });
+    ],
+    totalPages: 1
+};
+
+// 從靜態數據或API拉取訂單資料
+function fetchOrders(page = 1) {
+    // 模擬API延遲
+    setTimeout(() => {
+        renderTable(staticOrders.content);
+        renderPagination(staticOrders.totalPages, page);
+    }, 500);
 }
 
 // 渲染訂單列表
 function renderTable(orders) {
-    if (!Array.isArray(orders)) {
-        orders = [];
-    }
-
     const tbody = $('#order-table-body');
     tbody.empty();
     orders.forEach(order => {
@@ -64,16 +121,8 @@ function renderPagination(totalPages, currentPage) {
 
 // 顯示訂單詳細
 function showOrderDetails(orderId) {
-    $.ajax({
-        url: `/api/orders/${orderId}`,
-        method: 'GET',
-        success: function (order) {
-            renderOrderDetails(order);
-        },
-        error: function (xhr, status, error) {
-            console.error('Failed to fetch order details:', error);
-        }
-    });
+    const order = staticOrders.content.find(o => o.orderId === orderId);
+    renderOrderDetails(order);
 }
 
 // 渲染訂單詳細
@@ -168,37 +217,27 @@ function saveOrder() {
         status: orderStatus
     };
 
-    // 更新訂單
-    $.ajax({
-        url: `/api/orders/${orderId}`,
-        method: 'PUT',
-        contentType: 'application/json',
-        data: JSON.stringify(orderData),
-        success: function (response) {
-            console.log('Order saved:', response);
-            $('#editOrderModal').modal('hide');
-            fetchOrders(); // 重新拉取訂單資料
-        },
-        error: function (xhr, status, error) {
-            console.error('Failed to save order:', error);
-        }
-    });
+    // 更新靜態數據中的訂單狀態
+    const order = staticOrders.content.find(o => o.orderId === orderData.orderId);
+    if (order) {
+        order.status = orderData.status;
+    }
+
+    // 模擬保存訂單
+    setTimeout(() => {
+        console.log('Order saved:', orderData);
+        $('#editOrderModal').modal('hide');
+        fetchOrders(); // 重新拉取訂單資料
+    }, 500);
 }
 
 // 編輯訂單
 function editOrder(orderId) {
-    $.ajax({
-        url: `/api/orders/${orderId}`,
-        method: 'GET',
-        success: function (order) {
-            $('#editOrderId').val(order.orderId);
-            $('#editOrderStatus').val(order.status);
-            $('#editOrderModal').modal('show');
-        },
-        error: function (xhr, status, error) {
-            console.error('Failed to fetch order:', error);
-        }
-    });
+    const order = staticOrders.content.find(o => o.orderId === orderId);
+
+    $('#editOrderId').val(order.orderId);
+    $('#editOrderStatus').val(order.status);
+    $('#editOrderModal').modal('show');
 }
 
 // 獲取訂單狀態的文字描述
