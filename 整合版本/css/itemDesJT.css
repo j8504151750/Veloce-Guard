@@ -51,7 +51,7 @@
     background-color: black;
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 1000; /* Ensure this is very high */
     padding-left: 30px;
     opacity: .80;
   }
@@ -246,7 +246,7 @@
     }
   }
   
-  .hero-slides .owl-dots {
+  /* .hero-slides .owl-dots {
     position: absolute;
     left: 50px;
     bottom: 50px;
@@ -284,7 +284,7 @@
   .owl-dots .owl-dot.active {
     border: 1px solid #ffffff;
     background-color: #ffffff;
-  }
+  } */
   
   /* 影片 */
   .video-container {
@@ -541,13 +541,12 @@
       /* Custom styles for the fixed product introduction */
       .fixed-introduction {
         position: sticky;
-          top: 100px; /* 考虑 LOGO AREA 的高度 */
-          z-index: 1000;
-          background-color: white;
-          padding: 20px;
-         
-          max-height: calc(100vh - 60px); /* 考虑 LOGO AREA 的高度 */
-          overflow-y: auto;
+        top: 110px; /* Adjust this to accommodate the header height */
+        z-index: 1000; /* Ensure this is lower than the header */
+        background-color: white;
+        padding: 20px;
+        max-height: calc(100vh - 60px); /* Adjust to accommodate your layout */
+        overflow-y: auto;
     }
   
     /* Custom styles for the image container */
@@ -798,21 +797,17 @@
     display: none; /* 預設不顯示 */
   }
   
- 
-
-  input{
+ .searchhh>input{
     border:0;
-    background-color: #003c9d;
-    color: #fff;
-    border-radius: 10px;
+    /* background-color: #003c9d; */
+    /* color: #fff; */
+    /* border-radius: 10px; */
     cursor: pointer;
+    border: .5px solid black;
+    height: 37.6px;
   }
   
-  input:hover{
-    color: #003c9d;
-    background-color: #fff;
-    border: 2px #003c9d solid;
-  }
+
 
   .footer-body {
     font-family: 'Taipei';
