@@ -3,14 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>訂單管理 | Veloce Guard</title>
+    <title>商品管理 | Veloce Guard</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
     <!-- Favicon -->
     <link rel="shortcut icon" href="public/img/favicon.ico">
 
     <link rel="stylesheet" href="public/graindashboard/css/graindashboard.css">
+
 </head>
 
 <body class="has-sidebar has-fixed-sidebar-and-header">
@@ -138,6 +138,8 @@
         <!-- Sidebar Nav -->
         <aside id="sidebar" class="js-custom-scroll side-nav">
             <ul id="sideNav" class="side-nav-menu side-nav-menu-top-level mb-0">
+
+
                 <!-- Title -->
                 <li class="sidebar-heading h6">會員相關</li>
                 <!-- End Title -->
@@ -186,9 +188,9 @@
 
                     <!-- Pages: subPages -->
                     <ul id="subPages" class="side-nav-menu side-nav-menu-second-level mb-0">
-                        <li class="side-nav-menu-item active">
+                        <li class="side-nav-menu-item">
                             <a class="side-nav-menu-link" href="/整合版本/backorder.html">所有訂單</a>
-                        </li>
+                        </li>                        
                     </ul>
                     <!-- End Pages: subPages -->
                 </li>
@@ -204,7 +206,7 @@
                         <span class="side-nav-menu-icon d-flex mr-3">
                             <i class="gd-package"></i>
                         </span>
-                        <span class="side-nav-fadeout-on-closed media-body">所有商品</span>
+                        <span class="side-nav-fadeout-on-closed media-body">商品</span>
                         <span class="side-nav-control-icon d-flex">
                             <i class="gd-angle-right side-nav-fadeout-on-closed"></i>
                         </span>
@@ -213,13 +215,12 @@
 
                     <!-- subitems -->
                     <ul id="subitems" class="side-nav-menu side-nav-menu-second-level mb-0">
-                        <li class="side-nav-menu-item">
+                        <li class="side-nav-menu-item active">
                             <a class="side-nav-menu-link" href="/整合版本/backproduct.html">所有商品</a>
-                            <a class="side-nav-menu-link" href="/整合版本/backproducthelmet.html">安全帽</a>
-                            <a class="side-nav-menu-link" href="/整合版本/backproduct.html">手套</a>
-                            <a class="side-nav-menu-link" href="/整合版本/backproduct.html">防摔衣</a>
-
-                        </li>                        
+                        </li>
+                        <li class="side-nav-menu-item">
+                            <a class="side-nav-menu-link" href="product-edit.html">新增商品</a>
+                        </li>
                     </ul>
                     <!--  subitems -->
                 </li>
@@ -275,30 +276,31 @@
                     <div class="card-body">
                         <nav class="d-none d-md-block" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="order.html">訂單</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">所有訂單</li>
+                                <li class="breadcrumb-item"><a href="product.html">商品</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">所有商品</li>
                             </ol>
                         </nav>
 
                         <div class="mb-3 mb-md-4 d-flex justify-content-between">
-                            <div class="h3 mb-0">訂單</div>
+                            <div class="h3 mb-0">商品</div>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#editProductModal"
+                                onclick="openAddProductModal()">新增商品</button>
                         </div>
 
                         <div class="table-responsive-xl">
                             <table class="table text-nowrap mb-0">
                                 <thead>
                                     <tr>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">訂單編號</th>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">email</th>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">訂單日期</th>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">訂單總金額</th>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">訂單狀態</th>
-                                        <th class="font-weight-semi-bold border-top-0 py-2">訂單詳細</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">產品ID</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">產品名稱</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">產品類別</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">產品描述</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">產品分支</th>
                                         <th class="font-weight-semi-bold border-top-0 py-2">操作</th>
                                     </tr>
                                 </thead>
-                                <tbody id="order-table-body">
-                                    <!-- 動態插入訂單資料 -->
+                                <tbody id="product-table-body">
+                                    <!-- 動態插入產品資料 -->
                                 </tbody>
                             </table>
                             <div class="card-footer d-block d-md-flex align-items-center d-print-none">
@@ -316,98 +318,7 @@
             </div>
         </div>
 
-        <!-- Edit Order Modal -->
-        <div class="modal fade" id="editOrderModal" tabindex="-1" role="dialog" aria-labelledby="editOrderModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editOrderModalLabel">編輯訂單</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="editOrderForm">
-                            <input type="hidden" id="editOrderId">
-                            <div class="form-group">
-                                <label for="editOrderStatus">訂單狀態</label>
-                                <select class="form-control" id="editOrderStatus" required>
-                                    <option value="1">待付款</option>
-                                    <option value="2">已付款</option>
-                                    <option value="3">待出貨</option>
-                                    <option value="4">已出貨</option>
-                                    <option value="5">已送達</option>
-                                    <option value="6">已完成</option>
-                                    <option value="7">已取消</option>
-                                    <option value="8">退貨/換貨</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-primary">保存變更</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Order Details Modal -->
-        <div class="modal fade" id="orderDetailsModal" tabindex="-1" role="dialog"
-            aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="orderDetailsModalLabel">訂單詳細</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="orderDetailsModalBody">
-                        <!-- 這裡會動態插入訂單詳細 -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Add Product Modal -->
-        <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addProductModalLabel">新增商品</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="addProductForm" enctype="multipart/form-data">
-                            <div class="form-group">
-                                <label for="addProductName">名稱</label>
-                                <input type="text" class="form-control" id="addProductName" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="addProductCategory">類別</label>
-                                <input type="text" class="form-control" id="addProductCategory" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="addProductDescription">描述</label>
-                                <textarea class="form-control" id="addProductDescription" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="addProductPrice">價格</label>
-                                <input type="number" class="form-control" id="addProductPrice" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">保存變更</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Edit Product Modal -->
+        <!-- Edit/Add Product Modal -->
         <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog"
             aria-labelledby="editProductModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -426,26 +337,64 @@
                                 <input type="text" class="form-control" id="editProductName" required>
                             </div>
                             <div class="form-group">
-                                <label for="editProductCategory">類別</label>
-                                <input type="text" class="form-control" id="editProductCategory" required>
-                            </div>
-                            <div class="form-group">
                                 <label for="editProductDescription">描述</label>
                                 <textarea class="form-control" id="editProductDescription" required></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="editProductPrice">價格</label>
-                                <input type="number" class="form-control" id="editProductPrice" required>
+                                <label for="editproductPrice">價格</label>
+                                <input type="number" class="form-control" id="editproductPrice" required>
                             </div>
+                            <h5>產品分支</h5>
+                            <div id="editproductVariants"></div>
                             <button type="submit" class="btn btn-primary">保存變更</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-
+        <!-- Product Description Modal -->
+        <div class="modal fade" id="descriptionModal" tabindex="-1" role="dialog"
+            aria-labelledby="descriptionModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="descriptionModalLabel">產品描述</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="descriptionModalBody">
+                        <!-- 這裡會動態插入產品描述 -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Product Variants Modal -->
+        <div class="modal fade" id="variantsModal" tabindex="-1" role="dialog" aria-labelledby="variantsModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="variantsModalLabel">產品分支</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="variantsModalBody">
+                        <!-- 這裡會動態插入產品變體 -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
     </main>
-    <script src="/整合版本/js/backorder_script.js"></script>
+    <script src="/整合版本/js/backproduct_script.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="public/graindashboard/js/graindashboard.js"></script>
     <script src="public/graindashboard/js/graindashboard.vendor.js"></script>
