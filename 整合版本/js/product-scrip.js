@@ -46,7 +46,7 @@ $(document).ready(function () {
                         <div>${n}</div>
                         
                         </div><br>
-                        <input class="btn btn-secondary" type="button" value="加入購物車" style="width:100%; height:50px; margin-bottom:50px;">
+                        <a href="./itemDesJT.html" class="btn btn-secondary" style="width:100%; height:50px; margin-bottom:50px;">點我看詳細</a>
                         <br>
                     </div>
                 </div>`;
