@@ -1,5 +1,3 @@
-
-
 $(document).ready(function () {
   // 變數控制步驟進度
   let currentStep = 0;
@@ -72,7 +70,6 @@ $(document).ready(function () {
     const address = $("#address").val();
     const city = $("#city").val();
     const postalCode = $("#postal-code").val();
-    const country = $("#country").val();
     const paymentMethod = $("#payment-method").val();
     let paymentDetails = "";
 
@@ -93,7 +90,6 @@ $(document).ready(function () {
             <tr><td>地址</td><td>${address}</td></tr>
             <tr><td>城市</td><td>${city}</td></tr>
             <tr><td>郵遞區號</td><td>${postalCode}</td></tr>
-            <tr><td>國家</td><td>${country}</td></tr>
             <tr><td>付款資訊</td><td>${paymentDetails}</td></tr>
         `;
     $("#order-details").html(orderDetailsHtml);
@@ -145,9 +141,9 @@ $(document).ready(function () {
     $("#subtotal").text("$" + subtotal);
     //運費計算
     let shippingFee = 0;
-    if (subtotal < 1500) {
+    if (subtotal < 2000) {
       shippingFee = 120;
-    } else if (subtotal < 2000) {
+    } else if (subtotal < 5000) {
       shippingFee = 60;
     }
 
@@ -160,44 +156,37 @@ $(document).ready(function () {
   $("#payment-method").trigger("change");
 });
 
-
-
-
-
-
-
-
-//                   渲染購物車進入頁面
+// 渲染購物車進入頁面
 $(document).ready(function () {
   $.ajax({
-    url: `http://10.0.103.168:8080/api/public/users/john.doe%40example.com/carts/1`, // 后端提供的获取购物车数据的API
+    url: `http://localhost:8080/api/public/users/john.doe%40example.com/carts/1`, // 後端提供的獲取購物車數據的API
     type: 'GET',
     dataType: 'json',
     headers: {
-        'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJpYXQiOjE3MTg2MDkxOTcsImVtYWlsIjoiam9obi5kb2VAZXhhbXBsZS5jb20ifQ.sv9lu3PEvCTRaKO8fRENXOwWAWW9N7kj9XaRSJ4al_Y`
+        'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJpYXQiOjE3MTkzODEyNDUsImVtYWlsIjoiam9obi5kb2VAZXhhbXBsZS5jb20ifQ.F5YonI4jIR7OgJA42wrKe1lUB10a1zsSI1OsZ5E3WrE`
     },
 
     success: function (data) {
 
-      var itemsHtml = "";
-      $.each(data, function (index, item) {
-        console.log(data);
-        itemsHtml += `<tr>
-                    <td>${item.name}</td>
-                    <td><img class="cart-picture" src="${item.image_url}" alt="商品照片"></td>
-                    <td>$${item.price}</td>
-                    <td>
-                        <div class="quantity-controls">
-                            <button class="btn btn-outline-secondary btn-sm btn-quantity" data-action="decrease">-</button>
-                            <input type="number" class="form-control quantity-input" value="${item.quantity}" min="1">
-                            <button class="btn btn-outline-secondary btn-sm btn-quantity" data-action="increase">+</button>
-                        </div>
-                    </td>
-                    <td><button class="btn btn-secondary btn-sm" id="btn-remove">移除</button></td>
-                </tr>`;
-      });
-      $("#cart-items").html(itemsHtml);
-      updateTotal(); // 更新总计
+      // var itemsHtml = "";
+      // $.each(data, function (index, item) {
+      //   console.log(data);
+      //   itemsHtml += `<tr>
+      //               <td>${item.name}</td>
+      //               <td><img class="cart-picture" src="${item.image_url}" alt="商品照片"></td>
+      //               <td>$${item.price}</td>
+      //               <td>
+      //                   <div class="quantity-controls">
+      //                       <button class="btn btn-outline-secondary btn-sm btn-quantity" data-action="decrease">-</button>
+      //                       <input type="number" class="form-control quantity-input" value="${item.quantity}" min="1">
+      //                       <button class="btn btn-outline-secondary btn-sm btn-quantity" data-action="increase">+</button>
+      //                   </div>
+      //               </td>
+      //               <td><button class="btn btn-secondary btn-sm" id="btn-remove">移除</button></td>
+      //           </tr>`;
+      // });
+      // $("#cart-items").html(itemsHtml);
+      // updateTotal(); // 更新總計
     },
     error: function (err) {
       console.log(err);
@@ -211,7 +200,7 @@ $(document).ready(function () {
                     <td>
                         <div class="quantity-controls">
                             <button class="btn btn-outline-secondary btn-sm btn-quantity" data-action="decrease">-</button>
-                            <input type="number" class="form-control quantity-input" value="${item.quantity}" min="1">
+                            <input type="number" class="   quantity-input" value="${item.quantity}" min="1">
                             <button class="btn btn-outline-secondary btn-sm btn-quantity" data-action="increase">+</button>
                         </div>
                     </td>
@@ -219,47 +208,46 @@ $(document).ready(function () {
                 </tr>`;
       });
       $("#cart-items").html(itemsHtml);
-      updateTotal(); // 更新总计
+      updateTotal(); // 更新總計
     },
   });
 })
 
 // 創建訂單寫入資料庫
 $("#finalize-order").on("click", function () {
-  // 收集订单信息
+  // 收集訂單信息
   var orderData = {
     fullName: $("#full-name").val(),
     address: $("#address").val(),
     city: $("#city").val(),
     postalCode: $("#postal-code").val(),
-    country: $("#country").val(),
     paymentMethod: $("#payment-method").val(),
-    items: [], // 假设您已经有一个函数来收集购物车中的商品信息
-    orderDate: orderDate, // 假设您之前已经设置了 orderDate 变量
+    items: [], // 假設您已經有一個函數來收集購物車中的商品資訊
+    orderDate: orderDate, // 假設您之前已經設定了 orderDate 變數
   };
 
-  // 收集购物车中的商品信息
+  // 收集購物車中的商品資訊
   $("#cart-items tr").each(function () {
     var item = {
-      productId: $(this).data("product-id"), // 确保您的每个商品行都有 data-product-id 属性
+      productId: $(this).data("product-id"), // 確保您的每個商品行都有 data-product-id 屬性
       quantity: $(this).find(".quantity-input").val(),
     };
     orderData.items.push(item);
   });
 
-  // 发送POST请求到服务器以创建订单
+  // 發送POST請求到伺服器以創建訂單
   $.ajax({
-    url: "/createOrder", // 您的后端API端点
+    url: "/createOrder", // 您的後端API端點
     type: "POST",
-    contentType: "application/json", // 发送JSON数据
-    data: JSON.stringify(orderData), // 将订单数据转换为JSON字符串
+    contentType: "application/json", // 發送JSON數據
+    data: JSON.stringify(orderData), // 將訂單數據轉換為JSON字串
     success: function (response) {
-      // 订单创建成功的处理
+      // 訂單創建成功的處理
       alert("訂單提交成功！");
-      // 可能还需要跳转到订单成功页面或其他操作
+      // 可能還需要跳轉到訂單成功頁面或其他操作
     },
     error: function () {
-      // 订单创建失败的处理
+      // 訂單創建失敗的處理
       alert("訂單提交失敗，請重試。");
     },
   });

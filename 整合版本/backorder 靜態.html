@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>訂單管理 | Veloce Guard</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="public/img/favicon.ico">
+
+    <link rel="stylesheet" href="public/graindashboard/css/graindashboard.css">
+</head>
+
+<body class="has-sidebar has-fixed-sidebar-and-header">
+    <header class="header bg-body">
+        <nav class="navbar flex-nowrap p-0">
+            <div class="navbar-brand-wrapper d-flex align-items-center col-auto">
+                <!-- Logo For Mobile View -->
+                <a class="navbar-brand navbar-brand-mobile" href="/">
+                    <img class="img-fluid w-100" src="public/img/logo-mini.png" alt="Graindashboard">
+                </a>
+                <!-- End Logo For Mobile View -->
+
+                <!-- Logo For Desktop View -->
+                <a class="navbar-brand navbar-brand-desktop" href="/">
+                    <img class="side-nav-show-on-closed" src="public/img/logo-mini.png" alt="Graindashboard"
+                        style="width: auto; height: 33px;">
+                    <img class="side-nav-hide-on-closed" src="public/img/logo.png" alt="Graindashboard"
+                        style="width: auto; height: 33px;">
+                </a>
+                <!-- End Logo For Desktop View -->
+            </div>
+
+            <div class="header-content col px-md-3">
+                <div class="d-flex align-items-center">
+                    <!-- Side Nav Toggle -->
+                    <a class="js-side-nav header-invoker d-flex mr-md-2" href="#" data-close-invoker="#sidebarClose"
+                        data-target="#sidebar" data-target-wrapper="body">
+                        <i class="gd-align-left"></i>
+                    </a>
+                    <!-- End Side Nav Toggle -->
+
+                    <!-- User Notifications -->
+                    <div class="dropdown ml-auto">
+                        <a id="notificationsInvoker" class="header-invoker" href="#" aria-controls="notifications"
+                            aria-haspopup="true" aria-expanded="false" data-unfold-event="click"
+                            data-unfold-target="#notifications" data-unfold-type="css-animation"
+                            data-unfold-duration="300" data-unfold-animation-in="fadeIn"
+                            data-unfold-animation-out="fadeOut">
+                            <span
+                                class="indicator indicator-bordered indicator-top-right indicator-primary rounded-circle"></span>
+                            <i class="gd-bell"></i>
+                        </a>
+
+                        <div id="notifications"
+                            class="dropdown-menu dropdown-menu-center py-0 mt-4 w-18_75rem w-md-22_5rem unfold-css-animation unfold-hidden"
+                            aria-labelledby="notificationsInvoker" style="animation-duration: 300ms;">
+                            <div class="card">
+                                <div class="card-header d-flex align-items-center border-bottom py-3">
+                                    <h5 class="mb-0">Notifications</h5>
+                                    <a class="link small ml-auto" href="#">Clear All</a>
+                                </div>
+
+                                <div class="card-body p-0">
+                                    <div class="list-group list-group-flush">
+                                        <div class="list-group-item list-group-item-action">
+                                            <div class="d-flex align-items-center text-nowrap mb-2">
+                                                <i class="gd-info-alt icon-text text-primary mr-2"></i>
+                                                <h6 class="font-weight-semi-bold mb-0">New Update</h6>
+                                                <span class="list-group-item-date text-muted ml-auto">just now</span>
+                                            </div>
+                                            <p class="mb-0">
+                                                Order <strong>#10000</strong> has been updated.
+                                            </p>
+                                            <a class="list-group-item-closer text-muted" href="#"><i
+                                                    class="gd-close"></i></a>
+                                        </div>
+                                        <div class="list-group-item list-group-item-action">
+                                            <div class="d-flex align-items-center text-nowrap mb-2">
+                                                <i class="gd-info-alt icon-text text-primary mr-2"></i>
+                                                <h6 class="font-weight-semi-bold mb-0">New Update</h6>
+                                                <span class="list-group-item-date text-muted ml-auto">just now</span>
+                                            </div>
+                                            <p class="mb-0">
+                                                Order <strong>#10001</strong> has been updated.
+                                            </p>
+                                            <a class="list-group-item-closer text-muted" href="#"><i
+                                                    class="gd-close"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End User Notifications -->
+                    <!-- User Avatar -->
+                    <div class="dropdown mx-3 dropdown ml-2">
+                        <a id="profileMenuInvoker" class="header-complex-invoker" href="#" aria-controls="profileMenu"
+                            aria-haspopup="true" aria-expanded="false" data-unfold-event="click"
+                            data-unfold-target="#profileMenu" data-unfold-type="css-animation"
+                            data-unfold-duration="300" data-unfold-animation-in="fadeIn"
+                            data-unfold-animation-out="fadeOut">
+                            <!--img class="avatar rounded-circle mr-md-2" src="#" alt="John Doe"-->
+                            <span class="mr-md-2 avatar-placeholder">J</span>
+                            <span class="d-none d-md-block">John Doe</span>
+                            <i class="gd-angle-down d-none d-md-block ml-2"></i>
+                        </a>
+
+                        <ul id="profileMenu"
+                            class="unfold unfold-user unfold-light unfold-top unfold-centered position-absolute pt-2 pb-1 mt-4 unfold-css-animation unfold-hidden fadeOut"
+                            aria-labelledby="profileMenuInvoker" style="animation-duration: 300ms;">
+                            <li class="unfold-item">
+                                <a class="unfold-link d-flex align-items-center text-nowrap" href="#">
+                                    <span class="unfold-item-icon mr-3">
+                                        <i class="gd-user"></i>
+                                    </span>
+                                    My Profile
+                                </a>
+                            </li>
+                            <li class="unfold-item unfold-item-has-divider">
+                                <a class="unfold-link d-flex align-items-center text-nowrap" href="#">
+                                    <span class="unfold-item-icon mr-3">
+                                        <i class="gd-power-off"></i>
+                                    </span>
+                                    Sign Out
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End User Avatar -->
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="main">
+        <!-- Sidebar Nav -->
+        <aside id="sidebar" class="js-custom-scroll side-nav">
+            <ul id="sideNav" class="side-nav-menu side-nav-menu-top-level mb-0">
+                <!-- Title -->
+                <li class="sidebar-heading h6">會員相關</li>
+                <!-- End Title -->
+
+                <!-- 會員 -->
+                <li class="side-nav-menu-item side-nav-has-menu">
+                    <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subUsers">
+                        <span class="side-nav-menu-icon d-flex mr-3">
+                            <i class="gd-user"></i>
+                        </span>
+                        <span class="side-nav-fadeout-on-closed media-body">會員</span>
+                        <span class="side-nav-control-icon d-flex">
+                            <i class="gd-angle-right side-nav-fadeout-on-closed"></i>
+                        </span>
+                        <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
+                    </a>
+
+                    <!-- Users: subUsers -->
+                    <ul id="subUsers" class="side-nav-menu side-nav-menu-second-level mb-0">
+                        <li class="side-nav-menu-item active">
+                            <a class="side-nav-menu-link" href="/整合版本/backuser.html">所有會員</a>
+                        </li>
+                        <li class="side-nav-menu-item">
+                            <a class="side-nav-menu-link" href="/整合版本/backuser-edit.html">新增會員</a>
+                        </li>
+                    </ul>
+                    <!-- End Users: subUsers -->
+                </li>
+                <!-- End Users -->
+                <!-- Title -->
+                <li class="sidebar-heading h6">訂單相關</li>
+                <!-- End Title -->
+
+                <!-- 訂單 -->
+                <li class="side-nav-menu-item side-nav-has-menu">
+                    <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subPages">
+                        <span class="side-nav-menu-icon d-flex mr-3">
+                            <i class="gd-shopping-cart-full"></i>
+                        </span>
+                        <span class="side-nav-fadeout-on-closed media-body">訂單</span>
+                        <span class="side-nav-control-icon d-flex">
+                            <i class="gd-angle-right side-nav-fadeout-on-closed"></i>
+                        </span>
+                        <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
+                    </a>
+
+                    <!-- Pages: subPages -->
+                    <ul id="subPages" class="side-nav-menu side-nav-menu-second-level mb-0">
+                        <li class="side-nav-menu-item active">
+                            <a class="side-nav-menu-link" href="/整合版本/backorder.html">所有訂單</a>
+                        </li>
+                    </ul>
+                    <!-- End Pages: subPages -->
+                </li>
+                <!-- End 訂單 -->
+
+                <!-- Title -->
+                <li class="sidebar-heading h6">商品相關</li>
+                <!-- End Title -->
+
+                <!-- 商品 -->
+                <li class="side-nav-menu-item side-nav-has-menu ">
+                    <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subitems">
+                        <span class="side-nav-menu-icon d-flex mr-3">
+                            <i class="gd-package"></i>
+                        </span>
+                        <span class="side-nav-fadeout-on-closed media-body">所有商品</span>
+                        <span class="side-nav-control-icon d-flex">
+                            <i class="gd-angle-right side-nav-fadeout-on-closed"></i>
+                        </span>
+                        <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
+                    </a>
+
+                    <!-- subitems -->
+                    <ul id="subitems" class="side-nav-menu side-nav-menu-second-level mb-0">
+                        <li class="side-nav-menu-item">
+                            <a class="side-nav-menu-link" href="/整合版本/backproduct.html">所有商品</a>
+                            <a class="side-nav-menu-link" href="/整合版本/backproducthelmet.html">安全帽</a>
+                            <a class="side-nav-menu-link" href="/整合版本/backproduct.html">手套</a>
+                            <a class="side-nav-menu-link" href="/整合版本/backproduct.html">防摔衣</a>
+
+                        </li>                        
+                    </ul>
+                    <!--  subitems -->
+                </li>
+                <!-- End 商品 -->
+
+                <!-- Title -->
+                <li class="sidebar-heading h6">優惠卷相關</li>
+                <!-- End Title -->
+
+                <!-- 優惠卷 -->
+                <li class="side-nav-menu-item side-nav-has-menu ">
+                    <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subticket">
+                        <span class="side-nav-menu-icon d-flex mr-3">
+                            <i class="gd-money"></i>
+                        </span>
+                        <span class="side-nav-fadeout-on-closed media-body">優惠卷</span>
+                        <span class="side-nav-control-icon d-flex">
+                            <i class="gd-angle-right side-nav-fadeout-on-closed"></i>
+                        </span>
+                        <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
+                    </a>
+
+                    <!--  subticket -->
+                    <ul id="subticket" class="side-nav-menu side-nav-menu-second-level mb-0">
+                        <li class="side-nav-menu-item active">
+                            <a class="side-nav-menu-link" href="ticket.html">所有優惠卷</a>
+                        </li>
+                        <li class="side-nav-menu-item">
+                            <a class="side-nav-menu-link" href="ticket-edit.html">新增優惠卷</a>
+                        </li>
+                    </ul>
+                    <!-- subticket -->
+                </li>
+                <!-- End 優惠卷 -->
+
+                <!-- Settings -->
+                <li class="side-nav-menu-item">
+                    <a class="side-nav-menu-link media align-items-center" href="settings.html">
+                        <span class="side-nav-menu-icon d-flex mr-3">
+                            <i class="gd-settings"></i>
+                        </span>
+                        <span class="side-nav-fadeout-on-closed media-body">Settings</span>
+                    </a>
+                </li>
+                <!-- End Settings -->
+            </ul>
+        </aside>
+        <!-- End Sidebar Nav -->
+
+        <div class="content">
+            <div class="py-4 px-3 px-md-4">
+                <div class="card mb-3 mb-md-4">
+                    <div class="card-body">
+                        <nav class="d-none d-md-block" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="order.html">訂單</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">所有訂單</li>
+                            </ol>
+                        </nav>
+
+                        <div class="mb-3 mb-md-4 d-flex justify-content-between">
+                            <div class="h3 mb-0">訂單</div>
+                        </div>
+
+                        <div class="table-responsive-xl">
+                            <table class="table text-nowrap mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">訂單編號</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">email</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">訂單日期</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">訂單總金額</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">訂單狀態</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">訂單詳細</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="order-table-body">
+                                    <!-- 動態插入訂單資料 -->
+                                </tbody>
+                            </table>
+                            <div class="card-footer d-block d-md-flex align-items-center d-print-none">
+                                <div class="d-flex mb-2 mb-md-0">顯示 1 到 8 共 24 項目</div>
+                                <nav class="d-flex ml-md-auto d-print-none" aria-label="Pagination">
+                                    <ul class="pagination justify-content-end font-weight-semi-bold mb-0"
+                                        id="pagination">
+                                        <!-- 動態插入分頁控制項 -->
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Order Modal -->
+        <div class="modal fade" id="editOrderModal" tabindex="-1" role="dialog" aria-labelledby="editOrderModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editOrderModalLabel">編輯訂單</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editOrderForm">
+                            <input type="hidden" id="editOrderId">
+                            <div class="form-group">
+                                <label for="editOrderStatus">訂單狀態</label>
+                                <select class="form-control" id="editOrderStatus" required>
+                                    <option value="1">待付款</option>
+                                    <option value="2">已付款</option>
+                                    <option value="3">待出貨</option>
+                                    <option value="4">已出貨</option>
+                                    <option value="5">已送達</option>
+                                    <option value="6">已完成</option>
+                                    <option value="7">已取消</option>
+                                    <option value="8">退貨/換貨</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">保存變更</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Details Modal -->
+        <div class="modal fade" id="orderDetailsModal" tabindex="-1" role="dialog"
+            aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="orderDetailsModalLabel">訂單詳細</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="orderDetailsModalBody">
+                        <!-- 這裡會動態插入訂單詳細 -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Product Modal -->
+        <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addProductModalLabel">新增商品</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addProductForm" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="addProductName">名稱</label>
+                                <input type="text" class="form-control" id="addProductName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="addProductCategory">類別</label>
+                                <input type="text" class="form-control" id="addProductCategory" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="addProductDescription">描述</label>
+                                <textarea class="form-control" id="addProductDescription" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="addProductPrice">價格</label>
+                                <input type="number" class="form-control" id="addProductPrice" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">保存變更</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Product Modal -->
+        <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog"
+            aria-labelledby="editProductModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editProductModalLabel">編輯商品</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editProductForm" enctype="multipart/form-data">
+                            <input type="hidden" id="editProductId">
+                            <div class="form-group">
+                                <label for="editProductName">名稱</label>
+                                <input type="text" class="form-control" id="editProductName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editProductCategory">類別</label>
+                                <input type="text" class="form-control" id="editProductCategory" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editProductDescription">描述</label>
+                                <textarea class="form-control" id="editProductDescription" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="editProductPrice">價格</label>
+                                <input type="number" class="form-control" id="editProductPrice" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">保存變更</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <script src="/整合版本/js/backorder_script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="public/graindashboard/js/graindashboard.js"></script>
+    <script src="public/graindashboard/js/graindashboard.vendor.js"></script>
+</body>
+
+</html>
