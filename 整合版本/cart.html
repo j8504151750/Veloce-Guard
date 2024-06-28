@@ -6,8 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>V Shopping Cart</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/cart-styles.css" rel="stylesheet">
+    <!-- JWT解析套件 -->
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+
+    <link href="./css/cart-styles.css" rel="stylesheet">
 </head>
+<script>
+    //測試是否有token
+    document.addEventListener("DOMContentLoaded", function () {
+      const token = localStorage.getItem("jwt-token"); // 從 Local Storage 中讀取 jwt-token
+      if (token) {
+        console.log(token);
+        const decodedToken = jwt_decode(token);
+
+        // 打印解析後的token
+        console.log("Decoded JWT Token:", decodedToken);
+        console.log(decodedToken.email);
+      } else {
+        console.error("JWT Token not found");
+      }
+      // 你的其他 AJAX 請求代碼
+    });
+  </script>
 
 <body>
 
@@ -75,21 +95,18 @@
                             <input type="text" class="form-control" id="full-name" required>
                         </div>
                         <div class="form-group">
-                            <label for="address">地址</label>
-                            <input type="text" class="form-control" id="address" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="city">城市</label>
-                            <input type="text" class="form-control" id="city" required>
-                        </div>
-                        <div class="form-group">
                             <label for="postal-code">郵遞區號</label>
                             <input type="text" class="form-control" id="postal-code" required>
-                        </div>
+                        </div>  
                         <div class="form-group">
-                            <label for="country">國家</label>
-                            <input type="text" class="form-control" id="country" required>
+                            <label for="address">地址</label>
+                            <input type="text" class="form-control" id="address" required>
+                        </div>                               
+                        <div class="form-group">
+                            <label for="tel">電話</label>
+                            <input type="text" class="form-control" id="tel" required>
                         </div>
+                                         
                     </div>
                     <div class="col-md-6">
                         <h4>付款資訊</h4>
@@ -159,7 +176,7 @@
         <!-- 引入Bootstrap的JS文件 -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <!-- 引入自定義的JS文件 -->
-        <script src="/js/cart-script.js"></script>
+        <script src="./js/cart-script.js"></script>
 
 </body>
 
