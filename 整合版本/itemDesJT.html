@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+  
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,7 +32,7 @@
                 <a class="nav-link " href="index.html">首頁</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">安全帽</a>
+                <a class="nav-link active" aria-current="page" href="./product.html">安全帽</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="glove.html">手套</a>
@@ -54,8 +54,10 @@
     
     
               <!-- 購物車按鈕 -->
-              <a href="shopcart.html" class="btn-search btn btn-black btn-sm me-2" data-bs-toggle="tooltip"
-                data-bs-placement="bottom" title="購物車"><i class="fa fa-cart-arrow-down"></i></a>
+            <a href="shopcart.html" class="btn-search btn btn-black btn-sm me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="購物車">
+                <i class="fa fa-cart-arrow-down"></i>
+                <span class="badge bg-secondary" id="cartItemCount" style="font-family: sans-serif;">0</span> <!-- Badge for cart item count -->
+            </a>
     
     
               <!-- 會員功能按鈕 -->
@@ -93,23 +95,13 @@
                 <div class="col-md-7">
                     <div class="fixed-introduction">
                         <div class="product-introduction">
-                            <h2 class="product-name">X-Fifteen X-15 素色 全罩式安全帽 頂級款 X15</h2>
-                            <p>商品介绍: 為求更好的空氣力學，經過長期研究和風洞實驗，全新設計的X-Fifteen誕生了。在超過350km/h的超高速下也能展現出穩定的性能。</p>
-                            價格: <span class="product-price">21000</span> 元 <br><br>
+                          <h2 id="productName">Product Name Placeholder</h2>
+                          <p id="productDescription">Product Description Placeholder</p>
+                          價格: <span id="productPrice">Price Placeholder</span> 元 <br><br>
                             
                             <label for="sku">尺寸/顏色:</label>
                             <select name="sku" id="sku">
-                                <option value="x-15-白-M">X-15-白-M</option>
-                                <option value="X-15-白-L">X-15-白-L</option>
-                                <option value="X-15-白-XL">X-15-白-XL</option>
-                                <option value="X-15-黑-M">X-15-黑-M</option>
-                                <option value="X-15-黑-L">X-15-黑-L</option>
-                                <option value="X-15-黑-XL">X-15-黑-XL</option>
-                                <option value="X-15-消光黑-M">X-15-消光黑-M</option>
-                                <option value="X-15-消光黑-L">X-15-消光黑-L</option>
-                                <option value="X-15-消光黑-XL">X-15-消光黑-XL</option>
-                                <option value="X-15-消光黑-2XL">X-15-消光黑-2XL</option>
-
+                              <!-- AJAX -->
                             </select>
                             <label for="quantity">數量:</label>
                             <input type="number" id="quantity" name="quantity" min="1" max="100" value="1" style="text-align: center;" required>
