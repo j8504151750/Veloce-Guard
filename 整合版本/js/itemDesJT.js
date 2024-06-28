@@ -79,7 +79,7 @@ $(document).ready(function() {
     // Existing code to populate SKUs, change event for the select element, addToCart functionality...
 
     // Fetch Product Details on page load
-    var productUrl = 'http://localhost:8080/api/product/1';
+    var productUrl = `http://localhost:8080/api/product/1`;
     $.ajax({
         url: productUrl,
         type: 'GET',

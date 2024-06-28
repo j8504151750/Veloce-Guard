@@ -937,3 +937,15 @@
   #cartItemCount {
     /* display: none; */
 }
+
+.nav-pills .nav-link.active {
+  background-color: #6c757d !important; /* Bootstrap 的 `secondary` 颜色 */
+  color: white !important; /* 设置文字颜色为白色，以提高可读性 */
+}
+.nav-link {
+  color: #FFFFFF !important; /* 设置字体颜色为白色 */
+}
+a:hover{
+  color:#ffffff;
+  text-decoration: none;
+}
