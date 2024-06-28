@@ -6,28 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>V Shopping Cart</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- JWT解析套件 -->
-    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
-
-    <link href="./css/cart-styles.css" rel="stylesheet">
-</head>
-<script>
-    //測試是否有token
-    document.addEventListener("DOMContentLoaded", function () {
-      const token = localStorage.getItem("jwt-token"); // 從 Local Storage 中讀取 jwt-token
-      if (token) {
-        console.log(token);
-        const decodedToken = jwt_decode(token);
-
-        // 打印解析後的token
-        console.log("Decoded JWT Token:", decodedToken);
-        console.log(decodedToken.email);
-      } else {
-        console.error("JWT Token not found");
-      }
-      // 你的其他 AJAX 請求代碼
-    });
-  </script>
+    <link href="/整合版本/css/cart-styles.css" rel="stylesheet">
+</head> 
 
 <body>
 
@@ -46,8 +26,8 @@
                 <thead>
                     <tr>
                         <th>商品</th>
-                        <th>商品快照</th>
                         <th>商品編號</th>
+                        <th>商品快照</th>
                         <th>價格</th>
                         <th>數量</th>
                         <th>操作</th>
@@ -56,7 +36,8 @@
                 <tbody id="cart-items">
                     <!-- 商品 -->
                     <tr>
-                        <!-- <td>ZX-15</td>
+                        <td>ZX-15</td>
+                        <td>X-15-白-XL</td>
                         <td><img class="cart-picture" src="https://shoplineimg.com/5be4227a02dd95000178fa71/645dd9f4cf1c520017ddb4d5/800x.webp?source_format=jpg
                             " alt="商品照片"></td>
                         <td>$1500</td>
@@ -69,7 +50,7 @@
                                     data-action="increase">+</button>
                             </div>
                         </td>
-                        <td><button class="btn btn-secondary btn-sm" id="btn-remove">移除</button></td> -->
+                        <td><button class="btn btn-secondary btn-sm" id="btn-remove">移除</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -96,18 +77,17 @@
                             <input type="text" class="form-control" id="full-name" required>
                         </div>
                         <div class="form-group">
-                            <label for="postal-code">郵遞區號</label>
-                            <input type="text" class="form-control" id="postal-code" required>
-                        </div>  
-                        <div class="form-group">
                             <label for="address">地址</label>
                             <input type="text" class="form-control" id="address" required>
-                        </div>                               
+                        </div>            
+                        <div class="form-group">
+                            <label for="postal-code">郵遞區號</label>
+                            <input type="text" class="form-control" id="postal-code" required>
+                        </div>
                         <div class="form-group">
                             <label for="tel">電話</label>
                             <input type="text" class="form-control" id="tel" required>
                         </div>
-                                         
                     </div>
                     <div class="col-md-6">
                         <h4>付款資訊</h4>
@@ -148,8 +128,7 @@
                 <tbody id="order-details"></tbody>
             </table>
             <h4>訂單成立日期: <span id="order-date"></span></h4>
-            <button type="button" class="btn btn-secondary"><a href="/整合版本/product.html">返回商品頁面</a></button>
-
+            <button type="button" class="btn btn-secondary "><a href="/整合版本/product.html" style="text-decoration:none; color:white;" >返回商品頁面</a></button>
 
         </div>
 
@@ -180,7 +159,7 @@
         <!-- 引入Bootstrap的JS文件 -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <!-- 引入自定義的JS文件 -->
-        <script src="./js/cart-script.js"></script>
+        <script src="/整合版本/js/cart_script靜態.js"></script>
 
 </body>
 
