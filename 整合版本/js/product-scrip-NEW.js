@@ -12,7 +12,7 @@ $(document).ready(function () {
                         <img src="${firstVariantImage}" alt="${product.name}" />
                     </div>
                     
-                    <div>${product.name}</div>
+                    <div style="font-size: 20px;">${product.name}</div>
                     <a href="itemDesJT.html?productId=${product.productId}" class="btn btn-secondary" style="width:100%; height:50px; margin-bottom:50px;">點我看詳細</a>
                         <br>
                     </div>`
