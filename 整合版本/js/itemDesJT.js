@@ -1,106 +1,89 @@
-function updateCartItemCount(count) {
-    if (count > 0) {
-        $('#cartItemCount').text(count).show(); // Show badge with count
+$(document).ready(function() {
+    // Retrieve the Product ID from the URL
+    var productId = getProductIdFromUrl();
+    
+    // Fetch and display the product details
+    if (productId) {
+        getProductDetails(productId);
     } else {
-        $('#cartItemCount').hide(); // Hide badge if count is 0
+        console.error("Product ID not found in URL query parameters.");
     }
+
+    // Placeholder for other functionalities
+    initializeOtherFeatures();
+});
+
+// Function to extract `productId` from the current URL
+function getProductIdFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('productId');
 }
 
-$(document).ready(function() {
-    // Fetch SKU options on page load
-    var skuUrl = 'http://localhost:8080/api/product/1/variants'; 
+// Function to fetch and display product details
+function getProductDetails(productId) {
     $.ajax({
-        url: skuUrl,
+        url: `http://localhost:8080/api/product/${productId}`,
         type: 'GET',
         contentType: 'application/json',
-        headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
+        success: function(product) {
+            // Assuming `product` is the object that contains all the info
+            $('#productName').text(product.name);
+            $('#productDescription').text(product.description);
+            $('#productPrice').text(`${product.price}`);
+
+            // Update images and SKU options here if needed
+            // Assuming first variant image is used for main display if exists
+            if (product.productVariants && product.productVariants.length > 0) {
+                $('.image-sell img').first().attr('src', product.productVariants[0].image);
+
+                // Clear existing SKU options
+                $('#sku').empty();
+                product.productVariants.forEach(function(variant) {
+                    $('#sku').append(new Option(variant.sku));
+                });
+                $('#sku').change();
+            }
+            updateCartItemCount(0); // Example, adjust as needed
         },
-        success: function(response) {
-            $('#sku').empty();
-            response.forEach(function(skuObj) {
-                $('#sku').append(new Option(skuObj.sku)); // Assuming each object has `sku` and `display` properties
-            });
-            $('#sku').change();
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.error('Error fetching SKUs:', textStatus, errorThrown);
+        error: function(error) {
+            console.error('Error fetching product details:', error);
         }
     });
+}
 
-    $('#sku').change(function() {
-        var selectedSku = $(this).val();
-        var stockUrl = 'http://localhost:8080/api/product/variant/' + selectedSku + '/inventory';
-        $.ajax({
-            url: stockUrl,
-            type: 'GET',
-            success: function(response) {
-                $('#quantity').attr('max', response).val(1); // Also resets the quantity input to 1
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.error('Error fetching stock:', textStatus, errorThrown);
-            }
-        });
-    });
-
-    $('#addToCartBtn').click(function() {
-        var quantity = $('#quantity').val(); // Get the selected quantity
-        var sku = $('#sku').val();
-        $.ajax({
-            url: 'http://localhost:8080/api/public/carts/1/products/1/quantity/' + quantity,
-            type: 'POST',
-            contentType: 'application/json',
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-            },
-            data: JSON.stringify({quantity: quantity, sku: sku}),
-            success: function(response) {
-                alert('Product added to cart successfully!');
-                var totalItems = response.totalItems; // Assuming this is part of your response
-                updateCartItemCount(totalItems); 
-            },
-            error: function(xhr, status, error) {
-                console.error("Error adding product to cart:", error);
-                alert('Failed to add product to cart.');
-            }
-        });
-    });
+// Listen for changes on the SKU select dropdown
+$('#sku').change(function() {
+    var selectedSku = $(this).val();
+    fetchInventoryForSku(selectedSku);
 });
-
-// Initial update for the cart item count on page load, if needed
-$(document).ready(function() {
-    updateCartItemCount(0); // You might want to dynamically check this from your backend instead
-    // Include an AJAX call to fetch and display the current cart count, if required
-});
-
-$(document).ready(function() {
-    // Existing code to populate SKUs, change event for the select element, addToCart functionality...
-
-    // Fetch Product Details on page load
-    var productUrl = `http://localhost:8080/api/product/1`;
+// Function to fetch inventory count for an SKU and update the quantity input's max value
+function fetchInventoryForSku(sku) {
     $.ajax({
-        url: productUrl,
+        url: `http://localhost:8080/api/product/variant/${sku}/inventory`, // Adjust the URL as per your actual API endpoint
         type: 'GET',
         contentType: 'application/json',
-        headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
+        success: function(inventoryCount) {
+            // Assuming the response directly gives the inventory count
+            $('#quantity').attr('max', inventoryCount);
         },
-        success: function(response) {
-            console.log(response);
-            // Update HTML content with fetched product details
-            $('#productName').text(response.name);
-            $('#productDescription').text(response.description);
-            $('#productPrice').text(response.price);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.error('Error fetching product details:', textStatus, errorThrown);
-            // Handle error
-            // Optionally, you might want to display a default error message or content in case of failure
+        error: function(error) {
+            console.error('Error fetching inventory:', error);
+            // Handle errors (e.g., set a default max value or show an error message)
         }
     });
-    
-    // The logic for SKU list population, SKU selection change, and addToCart button click remains unchanged.
-});
+}
+
+// Initialize other features or functionalities you might have on this page
+function initializeOtherFeatures() {
+    // Example: Any setup for image sliders, variant selection, etc.
+    console.log("Other features initialized.");
+}
+
+// Example function to update cart item count
+function updateCartItemCount(count) {
+    if (count > 0) {
+        $('#cartItemCount').text(count).show();
+    } else {
+        $('#cartItemCount').hide();
+    }
+}
