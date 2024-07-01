@@ -1,76 +1,30 @@
-
 $(document).ready(function () {
     $.ajax({
+        url: 'http://localhost:8080/api/products',
         type: 'GET',
-        url: 'http://localhost:8080/api/public/products?pageNumber=0&pageSize=30&sortBy=productId&sortOrder=asc',
-        dataType: 'json',
-        headers: {
-            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJpYXQiOjE3MTg3OTE3NTQsImVtYWlsIjoiam9obi5kb2VAZXhhbXBsZS5jb20ifQ.Fmr94KQD5GFs7oJn6eFyehXkrF5Jx2278uoECEylX5g'
-        },
+        contentType: 'application/json',
         success: function (response) {
-            // Loop through each product and append it to the product container
-            $.each(response, function (index, product) {
-                
-                var firstVariantImage = product.productVariants.length > 0 ? product.productVariants[0].image : '';
-                
-                var productHTML = `
-                <div class="product col-4 float-left">
-                  <div class="image-container">
-                    <a href="${product.productName}">
-                      <img src="${firstVariantImage}" alt="">
-                    </a>
-                  </div>
-                </div>`;
-
-                $('#productContainer').append(productHTML);
-            });
-        },
-        error: function (err) {
-            console.log(err);
-
-            var products = err.responseJSON.content;
-            
-            // console.log(products);
-            // Loop through each product and append it to the product container
-            $.each(products, function (index, product) {
-                if (index >= 20 && index < 30) {
-                // console.log(product.productName);
-                var firstVariantImage = product.productVariants.length > 0 ? product.productVariants[0].image : '默认图片URL';
-
-                console.log(firstVariantImage);
-                var n = product.productName;
-                var productHTML = `
-                <div class="product col-4 float-left">
-                    <div class="image-container">
-                        <img src="${firstVariantImage}" alt="${product.productName}">
-                        <div>${n}</div>
-                        
-                        </div><br>
-                        <input type="button" value="加入購物車" style="width:100%; height:50px; margin-bottom:50px;">
-                        <br>
-                    </div>
-                </div>`;
-                $('#productContainer').append(productHTML);
-
-                //     $('#productContainer').append(productHTML);
-                // $.each(product.productVariants, function (index, productVariant) {
-
-                //     var productHTML = `
-                //     <div class="product col-4 float-left">
-                //       <div class="image-container">
-                //         <a href="${product.productName}">
-                //           <span>${n}</span>
-                //           <img src="${productVariant.image}" alt="">
-                //         </a>
-                //       </div>
-                //     </div>`;
-
-                //     $('#productContainer').append(productHTML);
-                // })
+            response.forEach(function (product) {
+                if (product.productId > 19 && product.productId < 30) { 
+                    var firstVariantImage = product.productVariants.length > 0 ? product.productVariants[0].image : 'defaultImagePath.jpg';
+                    $('#productContainer').append(
+                        `<div class="product col-4 float-left">
+                            <div class="image-container">
+                                <img src="${firstVariantImage}" alt="${product.name}" />
+                            </div>
+                            
+                            <div style="font-size: 20px;">${product.name}</div>
+                            <a href="itemDesJT.html?productId=${product.productId}" class="btn btn-secondary" style="width:100%; height:50px; margin-bottom:50px;">點我看詳細</a>
+                            <br>
+                        </div>`
+                    );
                 }
             });
-        
-        }
+        },
 
+
+        error: function (error) {
+            console.log("Failed to load products:", error);
+        }
     });
 });

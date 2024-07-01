@@ -5,20 +5,24 @@ $(document).ready(function () {
         contentType: 'application/json',
         success: function (response) {
             response.forEach(function (product) {
-                var firstVariantImage = product.productVariants.length > 0 ? product.productVariants[0].image : 'defaultImagePath.jpg';
-                $('#productContainer').append(
-                    `<div class="product col-4 float-left">
-                    <div class="image-container">
-                        <img src="${firstVariantImage}" alt="${product.name}" />
-                    </div>
-                    
-                    <div style="font-size: 20px;">${product.name}</div>
-                    <a href="itemDesJT.html?productId=${product.productId}" class="btn btn-secondary" style="width:100%; height:50px; margin-bottom:50px;">點我看詳細</a>
-                        <br>
-                    </div>`
-                );
+                if (product.productId > 0 && product.productId < 10) { 
+                    var firstVariantImage = product.productVariants.length > 0 ? product.productVariants[0].image : 'defaultImagePath.jpg';
+                    $('#productContainer').append(
+                        `<div class="product col-4 float-left">
+                            <div class="image-container">
+                                <img src="${firstVariantImage}" alt="${product.name}" />
+                            </div>
+                            
+                            <div style="font-size: 20px;">${product.name}</div>
+                            <a href="itemDesJT.html?productId=${product.productId}" class="btn btn-secondary" style="width:100%; height:50px; margin-bottom:50px;">點我看詳細</a>
+                            <br>
+                        </div>`
+                    );
+                }
             });
         },
+
+
         error: function (error) {
             console.log("Failed to load products:", error);
         }
