@@ -220,76 +220,94 @@
                                 </thead>
                                 <tbody id="user-table-body">
     <!------------------------------------渲染會員從資料庫使用AJAX ------------------------------------------------>
-                                    <script>
+    <script>
+        let currentEmail = "";
+        // 将 fetchUsers 函数定义在全局作用域
+        function fetchUsers(page = 1) {
+            const token = localStorage.getItem("jwt-token");
+            $.ajax({
+                url: 'http://localhost:8080/api/admin/users?pageNumber=0&pageSize=10&sortBy=userId&sortOrder=asc',
+                method: 'GET',
+                dataType: 'json',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                success: function (response) {
+                    console.log(response);
+                    renderTable(response.content);
+                },
+                error: function (err) {
+                    // console.log(err);
+                    const decodedToken = jwt_decode(token);
+                    // console.log(decodedToken);
+                    currentEmail = decodedToken.email;
+                    renderTable(err.responseJSON.content);
+                    
+                }
+            });
+        }
+        
+        // 将 renderTable 函数也定义在全局作用域
+        function renderTable(users) {
+            const tbody = $('#user-table-body');
+            tbody.empty();
+        
+            users.forEach(user => {
+                const row = `
+                    <tr data-user-id="${user.userId}">
+                        <td class="py-3">${user.userId}</td>
+                        <td class="align-middle py-3">${user.firstName}</td>
+                        <td class="py-3">${user.email}</td>
+                        <td class="py-3">${user.mobileNumber}</td>
+                        <td class="py-3">
+                            <div class="position-relative">
+                                <button class="btn btn-sm btn-danger" onclick="deleteProduct(${user.userId})">刪除</button>
+                            </div>
+                        </td>
+                    </tr>`;
+                tbody.append(row);
+            });
+        }
+        
+        // 将 deleteProduct 函数定义在全局作用域
+        function deleteProduct(userId) {
+            const userRow = $(`tr[data-user-id="${userId}"]`);
+            const userEmail = userRow.find('td:eq(2)').text(); // 获取邮箱地址所在的单元格内容
+            // 判断当前登录用户是否要删除自己
+            // 假设您已经将 token 中的 email 解析到 currentEmail 变量中
+          
+            
 
-                                        $(document).ready(function () {
-                                            const token = localStorage.getItem("jwt-token");
-                                            console.log(token);
-                                            function fetchUsers(page = 1) {
-                                                $.ajax({
-                                                    url: 'http://localhost:8080/api/admin/users?pageNumber=0&pageSize=10&sortBy=userId&sortOrder=asc', // 更改為你的 API URL
-                                                    method: 'GET',
-                                                    dataType: 'json',
-                                                    headers: {
-                                                        
+            if (userEmail === currentEmail) {
+        alert("您不能刪除自己的用戶！！");
+        return; // 阻止删除操作
+    }
+
+    if (confirm('確定要刪除這個用戶嗎？')) {
+        const token = localStorage.getItem("jwt-token");
+        $.ajax({
+            url: `http://localhost:8080/api/admin/users/${userId}`,
+            method: 'DELETE',
+            headers: {
                 'Authorization': 'Bearer ' + token
             },
-                                                    success: function (response) {
-                                                        console.log(response)
-                                                        // const users = response.users;
-                                                        // const totalPages = response.totalPages;
-                                                        // renderTable(response.content);
-                                                        // renderPagination(totalPages, page);
-                                                        // $('#pagination-info').text(`Showing ${response.from} to ${response.to} of ${response.total} Entries`);
-                                                    },
-                                                    error: function (err) {
-                                                        console.log(err);
-                                                        renderTable(err.responseJSON.content); // 假設你的API返回的產品資料在 'products' 屬性下
-                                                    }
-                                                });
-                                            }
-
-                                            function renderTable(users) {
-                                                const tbody = $('#user-table-body');
-                                                tbody.empty();
-
-                                                users.forEach(user => {
-                                                    const row = `
-                 <tr data-user-id="${user.userId}">
-                    <td class="py-3">${user.userId}</td>
-                    <td class="align-middle py-3">
-                        <div class="d-flex align-items-center">
-                            <div class="position-relative mr-2">
-                                <span class="avatar-placeholder mr-md-2">${user.firstName.charAt(0)}</span>
-                            </div>
-                            ${user.firstName}
-                        </div>
-                    </td>
-                    <td class="py-3">${user.email}</td>
-                    <td class="py-3">${user.mobileNumber}</td>
-                    
-                    <td class="py-3">
-                        <div class="position-relative">
-                            <a class="link-dark d-inline-block" href="#">
-                                <i class="gd-pencil icon-text"></i>
-                            </a>
-                            <a class="link-dark d-inline-block" href="#">
-                                <i class="gd-trash icon-text"></i>
-                            </a>
-                        </div>
-                    </td>
-                </tr>`;
-                                                    tbody.append(row);
-                                                });
-                                            }
-
-                                            // Fetch initial data
-                                            fetchUsers();
-                                        });
-
-
-
-                                    </script>
+            success: function(response) {
+                
+                fetchUsers(); // 成功后重新获取用户列表
+            },
+            error: function(err) {
+                
+                fetchUsers(); // 即使失败，也尝试重新加载用户列表
+            }
+        });
+    }
+}
+        
+        $(document).ready(function () {
+            // 初始获取用户列表
+            fetchUsers();
+        });
+        </script>
        <!-------------------------------------------- 結束渲染 -------------------------------------------------------->
                                 </tbody>
                             </table>
