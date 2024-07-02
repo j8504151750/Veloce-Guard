@@ -11,6 +11,12 @@ $(document).ready(function() {
 
     // Placeholder for other functionalities
     initializeOtherFeatures();
+
+    // Assuming userEmail stores the current user's email
+    var userEmail = 'test123@gmail.com'; // This should be dynamically determined based on the user's session or authentication details
+
+    // Fetch and update the cart item count initially
+    fetchAndUpdateCartCount(userEmail);
 });
 
 // Function to extract `productId` from the current URL
@@ -45,7 +51,7 @@ function getProductDetails(productId) {
                 });
                 $('#sku').change();
             }
-            updateCartItemCount(0); // Example, adjust as needed
+            // updateCartItemCount(0); // Example, adjust as needed
         },
         error: function(error) {
             console.error('Error fetching product details:', error);
@@ -82,12 +88,29 @@ function initializeOtherFeatures() {
 }
 
 // Example function to update cart item count
-function updateCartItemCount(count) {
-    if (count > 0) {
-        $('#cartItemCount').text(count).show();
-    } else {
-        $('#cartItemCount').hide();
-    }
+function fetchAndUpdateCartCount(userEmail) {
+    $.ajax({
+        url: 'http://localhost:8080/api/cart/items/test123@gmail.com',
+        type: 'GET',
+        success: function(response) {
+            // Assuming `response` is an array of items, each with a `quantity`
+            let totalQuantity = response.reduce((sum, item) => sum + item.quantity, 0);
+
+            // Update the cart item count text
+            $('#cartItemCount').text(totalQuantity);
+
+            // If totalQuantity is 0, hide the counter, otherwise show it
+            if (totalQuantity === 0) {
+                $('#cartItemCount').hide();
+            } else {
+                $('#cartItemCount').show();
+            }
+        },
+        error: function(error) {
+            console.error('Error fetching cart item count:', error);
+            $('#cartItemCount').hide(); // Hide the counter on error too
+        }
+    });
 }
 
 // Function triggered by the "Add to Cart" button
@@ -121,19 +144,49 @@ function addToCart() {
             // 'Access-Control-Allow-Origin': '*'
         },
         success: function(response) {
-            // Handle success (e.g., showing a confirmation message)
             console.log('Product added to cart successfully:', response);
             alert('商品已成功加入購物車！');
+            fetchAndUpdateCartCount('test123@gmail.com'); // Update this based on your user email retrieval method
         },
         error: function(error) {
             // Handle any errors
             console.error('Error adding product to cart:', error);
-            alert('加入購物車時出錯。');
+            // alert('加入購物車時出錯。');
         }
     });
 }
 
-$('#addToCartBtn').click(function(e) {
-    e.preventDefault(); // Prevent the default form submit action
+$('#addToCartBtn').off('click').on('click', function(e) {
+    // e.preventDefault(); // Prevent the default form submit action
     addToCart();
 });
+
+
+// function getProductimage(productId) {
+//     console.log("Fetching images for product ID:", productId);
+//     $.ajax({
+//         url: `http://localhost:8080/api/product/${productId}/variant/images`,
+//         type: 'GET',
+//         contentType: 'application/json',
+//         success: function(images) {
+//             console.log("Images received:", images);
+//             if (images && images.length > 0) {
+//                 $('.image-sell img').each(function(index) {
+//                     if (images[index]) {
+//                         $(this).attr('src', images[index]);
+//                         console.log(`Setting image ${index} src to`, images[index]);
+//                     } else {
+//                         $(this).attr('src', '');
+//                         console.log(`Clearing image ${index} src`);
+//                     }
+//                 });
+//             } else {
+//                 $('.image-sell img').attr('src', '');
+//                 console.log("No images received, clearing all image src attributes.");
+//             }
+//         },
+//         error: function(error) {
+//             console.error('Error fetching product images:', error);
+//         }
+//     });
+// }
