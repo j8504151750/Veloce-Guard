@@ -13,9 +13,9 @@ const staticOrders = {
     content: [
         {
             orderId: 1,
-            userId: 101,
+            email: 'test123@gmail.com',
             orderDate: '2024-06-01',
-            totalAmount: 1500,
+            totalAmount: 42000,
             status: 1,
             products: [
                 {
@@ -23,21 +23,12 @@ const staticOrders = {
                     productCategory: '全罩式',
                     color: '白',
                     size: 'M',
-                    quantity: 2,
-                    unitPrice: 21000,
-                    subtotal: 42000,
-                    image: 'https://shoplineimg.com/5be4227a02dd95000178fa71/645dd9f4cf1c520017ddb4d5/800x.webp?source_format=jpg'
-                },
-                {
-                    productName: 'X-Fifteen X-15 素色 全罩式安全帽 頂級款 X15',
-                    productCategory: '全罩式',
-                    color: '白',
-                    size: 'M',
-                    quantity: 2,
+                    quantity: 1,
                     unitPrice: 21000,
                     subtotal: 42000,
                     image: 'https://shoplineimg.com/5be4227a02dd95000178fa71/645dd9f4cf1c520017ddb4d5/800x.webp?source_format=jpg'
                 }
+                
 
             ],
             recipientName: '張三',
@@ -48,7 +39,7 @@ const staticOrders = {
         },
         {
             orderId: 2,
-            userId: 102,
+            email: 'test456@gmail.com',
             orderDate: '2024-06-02',
             totalAmount: 2000,
             status: 2,
@@ -91,7 +82,7 @@ function renderTable(orders) {
     orders.forEach(order => {
         const row = `<tr>
             <td>${order.orderId}</td>
-            <td>${order.userId}</td>
+            <td>${order.email}</td>
             <td>${order.orderDate}</td>
             <td>${order.totalAmount}</td>
             <td>${getOrderStatus(order.status)}</td>
@@ -138,7 +129,7 @@ function renderOrderDetails(order) {
             </tr>
             <tr>
                 <th>用戶ID</th>
-                <td>${order.userId}</td>
+                <td>${order.email}</td>
             </tr>
             <tr>
                 <th>收件人姓名</th>
