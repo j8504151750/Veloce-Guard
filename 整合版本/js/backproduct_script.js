@@ -178,8 +178,8 @@ function editVariant(productId, sku) {
 // 新增分支區塊並存儲分支資訊
 function addVariantField() {
     const variantFieldsContainer = $('#variantFieldsContainer');
-    const variantIndex = variantFieldsContainer.children().length;  
-    const variantField  = `
+    const variantIndex = variantFieldsContainer.children().length;
+    const variantField = `
         <div class="form-group variant-field">
             <label for="variantColor${variantIndex}">顏色</label>
             <input type="text" class="form-control" id="variantColor${variantIndex}" name="variants[${variantIndex}][color]" required>
@@ -194,7 +194,7 @@ function addVariantField() {
             <button type="button" class="btn btn-danger mb-2" onclick="removeVariantField(this)">移除分支</button>
         </div>
     `;
-    $('#variantFieldsContainer').append(variantField );
+    variantFieldsContainer.append(variantField);
 }
 
 // 新增分支區塊到顯示分支的模態框中
@@ -224,19 +224,14 @@ function removeVariantField(button) {
 
 // 保存變體
 function saveVariant() {
-    const variantId = $('#editVariantId').val();
+    const sku = $('#editVariantSku').val();
     const formData = new FormData();
-    let color = $('#editVariantColor').val();
-    let size = $('#editVariantSize').val();
-    let inventory = $('#editVariantInventory').val();
-    let sku = $('#editVariantSku').val();
-    var variant = {
-        'color': `${color}`,
-        'size': `${size}`,
-        'inventory': `${inventory}`,
-        'sku': `${sku}`
-    }
-    formData.append('variant', variant);
+    formData.append('variant', new Blob([JSON.stringify({
+        color: $('#editVariantColor').val(),
+        size: $('#editVariantSize').val(),
+        inventory: $('#editVariantInventory').val(),
+        sku: sku
+    })], { type: 'application/json' }));
 
     // 處理圖片文件上傳
     const imageFile = $('#editVariantImage')[0].files[0];
@@ -244,14 +239,10 @@ function saveVariant() {
         formData.append('image', imageFile);
     }
 
-    console.log("debug: " + formData.values());
     $.ajax({
         url: `http://localhost:8080/api/product/variant/${sku}`,
         type: 'PUT',
         data: formData,
-        headers: {
-            'Content-Type': 'multipart/form-data',
-        },
         processData: false, // 不要處理數據
         contentType: false, // 不設置內容類型
         success: function (response) {
@@ -299,44 +290,58 @@ function saveProductWithVariants() {
     const subcategory = $('#addProductCategory').val();
     const description = $('#addProductDescription').val();
     const price = $('#addProductPrice').val();
+    const categoryName = encodeURIComponent(subcategory);// 使用encodeURIComponent對categoryName進行URL編碼
 
     const productVariants = [];
-    $('#variantFieldsContainer .variant-field').each(function () {
-        const color = $(this).find('input[name="color[]"]').val();
-        const size = $(this).find('input[name="size[]"]').val();
-        const inventory = $(this).find('input[name="inventory[]"]').val();
-        const sku = $(this).find('input[name="sku[]"]').val();
-        const imageInput = $(this).find('input[name="image[]"]')[0];
-        const image = imageInput.files[0] ? URL.createObjectURL(imageInput.files[0]) : '';
 
+    $('.variant-field').each(function () {
+        const color = $(this).find('input[name="variants[' + $(this).index() + '][color]"]').val();
+        const size = $(this).find('input[name="variants[' + $(this).index() + '][size]"]').val();
+        const inventory = $(this).find('input[name="variants[' + $(this).index() + '][inventory]"]').val();
+        const sku = $(this).find('input[name="variants[' + $(this).index() + '][sku]"]').val();
+        const imageInput = $(this).find('input[name="variants[' + $(this).index() + '][image]"]')[0];
+        const image = imageInput && imageInput.files && imageInput.files[0] ? imageInput.files[0] : null;
         productVariants.push({ color, size, inventory, sku, image });
     });
 
-    const productData = {
-        name,
-        subcategory,
-        description,
+    const formData = new FormData();
+    formData.append('product', new Blob([JSON.stringify({
+        name: name,
+        subcategory: subcategory,
+        description: description,
         price: parseInt(price),
-        productVariants
-    };
+        productVariants: productVariants.map(variant => ({
+            color: variant.color,
+            size: variant.size,
+            inventory: variant.inventory,
+            sku: variant.sku
+        }))
+    })], { type: 'application/json' }));
 
-    // 新建產品資料
+    productVariants.forEach((variant, index) => {
+        if (variant.image) {
+            formData.append('image', variant.image);
+        }
+    });
+
     $.ajax({
-        url: '/api/admin/products',
+        url: `http://localhost:8080/api/${categoryName}/product`,
         type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(productData),
+        contentType: false,
+        processData: false,
+        data: formData,
         success: function (response) {
             alert('產品新增成功！');
             $('#addProductModal').modal('hide');
-            $('.modal-backdrop').remove(); // 移除半透明背景
-            fetchProducts(); // 重新拉取產品資料
+            $('.modal-backdrop').remove();
+            fetchProducts();
         },
         error: function (error) {
             alert('產品新增失敗，請重試。');
         }
     });
 }
+
 
 // 保存產品
 function saveProduct(type) {
