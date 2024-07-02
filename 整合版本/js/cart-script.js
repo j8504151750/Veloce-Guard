@@ -3,15 +3,10 @@ $(document).ready(function () {
   let currentStep = 0;
   let orderDate = "";
 
-  // 監聽加載購物車按鈕的點擊事件
-  $('#load-cart').on('click', function () {
-      const userEmail = $('#user-email').val();
-      if (userEmail) {
-          loadCart(userEmail);
-      } else {
-          alert('請輸入您的電子郵件。');
-      }
-  });
+  // 從 JWT 獲取用戶電子郵件 getEmailFromJWT();
+  const userEmail ="test123@gmail.com ";
+  // 自動加載購物車
+  loadCart(userEmail);
 
   // 監聽前往結帳按鈕的點擊事件
   $('#proceed-to-checkout').on('click', function () {
@@ -47,7 +42,7 @@ $(document).ready(function () {
   // 處理商品移除按鈕
   $(document).on('click', '#btn-remove', function () {
       const sku = $(this).closest('tr').data('sku');
-      removeCartItem(sku);
+      removeCartItem(sku, userEmail);
   });
 
   // 更新步驟顯示
@@ -136,7 +131,7 @@ $(document).ready(function () {
 
   // 更新總金額的函數
   function updateTotal() {
-      $.get('http://localhost:8080/api/cart/price/test123@gmail.com', function (price) {
+      $.get(`http://localhost:8080/api/cart/price/${userEmail}`, function (price) {
           $('#subtotal').text('$' + price);
           // 運費計算
           let shippingFee = 0;
@@ -155,8 +150,8 @@ $(document).ready(function () {
   }
 
   // 加載購物車
-  function loadCart() {
-      $.get('http://localhost:8080/api/cart/items/test123@gmail.com', function (items) {
+  function loadCart(userEmail) {
+      $.get(`http://localhost:8080/api/cart/items/${userEmail}`, function (items) {
           let cartItemsHtml = '';
           console.log(items); // 調試輸出
           items.forEach(item => {
@@ -169,7 +164,7 @@ $(document).ready(function () {
                       <td>
                           <div class="quantity-controls">
                               <button class="btn btn-outline-secondary btn-sm btn-quantity" data-action="decrease">-</button>
-                              <input type="number" class="form-control quantity-input" value="${item.quantity}" min="1">
+                              <input type="number" class=" quantity-input" value="${item.quantity}" min="1">
                               <button class="btn btn-outline-secondary btn-sm btn-quantity" data-action="increase">+</button>
                           </div>
                       </td>
@@ -201,7 +196,7 @@ $(document).ready(function () {
   // 更新購物車中的商品數量
   function updateCartItem(sku, quantity) {
       $.ajax({
-          url: `http://localhost:8080/api/cart/item/${sku}/test123@gmail.com/quantity/${quantity}`,
+          url: `http://localhost:8080/api/cart/item/${sku}/${userEmail}/quantity/${quantity}`,
           type: 'PUT',
           success: function () {
               location.reload(); // 更新成功後刷新頁面
@@ -215,15 +210,27 @@ $(document).ready(function () {
   // 移除購物車中的商品
   function removeCartItem(sku) {
       $.ajax({
-          url: `http://localhost:8080/api/cart/item/${sku}/test123@gmail.com`,
+          url: `http://localhost:8080/api/cart/item/${sku}/${userEmail}`,
           type: 'DELETE',
           success: function () {
-              loadCart();
+              loadCart(userEmail);
           },
           error: function() {
               alert('移除商品失敗');
           }
       });
+  }
+
+  // 從 JWT 中獲取用戶電子郵件的假設函數
+  function getEmailFromJWT() {
+      // 這裡需要解析您的 JWT，這是一個簡單的示例
+      // 實際實現應根據您的 JWT 結構和解碼方式來編寫
+      const token = localStorage.getItem('jwt'); // 假設 JWT 存儲在 localStorage
+      if (!token) {
+          return null;
+      }
+      const payload = JSON.parse(atob(token.split('.')[1])); // 解碼 JWT payload
+      return payload.email; // 返回 email
   }
 
   // 初始更新付款方式的顯示
