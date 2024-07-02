@@ -64,7 +64,7 @@ document.getElementById('registerform').addEventListener('submit', function(even
   };
 
    // Use fetch to send the data to the server
-   fetch('http://10.0.103.168:8080/api/register', {  
+   fetch('http://10.0.103.168:8080/api/user', {  
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',

@@ -36,6 +36,8 @@ function getProductDetails(productId) {
             if (product.productVariants && product.productVariants.length > 0) {
                 $('.image-sell img').first().attr('src', product.productVariants[0].image);
 
+
+
                 // Clear existing SKU options
                 $('#sku').empty();
                 product.productVariants.forEach(function(variant) {
@@ -87,3 +89,51 @@ function updateCartItemCount(count) {
         $('#cartItemCount').hide();
     }
 }
+
+// Function triggered by the "Add to Cart" button
+function addToCart() {
+    // Retrieve the selected product details and user email
+    var selectedSku = $('#sku').val();
+    var quantity = $('#quantity').val();
+    // var userEmail = $('#userEmail').val();
+
+    // if (!userEmail) {
+    //   alert('請輸入您的電子郵件地址。');
+    //   return; // Stop the function if no email provided
+    // }
+
+    // Data object to be sent to the server
+    var cartData = {
+        quantity: quantity,
+        sku: selectedSku,
+    };
+
+    // Construct the API URL dynamically using template literals
+    var apiUrl = `http://localhost:8080/api/cart/item/${selectedSku}/test123@gmail.com/quantity/${quantity}`;
+
+    // AJAX call to your server endpoint to handle the cart addition
+    $.ajax({
+        url: apiUrl,
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(cartData), 
+        headers: {
+            // 'Access-Control-Allow-Origin': '*'
+        },
+        success: function(response) {
+            // Handle success (e.g., showing a confirmation message)
+            console.log('Product added to cart successfully:', response);
+            alert('商品已成功加入購物車！');
+        },
+        error: function(error) {
+            // Handle any errors
+            console.error('Error adding product to cart:', error);
+            alert('加入購物車時出錯。');
+        }
+    });
+}
+
+$('#addToCartBtn').click(function(e) {
+    e.preventDefault(); // Prevent the default form submit action
+    addToCart();
+});
