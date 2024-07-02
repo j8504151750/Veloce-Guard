@@ -5,7 +5,7 @@ $(document).ready(function () {
         contentType: 'application/json',
         success: function (response) {
             response.forEach(function (product) {
-                if (product.productId > 18) { 
+                if (product.productId > 18 && product.productId<28) { 
                     var firstVariantImage = product.productVariants.length > 0 ? product.productVariants[0].image : 'defaultImagePath.jpg';
                     $('#productContainer').append(
                         `<div class="product col-4 float-left">
