@@ -51,7 +51,7 @@ $(document).ready(function () {
 // 從API數據拉取產品資料
 function fetchProducts() {
     $.ajax({
-        url: `http://localhost:8080/api/products`,
+        url: `http://localhost:8080/api/防摔衣/products`,
         method: 'GET',
         dataType: 'json',
         success: function (products) {
