@@ -9,13 +9,13 @@ $(document).ready(function () {
 });
 
 // 從API拉取訂單資料
-function fetchOrders() {
+function fetchOrders(page = 1, pageSize = 10) {
     $.ajax({
         url: 'http://localhost:8080/api/orders',
         method: 'GET',
         success: function (response) {
             console.log('Fetched orders:', response); // 調試輸出
-            renderTable(response); // 直接使用 response，不再依賴 content 和 totalPages
+            renderTable(response, page, pageSize); // 傳遞當前頁數和每頁顯示的訂單數
         },
         error: function (xhr, status, error) {
             console.error('Failed to fetch orders:', {
@@ -35,17 +35,18 @@ function renderTable(orders) {
 
     const tbody = $('#order-table-body');
     tbody.empty();
-    orders.forEach(order => {
+    orders.forEach((order) => {
         const row = `<tr>
+            <td>${order.id}</td>
             <td>${order.email}</td>
             <td>${order.date}</td>
             <td>${order.amount}</td>
-            <td>${order.status}</td> <!-- 確保這裡的鍵名與返回數據匹配 -->
+            <td>${getOrderStatus(Number(order.status))}</td> <!-- 使用函數轉換數值為文字描述 -->
             <td>
-                <button class="btn btn-info" onclick="showOrderDetails('${order.email}')">查看詳細</button>
+                <button class="btn btn-info" onclick="showOrderDetails(${order.id})">查看詳細</button> <!-- 使用訂單 ID -->
             </td>
             <td>
-                <button class="btn btn-sm btn-warning" onclick="editOrder('${order.email}')">編輯</button>
+                <button class="btn btn-sm btn-warning" onclick="editOrder(${order.id})">編輯</button> <!-- 使用訂單 ID -->
             </td>
         </tr>`;
         tbody.append(row);
@@ -53,24 +54,18 @@ function renderTable(orders) {
 }
 
 // 顯示訂單詳細
-function showOrderDetails(email) {
+function showOrderDetails(orderId) {
     $.ajax({
-        url: `http://localhost:8080/api/orders/${email}`,
+        url: `http://localhost:8080/api/order/${orderId}`,
         method: 'GET',
-        success: function (response) {
-            if (Array.isArray(response) && response.length > 0) {
-                renderOrderDetails(response[0]); // 假設每個 email 只有一個訂單
-            } else {
-                console.error('No order details found for email:', email);
-            }
+        success: function (order) {
+            renderOrderDetails(order);
         },
         error: function (xhr, status, error) {
             console.error('Failed to fetch order details:', error, xhr.responseText);
         }
     });
 }
-
-
 
 // 渲染訂單詳細
 function renderOrderDetails(order) {
@@ -93,7 +88,7 @@ function renderOrderDetails(order) {
             </tr>
             <tr>
                 <th>訂單狀態</th>
-                <td>${order.status}</td>
+                <td>${getOrderStatus(Number(order.status))}</td> <!-- 使用函數轉換數值為文字描述 -->
             </tr>
         </table>
         <h5>產品列表</h5>
@@ -126,24 +121,22 @@ function renderOrderDetails(order) {
 
 // 保存訂單
 function saveOrder() {
-    const email = $('#editOrderEmail').val();
+    const orderId = $('#editOrderId').val();
     const status = $('#editOrderStatus').val();
 
     const orderData = {
-        email: email,
         status: status
     };
 
-    // 更新訂單
     $.ajax({
-        url: `http://localhost:8080/api/orders/${email}`,
+        url: `http://localhost:8080/api/order/${orderId}`,
         method: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify(orderData),
         success: function (response) {
             console.log('Order saved:', response);
             $('#editOrderModal').modal('hide');
-            fetchOrders(); // 重新拉取訂單資料
+            fetchOrders();
         },
         error: function (xhr, status, error) {
             console.error('Failed to save order:', error);
@@ -152,12 +145,12 @@ function saveOrder() {
 }
 
 // 編輯訂單
-function editOrder(email) {
+function editOrder(orderId) {
     $.ajax({
-        url: `http://localhost:8080/api/orders/${email}`,
+        url: `http://localhost:8080/api/order/${orderId}`,
         method: 'GET',
         success: function (order) {
-            $('#editOrderEmail').val(order.email);
+            $('#editOrderId').val(order.id); // 使用訂單 ID
             $('#editOrderStatus').val(order.status);
             $('#editOrderModal').modal('show');
         },
@@ -165,4 +158,19 @@ function editOrder(email) {
             console.error('Failed to fetch order:', error);
         }
     });
+}
+
+// 獲取訂單狀態的文字描述
+function getOrderStatus(status) {
+    switch (status) {
+        case 1: return '待付款';
+        case 2: return '已付款';
+        case 3: return '待出貨';
+        case 4: return '已出貨';
+        case 5: return '已送達';
+        case 6: return '已完成';
+        case 7: return '已取消';
+        case 8: return '退貨/換貨';
+        default: return '未知狀態';
+    }
 }
