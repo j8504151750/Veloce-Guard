@@ -9,16 +9,20 @@ $(document).ready(function () {
 });
 
 // 從API拉取訂單資料
-function fetchOrders(page = 1) {
+function fetchOrders() {
     $.ajax({
-        url: `http://localhost:8080/api/admin/orders?page=${page}`,
+        url: 'http://localhost:8080/api/orders',
         method: 'GET',
         success: function (response) {
-            console.error('Failed to fetch orders:', response);
+            console.log('Fetched orders:', response); // 調試輸出
+            renderTable(response); // 直接使用 response，不再依賴 content 和 totalPages
         },
-        error: function (error) {
-            renderTable(error.content);
-            renderPagination(error.totalPages, page);
+        error: function (xhr, status, error) {
+            console.error('Failed to fetch orders:', {
+                xhr: xhr,
+                status: status,
+                error: error
+            });
         }
     });
 }
@@ -33,48 +37,40 @@ function renderTable(orders) {
     tbody.empty();
     orders.forEach(order => {
         const row = `<tr>
-            <td>${order.orderId}</td>
-            <td>${order.userId}</td>
-            <td>${order.orderDate}</td>
-            <td>${order.totalAmount}</td>
-            <td>${getOrderStatus(order.status)}</td>
+            <td>${order.email}</td>
+            <td>${order.date}</td>
+            <td>${order.amount}</td>
+            <td>${order.status}</td> <!-- 確保這裡的鍵名與返回數據匹配 -->
             <td>
-                <button class="btn btn-info" onclick="showOrderDetails(${order.orderId})">查看詳細</button>
+                <button class="btn btn-info" onclick="showOrderDetails('${order.email}')">查看詳細</button>
             </td>
             <td>
-                <button class="btn btn-sm btn-warning" onclick="editOrder(${order.orderId})">編輯</button>
+                <button class="btn btn-sm btn-warning" onclick="editOrder('${order.email}')">編輯</button>
             </td>
         </tr>`;
         tbody.append(row);
     });
 }
 
-// 渲染分頁控制
-function renderPagination(totalPages, currentPage) {
-    const pagination = $('#pagination');
-    pagination.empty();
-
-    for (let i = 1; i <= totalPages; i++) {
-        const pageItem = `<li class="page-item ${i === currentPage ? 'active' : ''}">
-            <a class="page-link" href="#" onclick="fetchOrders(${i})">${i}</a>
-        </li>`;
-        pagination.append(pageItem);
-    }
-}
-
 // 顯示訂單詳細
-function showOrderDetails(orderId) {
+function showOrderDetails(email) {
     $.ajax({
-        url: `/api/orders/${orderId}`,
+        url: `http://localhost:8080/api/orders/${email}`,
         method: 'GET',
-        success: function (order) {
-            renderOrderDetails(order);
+        success: function (response) {
+            if (Array.isArray(response) && response.length > 0) {
+                renderOrderDetails(response[0]); // 假設每個 email 只有一個訂單
+            } else {
+                console.error('No order details found for email:', email);
+            }
         },
         error: function (xhr, status, error) {
-            console.error('Failed to fetch order details:', error);
+            console.error('Failed to fetch order details:', error, xhr.responseText);
         }
     });
 }
+
+
 
 // 渲染訂單詳細
 function renderOrderDetails(order) {
@@ -84,71 +80,41 @@ function renderOrderDetails(order) {
     const orderDetails = `
         <table class="table table-bordered">
             <tr>
-                <th>訂單編號</th>
-                <td>${order.orderId}</td>
+                <th>電子郵件</th>
+                <td>${order.email}</td>
             </tr>
             <tr>
-                <th>用戶ID</th>
-                <td>${order.userId}</td>
+                <th>訂單日期</th>
+                <td>${order.date}</td>
             </tr>
             <tr>
-                <th>收件人姓名</th>
-                <td>${order.recipientName}</td>
-            </tr>
-            <tr>
-                <th>收件人郵遞區號</th>
-                <td>${order.recipientZip}</td>
-            </tr>
-            <tr>
-                <th>收件人地址</th>
-                <td>${order.recipientAddress}</td>
-            </tr>
-            <tr>
-                <th>收件人電話</th>
-                <td>${order.recipientPhone}</td>
-            </tr>
-            <tr>
-                <th>付款方式</th>
-                <td>${order.paymentMethod}</td>
-            </tr>
-            <tr>
-                <th>訂單成立日期</th>
-                <td>${order.orderDate}</td>
-            </tr>
-            <tr>
-                <th>訂單總金額</th>
-                <td>${order.totalAmount}</td>
+                <th>總金額</th>
+                <td>${order.amount}</td>
             </tr>
             <tr>
                 <th>訂單狀態</th>
-                <td>${getOrderStatus(order.status)}</td>
+                <td>${order.status}</td>
             </tr>
         </table>
         <h5>產品列表</h5>
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>商品名稱</th>
-                    <th>產品類別</th>
                     <th>顏色</th>
                     <th>尺寸</th>
+                    <th>SKU</th>
                     <th>數量</th>
-                    <th>單價</th>
-                    <th>小計</th>
                     <th>圖片</th>
                 </tr>
             </thead>
             <tbody>
-                ${order.products.map(product => `
+                ${order.items.map(item => `
                     <tr>
-                        <td>${product.productName}</td>
-                        <td>${product.productCategory}</td>
-                        <td>${product.color}</td>
-                        <td>${product.size}</td>
-                        <td>${product.quantity}</td>
-                        <td>${product.unitPrice}</td>
-                        <td>${product.subtotal}</td>
-                        <td><img src="${product.image}" alt="${product.productName}" width="50"></td>
+                        <td>${item.color}</td>
+                        <td>${item.size}</td>
+                        <td>${item.sku}</td>
+                        <td>${item.quantity}</td>
+                        <td><img src="${item.image}" alt="${item.sku}" width="50"></td>
                     </tr>`).join('')}
             </tbody>
         </table>
@@ -160,17 +126,17 @@ function renderOrderDetails(order) {
 
 // 保存訂單
 function saveOrder() {
-    const orderId = parseInt($('#editOrderId').val());
-    const orderStatus = parseInt($('#editOrderStatus').val());
+    const email = $('#editOrderEmail').val();
+    const status = $('#editOrderStatus').val();
 
     const orderData = {
-        orderId: orderId,
-        status: orderStatus
+        email: email,
+        status: status
     };
 
     // 更新訂單
     $.ajax({
-        url: `/api/orders/${orderId}`,
+        url: `http://localhost:8080/api/orders/${email}`,
         method: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify(orderData),
@@ -186,12 +152,12 @@ function saveOrder() {
 }
 
 // 編輯訂單
-function editOrder(orderId) {
+function editOrder(email) {
     $.ajax({
-        url: `/api/orders/${orderId}`,
+        url: `http://localhost:8080/api/orders/${email}`,
         method: 'GET',
         success: function (order) {
-            $('#editOrderId').val(order.orderId);
+            $('#editOrderEmail').val(order.email);
             $('#editOrderStatus').val(order.status);
             $('#editOrderModal').modal('show');
         },
@@ -199,19 +165,4 @@ function editOrder(orderId) {
             console.error('Failed to fetch order:', error);
         }
     });
-}
-
-// 獲取訂單狀態的文字描述
-function getOrderStatus(status) {
-    switch (status) {
-        case 1: return '待付款';
-        case 2: return '已付款';
-        case 3: return '待出貨';
-        case 4: return '已出貨';
-        case 5: return '已送達';
-        case 6: return '已完成';
-        case 7: return '已取消';
-        case 8: return '退貨/換貨';
-        default: return '未知狀態';
-    }
 }
