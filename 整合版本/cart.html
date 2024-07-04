@@ -14,20 +14,20 @@
 <script>
     //測試是否有token
     document.addEventListener("DOMContentLoaded", function () {
-      const token = localStorage.getItem("jwt-token"); // 從 Local Storage 中讀取 jwt-token
-      if (token) {
-        console.log(token);
-        const decodedToken = jwt_decode(token);
+        const token = localStorage.getItem("jwt-token"); // 從 Local Storage 中讀取 jwt-token
+        if (token) {
+            console.log(token);
+            const decodedToken = jwt_decode(token);
 
-        // 打印解析後的token
-        console.log("Decoded JWT Token:", decodedToken);
-        console.log(decodedToken.email);
-      } else {
-        console.error("JWT Token not found");
-      }
-      // 你的其他 AJAX 請求代碼
+            // 打印解析後的token
+            console.log("Decoded JWT Token:", decodedToken);
+            console.log(decodedToken.email);
+        } else {
+            console.error("JWT Token not found");
+        }
+        // 你的其他 AJAX 請求代碼
     });
-  </script>
+</script>
 
 <body>
 
@@ -78,7 +78,9 @@
                 <h4>運費: <span id="shipping-fee">$60</span></h4>
                 <h4>總金額: <span id="total-amount">$1560</span></h4>
                 <div class="button-container">
-                    <button class="btn btn-secondary" id="continue-shopping">繼續購物</button>
+                    <button class="btn btn-secondary" id="continue-shopping">
+                        <a href="/整合版本/product.html" style="color: white; text-decoration: none;">繼續購物</a>
+                    </button>
                     <button class="btn btn-secondary" id="proceed-to-checkout">前往結帳</button>
                 </div>
             </div>
@@ -98,16 +100,16 @@
                         <div class="form-group">
                             <label for="postal-code">郵遞區號</label>
                             <input type="text" class="form-control" id="postal-code" required>
-                        </div>  
+                        </div>
                         <div class="form-group">
                             <label for="address">地址</label>
                             <input type="text" class="form-control" id="address" required>
-                        </div>                               
+                        </div>
                         <div class="form-group">
                             <label for="tel">電話</label>
                             <input type="text" class="form-control" id="tel" required>
                         </div>
-                                         
+
                     </div>
                     <div class="col-md-6">
                         <h4>付款資訊</h4>
@@ -148,9 +150,9 @@
                 <tbody id="order-details"></tbody>
             </table>
             <h4>訂單成立日期: <span id="order-date"></span></h4>
-            <button type="button" class="btn btn-secondary"><a href="/整合版本/product.html">返回商品頁面</a></button>
-
-
+            <button type="button" class="btn btn-secondary">
+                <a href="/整合版本/product.html" style="color: white; text-decoration: none;">返回商品頁面</a>
+            </button>
         </div>
 
         <!-- 確認彈出視窗 -->
