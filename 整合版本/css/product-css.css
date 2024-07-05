@@ -93,7 +93,12 @@ body {
   margin-left: 100px;
 }
 
-
+.btn-secondary {
+    text-align: center; /* Centers text horizontally */
+    line-height: 50px; /* Adjust this value to match your button's height */
+    height: 50px; /* Example height, adjust as needed */
+    padding: 0; /* Adjust or remove padding */
+}
 
 .header-social-area a {
   text-decoration: none;
@@ -571,25 +576,19 @@ img {
 .product {
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   justify-content: center;
-  /* 垂直居中 */
   align-items: center;
-  /* 水平居中 */
   padding-bottom: 50px;
   padding-left: 15px;
-  padding-top: 110px;
-  /* margin-left: 10px; */
+  padding-top: 20px;
 
 }
-
+/* 
 .product img {
-  max-width: 1000px;
-  /* 图片的最大宽度为其父容器的100% */
-  width: 100%;
-  height: auto;
-  /* 高度自动调整，以保持比例 */
-}
+  width: 407px; 
+  height: 408px; 
+  object-fit: cover;
+} */
 
 .title a {
   text-decoration: none;
@@ -609,14 +608,17 @@ img {
 
 /* 商品圖換第二章 */
 .image-container {
-  position: relative;
-  max-width: 1000px;
-  /* 图片的最大宽度为其父容器的100% */
-  width: 100%;
-  height: auto;
-  /* 高度自动调整，以保持比例 */
-  overflow: hidden;
-  
+  width: 100%; /* Ensures the container takes the full width of its parent */
+  height: 408px; /* Or whatever height maintains the aspect ratio you prefer */
+  display: flex;
+  justify-content: center; /* Centers the image horizontally */
+  align-items: center; /* Centers the image vertically */
+  overflow: hidden; /* Hides parts of the image that overflow the container */
+}
+.product img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover; /* or 'contain' based on your preference */
 }
 
 .image-container img {
@@ -919,4 +921,12 @@ input:hover{
 a:hover{
   color:#ffffff;
   text-decoration: none;
+}
+
+.product-name {
+  height: 60px; /* Adjust based on your needs */
+  overflow: hidden; /* Hides text that overflows the container */
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limits the text to two lines */
+  -webkit-box-orient: vertical;
 }

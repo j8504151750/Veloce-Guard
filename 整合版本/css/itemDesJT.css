@@ -550,7 +550,7 @@
     }
   
     /* Custom styles for the image container */
-    .image-sell {
+    .image-sell,.image-sell1,.image-sell2 {
         margin-bottom: 20px;
         max-height: calc(100vh - 100px); /* Adjust the height as needed */
         overflow-y: auto;
@@ -561,13 +561,35 @@
     .image-sell::-webkit-scrollbar {
         width: 8px; /* Customize scrollbar width */
     }
+    .image-sell1::-webkit-scrollbar {
+        width: 8px; /* Customize scrollbar width */
+    }
+    .image-sell2::-webkit-scrollbar {
+        width: 8px; /* Customize scrollbar width */
+    }
   
     .image-sell::-webkit-scrollbar-thumb {
         background-color: #888; /* Customize scrollbar color */
         border-radius: 4px; /* Customize scrollbar border radius */
     }
+    .image-sell1::-webkit-scrollbar-thumb {
+        background-color: #888; /* Customize scrollbar color */
+        border-radius: 4px; /* Customize scrollbar border radius */
+    }
+    .image-sell2::-webkit-scrollbar-thumb {
+        background-color: #888; /* Customize scrollbar color */
+        border-radius: 4px; /* Customize scrollbar border radius */
+    }
   
     .image-sell img {
+        width: 100%;
+        height: auto;
+    }
+    .image-sell1 img {
+        width: 100%;
+        height: auto;
+    }
+    .image-sell2 img {
         width: 100%;
         height: auto;
     }
@@ -936,4 +958,16 @@
   
   #cartItemCount {
     /* display: none; */
+}
+
+.nav-pills .nav-link.active {
+  background-color: #6c757d !important; /* Bootstrap 的 `secondary` 颜色 */
+  color: white !important; /* 设置文字颜色为白色，以提高可读性 */
+}
+.nav-link {
+  color: #FFFFFF !important; /* 设置字体颜色为白色 */
+}
+a:hover{
+  color:#ffffff;
+  text-decoration: none;
 }

@@ -2,7 +2,7 @@
 $(document).ready(function () {
     $.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/api/public/products?pageNumber=0&pageSize=30&sortBy=productId&sortOrder=asc',
+        url: 'http://localhost:8080/api/products?pageNumber=0&pageSize=30&sortBy=productId&sortOrder=asc',
         dataType: 'json',
         headers: {
             'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJpYXQiOjE3MTg3OTE3NTQsImVtYWlsIjoiam9obi5kb2VAZXhhbXBsZS5jb20ifQ.Fmr94KQD5GFs7oJn6eFyehXkrF5Jx2278uoECEylX5g'

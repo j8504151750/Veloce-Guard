@@ -1,0 +1,41 @@
+[
+  {
+    "product_name": "Product 1",
+    "subcategory": "Category 1",
+    "brand": "Brand A",
+    "description": "Description 1",
+    "price": 10.0,
+    "productVariants": [
+      {
+        "color": "Red",
+        "size": "M",
+        "inventory": 100,
+        "sku": "SKU001",
+        "image": "image1.jpg"
+      }
+    ]
+  },
+  {
+    "product_name": "Product 2",
+    "subcategory": "Category 2",
+    "brand": "Brand B",
+    "description": "Description 2",
+    "price": 20.0,
+    "productVariants": [
+      {
+        "color": "Blue",
+        "size": "L",
+        "inventory": 50,
+        "sku": "SKU002",
+        "image": "image2.jpg"
+      },
+      {
+        "color": "Blue",
+        "size": "XL",
+        "inventory": 50,
+        "sku": "SKU002-XL",
+        "image": "image2.jpg"
+      }
+    ]
+  }
+]

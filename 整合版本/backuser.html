@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -220,6 +221,7 @@
                                 </thead>
                                 <tbody id="user-table-body">
     <!------------------------------------渲染會員從資料庫使用AJAX ------------------------------------------------>
+<<<<<<< HEAD
     <script>
         let currentEmail = "";
         // 将 fetchUsers 函数定义在全局作用域
@@ -308,6 +310,78 @@
             fetchUsers();
         });
         </script>
+=======
+                                    <script>
+
+                                        $(document).ready(function () {
+                                            const token = localStorage.getItem("jwt-token");
+                                            console.log(token);
+                                            function fetchUsers(page = 1) {
+                                                $.ajax({
+                                                    url: 'http://localhost:8080/api/admin/users?pageNumber=0&pageSize=10&sortBy=userId&sortOrder=asc', // 更改為你的 API URL
+                                                    method: 'GET',
+                                                    dataType: 'json',
+                                                    headers: {
+                                                        
+                'Authorization': 'Bearer ' + token
+            },
+                                                    success: function (response) {
+                                                        console.log(response)
+                                                        // const users = response.users;
+                                                        // const totalPages = response.totalPages;
+                                                        // renderTable(response.content);
+                                                        // renderPagination(totalPages, page);
+                                                        // $('#pagination-info').text(`Showing ${response.from} to ${response.to} of ${response.total} Entries`);
+                                                    },
+                                                    error: function (err) {
+                                                        console.log(err);
+                                                        renderTable(err.responseJSON.content); // 假設你的API返回的產品資料在 'products' 屬性下
+                                                    }
+                                                });
+                                            }
+
+                                            function renderTable(users) {
+                                                const tbody = $('#user-table-body');
+                                                tbody.empty();
+
+                                                users.forEach(user => {
+                                                    const row = `
+                 <tr data-user-id="${user.userId}">
+                    <td class="py-3">${user.userId}</td>
+                    <td class="align-middle py-3">
+                        <div class="d-flex align-items-center">
+                            <div class="position-relative mr-2">
+                                <span class="avatar-placeholder mr-md-2">${user.firstName.charAt(0)}</span>
+                            </div>
+                            ${user.firstName}
+                        </div>
+                    </td>
+                    <td class="py-3">${user.email}</td>
+                    <td class="py-3">${user.mobileNumber}</td>
+                    
+                    <td class="py-3">
+                        <div class="position-relative">
+                            <a class="link-dark d-inline-block" href="#">
+                                <i class="gd-pencil icon-text"></i>
+                            </a>
+                            <a class="link-dark d-inline-block" href="#">
+                                <i class="gd-trash icon-text"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>`;
+                                                    tbody.append(row);
+                                                });
+                                            }
+
+                                            // Fetch initial data
+                                            fetchUsers();
+                                        });
+
+
+
+                                    </script>
+>>>>>>> 10b4caf10f0fecee9942ffccf6c5b7aff88de50d
        <!-------------------------------------------- 結束渲染 -------------------------------------------------------->
                                 </tbody>
                             </table>

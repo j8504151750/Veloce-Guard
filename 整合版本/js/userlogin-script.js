@@ -61,6 +61,7 @@ document
       },
     };
 
+<<<<<<< HEAD
     // Use fetch to send the data to the server
     fetch("http://localhost:8080/api/register", {
       method: "POST",
@@ -129,6 +130,25 @@ document
         console.error("Error:", error);
       });
   });
+=======
+   // Use fetch to send the data to the server
+   fetch('http://10.0.103.168:8080/api/user', {  
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Accress-COntrol-Allow-Origin': '*'
+    },
+    body: JSON.stringify(data), 
+})
+.then(response => response.json()) 
+.then(data => {
+    console.log('Success:', data); 
+})
+.catch((error) => {
+    console.error('Error:', error);
+});
+});
+>>>>>>> 10b4caf10f0fecee9942ffccf6c5b7aff88de50d
 
 //"登入"資訊傳到後端
 // Handle the login form submission
