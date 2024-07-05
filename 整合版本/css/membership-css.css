@@ -1,19 +1,32 @@
 
+@font-face {
+	font-family: 'Taipei';
+	src: url('../Font/Taipei.ttf') ,
+		  
+  }
+ 
+
 /* Remove the default bottom border from nav-tabs */
 .nav-tabs {
     border-bottom: none;
 }
 
 /* Add a custom underline (bottom border) to active nav links */
-.nav-tabs .nav-link.active {
-    border-bottom: 2px solid #007bff; /* Use Bootstrap's primary color */
+.nav-tabs .nav-link-main.active {
+    border-bottom: 2px solid #003c9d ; /* Use Bootstrap's primary color */
+    color: #003c9d !important;
     border-radius: 0; /* Remove the border radius to match nav-tabs style */
+    border-style: outset;
 }
 
 /* Add space below the custom underline */
-.nav-item .nav-link.active {
+.nav-item .nav-link-main.active {
     padding-bottom: calc(0.5rem - 2px); /* Adjust padding to account for the added border */
-}
+
+  }
+  .nav-link-main{
+    padding: 2px;
+  }
 
 /* Optional: Adjust the padding of the nav-tabs container if needed for alignment */
 .nav-tabs {
@@ -35,6 +48,7 @@
 /* Logo Area */
 .logo-area .logo-text a {
     text-decoration: none !important;
+    
   }
   
   .dropdown-btn {
@@ -181,35 +195,13 @@
   
   }
 
-  /* Footer Area */
-.text-footer {
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 130px;
-
+ /* -----------------------------FOOTER----------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+ 
 }
-
-#footer {
-  font-family: 'Permanent Marker', cursive;
-  color: #ffffff;
-  background-color: black;
-  display: flex;
-  justify-content: space-between;
-  padding: 60px;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  padding: 10px;
-}
-
-.footer-container{
-  text-align: center;
-  margin: auto; 
-  width: 100%; 
-}
-
 .footer-body {
   font-family: 'Taipei';
   display: flex;
@@ -285,7 +277,7 @@
   left: 0;
   width: 100%;
   height: 100px;
-  background: url("/images/wave02.png");
+  background: url("../images/wave02.png");
   background-size: 1000px 100px;
 }
 
@@ -315,4 +307,232 @@
   opacity: 0.7;
   bottom: 20px;
   animation: animate 3s linear infinite;
+}
+
+@keyframes animateWaves {
+  0% {
+    background-position-x: 1000px;
+  }
+  100% {
+    background-positon-x: 0px;
+  }
+}
+
+@keyframes animate {
+  0% {
+    background-position-x: -1000px;
+  }
+  100% {
+    background-positon-x: 0px;
+  }
+}
+
+
+/* -----------------------------FOOTER----------------------------------- */
+
+.social-icon,
+.menu {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+  flex-wrap: wrap;
+}
+
+.social-icon__item,
+.menu__item {
+  list-style: none;
+}
+
+.social-icon__link {
+  font-size: 2rem;
+  color: #fff;
+  margin: 0 10px;
+  display: inline-block;
+  transition: 0.5s;
+}
+.social-icon__link:hover {
+  transform: translateY(-10px);
+}
+
+.menu__link {
+  font-size: 1.2rem;
+  color: #fff;
+  margin: 0 10px;
+  display: inline-block;
+  transition: 0.5s;
+  text-decoration: none;
+  opacity: 0.75;
+  font-weight: 300;
+}
+
+.menu__link:hover {
+  opacity: 1;
+}
+
+.footer p {
+  color: #fff;
+  margin: 15px 0 10px 0;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.wave {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: url("../images/wave02.png");
+  background-size: 1000px 100px;
+}
+
+.wave#wave1 {
+  z-index: 1000;
+  opacity: 1;
+  bottom: 0;
+  animation: animateWaves 4s linear infinite;
+}
+
+.wave#wave2 {
+  z-index: 999;
+  opacity: 0.5;
+  bottom: 10px;
+  animation: animate 4s linear infinite !important;
+}
+
+.wave#wave3 {
+  z-index: 1000;
+  opacity: 0.2;
+  bottom: 15px;
+  animation: animateWaves 3s linear infinite;
+}
+
+.wave#wave4 {
+  z-index: 999;
+  opacity: 0.7;
+  bottom: 20px;
+  animation: animate 3s linear infinite;
+}
+
+@font-face {
+	font-family: 'Taipei';
+	src: url('../Font/Taipei.ttf') ,
+		  
+  }
+
+/* Logo Area */
+.logo-area .logo-text a {
+  text-decoration: none !important;
+}
+
+.dropdown-btn {
+
+  color: white !important;
+
+}
+
+/* Fonts */
+.permanent-marker-regular {
+  font-family: "Permanent Marker", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Permanent Marker', cursive;
+  
+}
+
+/* Remove unnecessary style repetitions */
+.logo-area .dropdown-toggle {
+  margin-right: 5px;
+}
+
+.dropdown {
+  padding-right: 5px;
+  width: auto;
+}
+
+.dropdown-toggle {
+  padding: 0.1rem 0.1rem;
+}
+
+.logo-text a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Logo Area */
+.logo-area {
+
+  width: 100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  height: 100px;
+  background-color: black;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding-left: 30px;
+  opacity: .80;
+}
+
+.header-btn {
+  margin-right: 20px;
+}
+
+.btn-search {
+  font-size: 20px;
+  color: white !important;
+  padding-right: 10px;
+}
+
+.header-social-area {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.logo-area .logo-text {
+  flex-grow: 1;
+  text-align: center;
+  /* margin-left: 5px; */
+}
+
+.logo-text {
+  font-family: 'Permanent Marker', cursive;
+  display: inline-block;
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 36px;
+  margin-left: 100px;
+}
+
+
+
+.header-social-area a {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 18px;
+  margin-right: 30px;
+
+}
+.nav-pills .nav-link.active {
+  background-color: #6c757d !important; /* Bootstrap 的 `secondary` 颜色 */
+  color: white !important; /* 设置文字颜色为白色，以提高可读性 */
+}
+.nav-link {
+  color: #FFFFFF !important; /*设置字体颜色为白色*/
+  font-family: 'Permanent Marker', cursive!important;
+}
+a:hover{
+  
+  text-decoration: none;
+}
+.nav-link-main{
+  color: #212529!important;
+  text-decoration: none;
 }

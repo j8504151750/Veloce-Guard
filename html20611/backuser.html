@@ -56,76 +56,17 @@
           <!-- End Logo For Desktop View -->
         </div>
 
-        <div class="header-content col px-md-3">
-          <div class="d-flex align-items-center">
-            <!-- Side Nav Toggle -->
-            <a
-              class="js-side-nav header-invoker d-flex mr-md-2"
-              href="#"
-              data-close-invoker="#sidebarClose"
-              data-target="#sidebar"
-              data-target-wrapper="body"
-            >
-              <i class="gd-align-left"></i>
-            </a>
-            <!-- End Side Nav Toggle -->
-
-            <!-- User Avatar -->
-            <div class="dropdown mx-3 dropdown ml-2 ml-auto">
-              <a
-                id="profileMenuInvoker"
-                class="header-complex-invoker"
-                href="#"
-                aria-controls="profileMenu"
-                aria-haspopup="true"
-                aria-expanded="false"
-                data-unfold-event="click"
-                data-unfold-target="#profileMenu"
-                data-unfold-type="css-animation"
-                data-unfold-duration="300"
-                data-unfold-animation-in="fadeIn"
-                data-unfold-animation-out="fadeOut"
-              >
-                <!--img class="avatar rounded-circle mr-md-2" src="#" alt="John Doe"-->
-                <span class="mr-md-2 avatar-placeholder">J</span>
-                <span class="d-none d-md-block">John Doe</span>
-                <i class="gd-angle-down d-none d-md-block ml-2"></i>
-              </a>
-
-              <ul
-                id="profileMenu"
-                class="unfold unfold-user unfold-light unfold-top unfold-centered position-absolute pt-2 pb-1 mt-4 unfold-css-animation unfold-hidden fadeOut"
-                aria-labelledby="profileMenuInvoker"
-                style="animation-duration: 300ms"
-              >
-                <li class="unfold-item">
-                  <a
-                    class="unfold-link d-flex align-items-center text-nowrap"
-                    href="#"
-                  >
-                    <span class="unfold-item-icon mr-3">
-                      <i class="gd-user"></i>
-                    </span>
-                    My Profile
-                  </a>
-                </li>
-                <li class="unfold-item unfold-item-has-divider">
-                  <a
-                    class="unfold-link d-flex align-items-center text-nowrap"
-                    href="#"
-                  >
-                    <span class="unfold-item-icon mr-3">
-                      <i class="gd-power-off"></i>
-                    </span>
-                    Sign Out
-                  </a>
-                </li>
-              </ul>
+            <div class="header-content col px-md-3">
+                <div class="d-flex align-items-center">
+                    <!-- Side Nav Toggle -->
+                    <a class="js-side-nav header-invoker d-flex mr-md-2" href="#" data-close-invoker="#sidebarClose"
+                        data-target="#sidebar" data-target-wrapper="body">
+                        <i class="gd-align-left"></i>
+                    </a>
+                    <!-- End Side Nav Toggle -->
+                </div>
             </div>
-            <!-- End User Avatar -->
-          </div>
-        </div>
-      </nav>
+        </nav>
     </header>
     <!-- End Header -->
 
@@ -156,24 +97,18 @@
               ></span>
             </a>
 
-            <!-- Users: subUsers -->
-            <ul
-              id="subUsers"
-              class="side-nav-menu side-nav-menu-second-level mb-0"
-            >
-              <li class="side-nav-menu-item active">
-                <a class="side-nav-menu-link" href="users.html">所有會員</a>
-              </li>
-              <li class="side-nav-menu-item">
-                <a class="side-nav-menu-link" href="user-edit.html">新增會員</a>
-              </li>
-            </ul>
-            <!-- End Users: subUsers -->
-          </li>
-          <!-- End Users -->
-          <!-- Title -->
-          <li class="sidebar-heading h6">訂單相關</li>
-          <!-- End Title -->
+                    <!-- Users: subUsers -->
+                    <ul id="subUsers" class="side-nav-menu side-nav-menu-second-level mb-0">
+                        <li class="side-nav-menu-item active">
+                            <a class="side-nav-menu-link" href="users.html">所有會員</a>
+                        </li>
+                    </ul>
+                    <!-- End Users: subUsers -->
+                </li>
+                <!-- End Users -->
+                <!-- Title -->
+                <li class="sidebar-heading h6">訂單相關</li>
+                <!-- End Title -->
 
           <!-- 訂單 -->
           <li class="side-nav-menu-item side-nav-has-menu">
@@ -253,65 +188,41 @@
           </li>
           <!-- End 商品 -->
 
-          <!-- Title -->
-          <li class="sidebar-heading h6">優惠卷相關</li>
-          <!-- End Title -->
+                <!-- Title -->
+                <li class="sidebar-heading h6">聯絡我們相關</li>
+                <!-- End Title -->
+                
+                <!-- 優惠卷 -->
+                <li class="side-nav-menu-item side-nav-has-menu ">
+                    <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subticket">
+                        <span class="side-nav-menu-icon d-flex mr-3">
+                            <i class="gd-comment-alt"></i>
+                        </span>
+                        <span class="side-nav-fadeout-on-closed media-body">聯絡我們</span>
+                        <span class="side-nav-control-icon d-flex">
+                            <i class="gd-angle-right side-nav-fadeout-on-closed"></i>
+                        </span>
+                        <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
+                    </a>
 
-          <!-- 優惠卷 -->
-          <li class="side-nav-menu-item side-nav-has-menu">
-            <a
-              class="side-nav-menu-link media align-items-center"
-              href="#"
-              data-target="#subticket"
-            >
-              <span class="side-nav-menu-icon d-flex mr-3">
-                <i class="gd-money"></i>
-              </span>
-              <span class="side-nav-fadeout-on-closed media-body">優惠卷</span>
-              <span class="side-nav-control-icon d-flex">
-                <i class="gd-angle-right side-nav-fadeout-on-closed"></i>
-              </span>
-              <span
-                class="side-nav__indicator side-nav-fadeout-on-closed"
-              ></span>
-            </a>
+                    <!--  subticket -->
+                    <ul id="subticket" class="side-nav-menu side-nav-menu-second-level mb-0">
+                        <li class="side-nav-menu-item active">
+                            <a class="side-nav-menu-link" href="#">所有回饋</a>
+                        </li>
+                       
+                    </ul>
+                    <!-- subticket -->
+                </li>
+                <!-- End 優惠卷 -->
 
-            <!--  subticket -->
-            <ul
-              id="subticket"
-              class="side-nav-menu side-nav-menu-second-level mb-0"
-            >
-              <li class="side-nav-menu-item active">
-                <a class="side-nav-menu-link" href="ticket.html">所有優惠卷</a>
-              </li>
-              <li class="side-nav-menu-item">
-                <a class="side-nav-menu-link" href="ticket-edit.html"
-                  >新增優惠卷</a
-                >
-              </li>
+
+
+                
+
             </ul>
-            <!-- subticket -->
-          </li>
-          <!-- End 優惠卷 -->
-
-          <!-- Settings -->
-          <li class="side-nav-menu-item">
-            <a
-              class="side-nav-menu-link media align-items-center"
-              href="settings.html"
-            >
-              <span class="side-nav-menu-icon d-flex mr-3">
-                <i class="gd-settings"></i>
-              </span>
-              <span class="side-nav-fadeout-on-closed media-body"
-                >Settings</span
-              >
-            </a>
-          </li>
-          <!-- End Settings -->
-        </ul>
-      </aside>
-      <!-- End Sidebar Nav -->
+        </aside>
+        <!-- End Sidebar Nav -->
 
       <div class="content">
         <div class="py-4 px-3 px-md-4">
@@ -334,65 +245,56 @@
                 <div class="h3 mb-0">會員</div>
               </div>
 
-              <!-- Users -->
-              <div class="table-responsive-xl">
-                <table class="table text-nowrap mb-0">
-                  <thead>
-                    <tr>
-                      <th class="font-weight-semi-bold border-top-0 py-2">#</th>
-                      <th class="font-weight-semi-bold border-top-0 py-2">
-                        Name
-                      </th>
-                      <th class="font-weight-semi-bold border-top-0 py-2">
-                        Email
-                      </th>
-                      <th class="font-weight-semi-bold border-top-0 py-2">
-                        Registration Date
-                      </th>
-                      <th class="font-weight-semi-bold border-top-0 py-2">
-                        Status
-                      </th>
-                      <th class="font-weight-semi-bold border-top-0 py-2">
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody id="user-table-body">
-                    <!------------------------------------渲染會員從資料庫使用AJAX ------------------------------------------------>
-                    <script>
-                      $(document).ready(function () {
-                        function fetchUsers(page = 1) {
-                          $.ajax({
-                            url: "http://localhost:8080/api/admin/users?pageNumber=0&pageSize=10&sortBy=userId&sortOrder=asc", // 更改為你的 API URL
-                            method: "GET",
-                            dataType: "json",
-                            headers: {
-                              Authorization:
-                                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJpYXQiOjE3MTkyMTE0NTMsImVtYWlsIjoiam9obi5kb2VAZXhhbXBsZS5jb20ifQ.gRup7FcTmXvNDMXMuth-xKgVENuPJMmQRt2UPiDfjlc",
-                            },
-                            success: function (response) {
-                              console.log(response);
-                              // const users = response.users;
-                              // const totalPages = response.totalPages;
-                              renderTable(response.content);
-                              // renderPagination(totalPages, page);
-                              // $('#pagination-info').text(`Showing ${response.from} to ${response.to} of ${response.total} Entries`);
-                            },
-                            error: function (err) {
-                              console.error("Error fetching users:", err);
-                              renderTable(err.responseJSON.content);
-                            },
-                          });
-                        }
+                        <!-- Users -->
+                        <div class="table-responsive-xl">
+                            <table class="table text-nowrap mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">會員ID</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">姓名</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">Email</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">電話號碼</th>
+                                        <!-- <th class="font-weight-semi-bold border-top-0 py-2">Status</th> -->
+                                        <th class="font-weight-semi-bold border-top-0 py-2">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="user-table-body">
+    <!------------------------------------渲染會員從資料庫使用AJAX ------------------------------------------------>
+                                    <script>
+
+                                        $(document).ready(function () {
+                                            function fetchUsers(page = 1) {
+                                                $.ajax({
+                                                    url: 'http://localhost:8080/api/admin/users?pageNumber=0&pageSize=10&sortBy=userId&sortOrder=asc', // 更改為你的 API URL
+                                                    method: 'GET',
+                                                    dataType: 'json',
+                                                    headers: {
+                                                        
+                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJpYXQiOjE3MTg4NjEzMjgsImVtYWlsIjoiam9obi5kb2VAZXhhbXBsZS5jb20ifQ.iUM0sEEZU9aHhhFM3rqAhw9VV2K_cvGrzg0ISC9lOiI'
+            },
+                                                    success: function (response) {
+                                                        console.log(response)
+                                                        // const users = response.users;
+                                                        // const totalPages = response.totalPages;
+                                                        // renderTable(response.content);
+                                                        // renderPagination(totalPages, page);
+                                                        // $('#pagination-info').text(`Showing ${response.from} to ${response.to} of ${response.total} Entries`);
+                                                    },
+                                                    error: function (err) {
+                                                        console.log(err);
+                                                        renderTable(err.responseJSON.content); // 假設你的API返回的產品資料在 'products' 屬性下
+                                                    }
+                                                });
+                                            }
 
                         function renderTable(users) {
                           const tbody = $("#user-table-body");
                           tbody.empty();
 
-                          users.forEach((user, index) => {
-                            const row = `
-                 <tr data-user-id="${user.id}">
-                    <td class="py-3">${index + 1}</td>
+                                                users.forEach(user => {
+                                                    const row = `
+                 <tr data-user-id="${user.userId}">
+                    <td class="py-3">${user.userId}</td>
                     <td class="align-middle py-3">
                         <div class="d-flex align-items-center">
                             <div class="position-relative mr-2">
@@ -404,14 +306,8 @@
                         </div>
                     </td>
                     <td class="py-3">${user.email}</td>
-                    <td class="py-3">${new Date(
-                      user.registerTime
-                    ).toLocaleDateString()}</td>
-                    <td class="py-3">
-                        <span class="badge badge-pill badge-${
-                          user.status === "Verified" ? "success" : "warning"
-                        }">${user.status}</span>
-                    </td>
+                    <td class="py-3">${user.mobileNumber}</td>
+                    
                     <td class="py-3">
                         <div class="position-relative">
                             <a class="link-dark d-inline-block" href="#">
@@ -423,108 +319,30 @@
                         </div>
                     </td>
                 </tr>`;
-                            tbody.append(row);
-                          });
-                        }
+                                                    tbody.append(row);
+                                                });
+                                            }
 
-                        function renderPagination(totalPages, currentPage) {
-                          const pagination = $("#pagination");
-                          pagination.empty();
+                                            // Fetch initial data
+                                            fetchUsers();
+                                        });
 
-                          for (let i = 1; i <= totalPages; i++) {
-                            const activeClass =
-                              i === currentPage ? "active" : "";
-                            pagination.append(
-                              `<li class="page-item ${activeClass}"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`
-                            );
-                          }
 
-                          $(".page-link").click(function (e) {
-                            e.preventDefault();
-                            const page = $(this).data("page");
-                            fetchUsers(page);
-                          });
-                        }
 
-                        // Fetch initial data
-                        fetchUsers();
-                      });
-                    </script>
-                    <!-------------------------------------------- 結束渲染 -------------------------------------------------------->
-                  </tbody>
-                </table>
-                <div
-                  class="card-footer d-block d-md-flex align-items-center d-print-none"
-                >
-                  <div class="d-flex mb-2 mb-md-0">
-                    Showing 1 to 8 of 24 Entries
-                  </div>
-
-                  <nav
-                    class="d-flex ml-md-auto d-print-none"
-                    aria-label="Pagination"
-                  >
-                    <ul
-                      class="pagination justify-content-end font-weight-semi-bold mb-0"
-                    >
-                      <li class="page-item">
-                        <a
-                          id="datatablePaginationPrev"
-                          class="page-link"
-                          href="#!"
-                          aria-label="Previous"
-                          ><i
-                            class="gd-angle-left icon-text icon-text-xs d-inline-block"
-                          ></i
-                        ></a>
-                      </li>
-                      <li class="page-item d-none d-md-block">
-                        <a
-                          id="datatablePaginationPage0"
-                          class="page-link active"
-                          href="#!"
-                          data-dt-page-to="0"
-                          >1</a
-                        >
-                      </li>
-                      <li class="page-item d-none d-md-block">
-                        <a
-                          id="datatablePagination1"
-                          class="page-link"
-                          href="#!"
-                          data-dt-page-to="1"
-                          >2</a
-                        >
-                      </li>
-                      <li class="page-item d-none d-md-block">
-                        <a
-                          id="datatablePagination2"
-                          class="page-link"
-                          href="#!"
-                          data-dt-page-to="2"
-                          >3</a
-                        >
-                      </li>
-                      <li class="page-item">
-                        <a
-                          id="datatablePaginationNext"
-                          class="page-link"
-                          href="#!"
-                          aria-label="Next"
-                          ><i
-                            class="gd-angle-right icon-text icon-text-xs d-inline-block"
-                          ></i
-                        ></a>
-                      </li>
-                    </ul>
-                  </nav>
+                                    </script>
+       <!-------------------------------------------- 結束渲染 -------------------------------------------------------->
+                                </tbody>
+                            </table>
+                           
+                        <!-- End Users -->
+                    </div>
                 </div>
-              </div>
-              <!-- End Users -->
+
+
             </div>
-          </div>
+
+     
         </div>
-      </div>
     </main>
 
     <!-- Edit User Modal修改按鈕 -->
@@ -586,7 +404,7 @@
       </div>
     </div>
 
-    <script src="backuser_script.js"></script>
+  <!-- <script src="/user_script.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="public/graindashboard/js/graindashboard.js"></script>
     <script src="public/graindashboard/js/graindashboard.vendor.js"></script>

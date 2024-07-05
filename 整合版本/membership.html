@@ -4,11 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Membership Page</title>
+    <title>Veloce Guard |  會員中心</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/membership-css.css">
@@ -24,38 +27,49 @@
 <body>
 
     <header style="position: sticky; top: 0; z-index: 1000;">
-        <div class="logo-sidebar-container">
+    <div class="logo-sidebar-container">
 
-            <!-- Logo Area -->
-            <div class="logo-area d-flex align-items-center">
-                <!-- Dropdown Navigation -->
-                <div class=" dropdown p-0 m-0">
-                    <a class="dropdown-btn btn btn-black btn-sm dropdown-toggle" href="./index.html" role="button"
-                        id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">首頁</a>
+      <!-- Logo Area -->
+      <div class="logo-area d-flex align-items-center">
+        <!--Navbar -->
+        <ul class="nav nav-pills ">
+          <li class="nav-item">
+            <a class="nav-link " href="index.html">首頁</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"  href="product.html">安全帽</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="glove.html">手套</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="clothes.html">防摔衣</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="connect.html">聯絡我們</a>
+          </li>
+        </ul>
+        <!-- Logo Text -->
+        <div class="logo-name logo-text text-center"><a href="index.html">Veloce Guard</a></div>
+        <div class="header-btn d-flex align-items-center ">
+          <form class="d-flex ">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+          </form>
 
-                    <a class="dropdown-btn btn btn-black btn-sm dropdown-toggle" href="./product.html" role="button"
-                        id="dropdownMenuLink1" data-bs-toggle="dropdown" aria-expanded="false">產品</a>
 
-                    <a class="dropdown-btn btn btn-black btn-sm dropdown-toggle" href="./connect.html" role="button"
-                        id="dropdownMenuLink1" data-bs-toggle="dropdown" aria-expanded="false">聯絡我們</a>
-
-                </div>
-
-                <!-- Logo Text -->
-                <div class="logo-name logo-text text-center"><a href="index.html">Veloce Guard</a></div>
-                <div class="header-btn d-flex align-items-center ">
+          <!-- 購物車按鈕 -->
+          <a href="shopcart.html" class="btn-search btn btn-black btn-sm me-2" data-bs-toggle="tooltip"
+            data-bs-placement="bottom" title="購物車"><i class="fa fa-cart-arrow-down"></i></a>
 
 
-
-                    <!-- 購物車按鈕 -->
-                    <a href="shopcart.html" class="btn-search btn btn-black btn-sm me-2" data-bs-toggle="tooltip"
-                        data-bs-placement="bottom" title="購物車"><i class="fa fa-cart-arrow-down"></i></a>
-
-
-                </div>
-            </div>
+          <!-- 會員功能按鈕 -->
+          <a href="member.html" class="btn-search btn btn-black btn-sm" data-bs-toggle="tooltip"
+            data-bs-placement="bottom" title="會員"><i class="fa fa-user-ninja"></i></a>
         </div>
-    </header>
+      </div>
+    </div>
+  </header>
 
     <div class="container mt-5">
         <div class="row">
@@ -63,10 +77,10 @@
                 <!-- Main Tabs for Membership Page -->
                 <ul class="nav nav-tabs justify-content-end" style="margin-right: 50px;">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#orders">我的訂單</a>
+                        <a class="nav-link-main active" data-toggle="tab" href="#orders" >我的訂單</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#info">會員資料</a>
+                        <a class="nav-link-main" data-toggle="tab" href="#info">會員資料</a>
                     </li>
                 </ul>
 

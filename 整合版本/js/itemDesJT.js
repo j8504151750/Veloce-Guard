@@ -37,24 +37,47 @@ function getProductDetails(productId) {
             $('#productDescription').text(product.description);
             $('#productPrice').text(`${product.price}`);
 
-            // Update images and SKU options here if needed
-            // Assuming first variant image is used for main display if exists
-            if (product.productVariants && product.productVariants.length > 0) {
-                $('.image-sell img').first().attr('src', product.productVariants[0].image);
-
-
-
+             // Fetch product variant images
+             getProductVariantImages(productId);
+            
                 // Clear existing SKU options
                 $('#sku').empty();
                 product.productVariants.forEach(function(variant) {
                     $('#sku').append(new Option(variant.sku));
                 });
                 $('#sku').change();
-            }
+            
             // updateCartItemCount(0); // Example, adjust as needed
         },
         error: function(error) {
             console.error('Error fetching product details:', error);
+        }
+    });
+}function getProductVariantImages(productId) {
+    $.ajax({
+        url: `http://localhost:8080/api/product/${productId}/variant/images`,
+        type: 'GET',
+        contentType: 'application/json',
+        success: function(images) {
+            console.log('Variant images:', images);
+            // Assuming images is an array of URLs for variant images
+            if (images && images.length > 0) {
+                $('.image-sell img').each(function(index) {
+                    if (index < images.length) {
+                        $(this).attr('src', images[index]);
+                    } else {
+                        $(this).first().remove(); // Clear remaining images if fewer images are returned
+                    }
+                });
+            } else {
+                // Clear all image sources if no images are returned
+                $('.image-sell img').first().remove();
+            }
+        },
+        error: function(error) {
+            console.error('Error fetching variant images:', error);
+            // Handle error (e.g., show default image or clear existing images)
+            $('.image-sell img').attr('src', ''); // Clear images on error
         }
     });
 }

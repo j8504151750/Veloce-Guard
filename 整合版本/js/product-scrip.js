@@ -74,3 +74,5 @@ $(document).ready(function () {
 
     });
 });
+const token = localStorage.getItem('jwt-token');
+console.log('Current JWT Token:', token);
