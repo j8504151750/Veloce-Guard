@@ -150,18 +150,25 @@ $(document).ready(function () {
             const total = price + shippingFee;
             $('#shipping-fee').text('$' + shippingFee);
             $('#total-amount').text('$' + total);
-        }).fail(function() {
+        }).fail(function () {
             alert('加載總金額失敗');
         });
     }
+
+    // 初始化標誌
+    let reloadOnce = sessionStorage.getItem('reloadOnce') === 'true';
 
     // 加載購物車
     function loadCart(userEmail) {
         $.get(`http://localhost:8080/api/cart/items/${userEmail}`, function (items) {
             let cartItemsHtml = '';
             console.log(items); // 調試輸出
-            items.forEach(item => {
-                cartItemsHtml += `
+            if (items.length === 0) {
+                // 購物車為空的情況
+                cartItemsHtml = '<tr><td colspan="6" class="text-center">購物車為空</td></tr>';
+            } else {
+                items.forEach(item => {
+                    cartItemsHtml += `
                     <tr data-sku="${item.sku}">
                         <td>${item.name}</td>
                         <td>${item.sku}</td>
@@ -170,20 +177,36 @@ $(document).ready(function () {
                         <td>
                             <div class="quantity-controls">
                                 <button class="btn btn-outline-secondary btn-sm btn-quantity" data-action="decrease">-</button>
-                                <input type="number" class=" quantity-input" value="${item.quantity}" min="1">
+                                <input type="number" class="quantity-input" value="${item.quantity}" min="1">
                                 <button class="btn btn-outline-secondary btn-sm btn-quantity" data-action="increase">+</button>
                             </div>
                         </td>
                         <td><button class="btn btn-secondary btn-sm" id="btn-remove">移除</button></td>
                     </tr>
                 `;
-            });
+                });
+            }
             $('#cart-items').html(cartItemsHtml);
             updateTotal();
-        }).fail(function() {
-            alert('加載購物車失敗');
+        }).fail(function () {
+            if (!reloadOnce) {
+                alert('購物車已清空');
+                sessionStorage.setItem('reloadOnce', 'true'); // 設置標誌避免重複刷新
+                location.reload(); // 自動重新整理頁面
+            }
         });
     }
+
+    // 調用加載購物車函數
+    loadCart(userEmail);
+
+    // 重置標誌在頁面加載時
+    $(document).ready(function () {
+        sessionStorage.removeItem('reloadOnce');
+    });
+
+
+
 
     // 檢查並更新購物車中的商品數量
     function checkAndUpdateCartItem(sku, quantity, $input) {
@@ -196,7 +219,7 @@ $(document).ready(function () {
                 alert('數量超過庫存');
                 $input.val(stock); // 重設數量為庫存量
             }
-        }).fail(function(jqXHR, textStatus, errorThrown) {
+        }).fail(function (jqXHR, textStatus, errorThrown) {
             console.error('檢查庫存失敗:', textStatus, errorThrown);
             alert('檢查庫存失敗');
         });
@@ -210,7 +233,7 @@ $(document).ready(function () {
             success: function () {
                 loadCart(userEmail); // 更新成功後刷新購物車
             },
-            error: function() {
+            error: function () {
                 alert('更新商品數量失敗');
             }
         });
@@ -224,7 +247,7 @@ $(document).ready(function () {
             success: function () {
                 loadCart(userEmail);
             },
-            error: function() {
+            error: function () {
                 alert('移除商品失敗');
             }
         });
@@ -242,7 +265,7 @@ $(document).ready(function () {
                 $('#confirmationModal').modal('hide');
                 updateStep();
             },
-            error: function() {
+            error: function () {
                 alert('訂單提交失敗');
             }
         });
