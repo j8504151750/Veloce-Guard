@@ -88,7 +88,7 @@ $(document).ready(function () {
             <tr><td>郵遞區號</td><td>${postalCode}</td></tr>
             <tr><td>電話</td><td>${tel}</td></tr>
             <tr><td>付款資訊</td><td>${paymentDetails}</td></tr>
-            <tr><td>總金額</td><td>${order.totalAmount}</td></tr>
+            <tr><td>總金額</td><td>${order.amount}</td></tr>
         `;
         $('#order-details').html(orderDetailsHtml);
         $('#order-date').text(orderDate);
