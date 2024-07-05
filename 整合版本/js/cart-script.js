@@ -209,6 +209,7 @@ $(document).ready(function () {
             type: 'PUT',
             success: function () {
                 loadCart(userEmail); // 更新成功後刷新購物車
+                
             },
             error: function() {
                 alert('更新商品數量失敗');
