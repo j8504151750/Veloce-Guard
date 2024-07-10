@@ -62,10 +62,10 @@ $(document).ready(function () {
 
     // 顯示訂單明細並記錄訂單成立日期
     function updateOrderDetails(order) {
-        const fullName = $('#full-name').val();
+        const deliveryName = $('#full-name').val();
         const address = $('#address').val();
-        const postalCode = $('#postal-code').val();
-        const tel = $('#tel').val();
+        const pincode = $('#postal-code').val();
+        const deliveryTel = $('#tel').val();
         const paymentMethod = $('#payment-method').val();
         let paymentDetails = "";
 
@@ -83,10 +83,10 @@ $(document).ready(function () {
 
         const orderDetailsHtml = `
             <tr><td>訂單編號</td><td>${order.id}</td></tr>
-            <tr><td>全名</td><td>${fullName}</td></tr>
+            <tr><td>全名</td><td>${deliveryName}</td></tr>
             <tr><td>地址</td><td>${address}</td></tr>
-            <tr><td>郵遞區號</td><td>${postalCode}</td></tr>
-            <tr><td>電話</td><td>${tel}</td></tr>
+            <tr><td>郵遞區號</td><td>${pincode}</td></tr>
+            <tr><td>電話</td><td>${deliveryTel}</td></tr>
             <tr><td>付款資訊</td><td>${paymentDetails}</td></tr>
             <tr><td>總金額</td><td>${order.amount}</td></tr>
         `;
@@ -137,7 +137,7 @@ $(document).ready(function () {
 
     // 更新總金額的函數
     function updateTotal() {
-        $.get(`http://localhost:8080/api/cart/price/${userEmail}`, function (price) {
+        $.get(`http://localhost:8080/api/public/user/${userEmail}/cart/price`, function (price) {
             $('#subtotal').text('$' + price);
             // 運費計算
             let shippingFee = 0;
@@ -160,7 +160,7 @@ $(document).ready(function () {
 
     // 加載購物車
     function loadCart(userEmail) {
-        $.get(`http://localhost:8080/api/cart/items/${userEmail}`, function (items) {
+        $.get(`http://localhost:8080/api/public/user/${userEmail}/cart/items`, function (items) {
             let cartItemsHtml = '';
             console.log(items); // 調試輸出
             if (items.length === 0) {
@@ -211,7 +211,7 @@ $(document).ready(function () {
     // 檢查並更新購物車中的商品數量
     function checkAndUpdateCartItem(sku, quantity, $input) {
         console.log(`Checking stock for SKU: ${sku}`);
-        $.get(`http://localhost:8080/api/product/variant/${sku}/inventory`, function (stock) {
+        $.get(`http://localhost:8080/api/public/product/variant/${sku}/inventory`, function (stock) {
             console.log(`Stock for SKU ${sku}: ${stock}`);
             if (quantity <= stock) {
                 updateCartItem(sku, quantity);
@@ -228,7 +228,7 @@ $(document).ready(function () {
     // 更新購物車中的商品數量
     function updateCartItem(sku, quantity) {
         $.ajax({
-            url: `http://localhost:8080/api/cart/item/${sku}/${userEmail}/quantity/${quantity}`,
+            url: `http://localhost:8080/api/public/user/${userEmail}/cart/item/${sku}/quantity/${quantity}`,
             type: 'PUT',
             success: function () {
                 loadCart(userEmail); // 更新成功後刷新購物車
@@ -243,7 +243,7 @@ $(document).ready(function () {
     // 移除購物車中的商品
     function removeCartItem(sku) {
         $.ajax({
-            url: `http://localhost:8080/api/cart/item/${sku}/${userEmail}`,
+            url: `http://localhost:8080/api/public/user/${userEmail}/cart/item/${sku}`,
             type: 'DELETE',
             success: function () {
                 loadCart(userEmail);
@@ -255,22 +255,41 @@ $(document).ready(function () {
     }
 
     // 完成訂單
-    function finalizeOrder() {
-        const paymentMethod = $('#payment-method').val();
-        $.ajax({
-            url: `http://localhost:8080/api/user/${userEmail}/order/${paymentMethod}`,
-            type: 'POST',
-            success: function (order) {
-                currentStep++;
-                updateOrderDetails(order);
-                $('#confirmationModal').modal('hide');
-                updateStep();
-            },
-            error: function () {
-                alert('訂單提交失敗');
-            }
-        });
-    }
+    // 完成訂單
+function finalizeOrder() {
+    const payment = $('#payment-method').val();
+    const deliveryName = $('#full-name').val();
+    const address = $('#address').val();
+    const pincode = $('#postal-code').val();
+    const deliveryTel = $('#tel').val();
+
+    const orderData = {
+        paymentMethod: payment,
+        deliveryName: deliveryName,
+        address: address,
+        pincode: pincode,
+        deliveryTel: deliveryTel
+    };
+
+    $.ajax({
+        url: `http://localhost:8080/api/public/user/${userEmail}/order/${payment}`,
+        type: 'POST',
+        headers: {
+            "Authorization": "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJleHAiOjE3MjA2ODQzMTMsImlhdCI6MTcyMDU5NzkxMywiZW1haWwiOiJ0ZXN0MTIzQGdtYWlsLmNvbSIsInN0YXR1cyI6IlVTRVIifQ.ICDmjZiwFMJOw9QR6JBhm2Q5gXPX5DaTV3yJPNFY3E4" + "",
+            "Content-Type": "application/json"
+        },
+        data: JSON.stringify(orderData),
+        success: function (order) {
+            currentStep++;
+            updateOrderDetails(order);
+            $('#confirmationModal').modal('hide');
+            updateStep();
+        },
+        error: function () {
+            alert('訂單提交失敗');
+        }
+    });
+}
 
     // 初始更新付款方式的顯示
     $('#payment-method').trigger('change');

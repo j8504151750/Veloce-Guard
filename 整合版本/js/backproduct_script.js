@@ -19,10 +19,13 @@ $(document).ready(function () {
         };
 
         $.ajax({
-            url: `http://localhost:8080/api/product/${productId}`,
+            url: `http://localhost:8080/api/admin/product/${productId}`,
             type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(updatedProduct),
+            headers: {
+                "Authorization": "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJleHAiOjE3MjA2NjgzODAsImlhdCI6MTcyMDU4MTk4MCwiZW1haWwiOiJiZWFyMjAwODA2QGdtYWlsLmNvbSIsInN0YXR1cyI6IkFETUlOIn0.PBTkXU5CfJSrKirUf_WQ8d7EsFryFPKXjZb5_0nYI44" + ""
+            },
             success: function (response) {
                 alert('產品更新成功！');
                 $('#editProductModal').modal('hide');
@@ -51,9 +54,12 @@ $(document).ready(function () {
 // 從API數據拉取產品資料
 function fetchProducts() {
     $.ajax({
-        url: `http://localhost:8080/api/products`,
+        url: `http://localhost:8080/api/admin/products`,
         method: 'GET',
         dataType: 'json',
+        headers: {
+            "Authorization": "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJleHAiOjE3MjA2NjgzODAsImlhdCI6MTcyMDU4MTk4MCwiZW1haWwiOiJiZWFyMjAwODA2QGdtYWlsLmNvbSIsInN0YXR1cyI6IkFETUlOIn0.PBTkXU5CfJSrKirUf_WQ8d7EsFryFPKXjZb5_0nYI44" + ""
+        },
         success: function (products) {
             console.log('API response:', products); // 添加這行來檢查API返回的資料
             if (products) {
@@ -113,9 +119,12 @@ function showDescription(description) {
 // 顯示產品變體
 function showVariants(productId) {
     $.ajax({
-        url: `http://localhost:8080/api/product/${productId}/variants`,
+        url: `http://localhost:8080/api/public/product/${productId}/variants`,
         method: 'GET',
         dataType: 'json',
+        headers: {
+            "Authorization": "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJleHAiOjE3MjA2NjgzODAsImlhdCI6MTcyMDU4MTk4MCwiZW1haWwiOiJiZWFyMjAwODA2QGdtYWlsLmNvbSIsInN0YXR1cyI6IkFETUlOIn0.PBTkXU5CfJSrKirUf_WQ8d7EsFryFPKXjZb5_0nYI44" + ""
+        },
         success: function (response) {
             renderVariants(response, productId); // 假設API返回的變體資料在response中
         },
@@ -155,9 +164,12 @@ function renderVariants(variants, productId) {
 // 編輯產品變體
 function editVariant(productId, sku) {
     $.ajax({
-        url: `http://localhost:8080/api/product/${productId}/variants`,
+        url: `http://localhost:8080/api/public/product/${productId}/variants`,
         method: 'GET',
         dataType: 'json',
+        headers: {
+            "Authorization": "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJleHAiOjE3MjA2NjgzODAsImlhdCI6MTcyMDU4MTk4MCwiZW1haWwiOiJiZWFyMjAwODA2QGdtYWlsLmNvbSIsInN0YXR1cyI6IkFETUlOIn0.PBTkXU5CfJSrKirUf_WQ8d7EsFryFPKXjZb5_0nYI44" + ""
+        },
         success: function (response) {
             const variant = response[sku];
             $('#editProductId').val(productId);
@@ -240,11 +252,14 @@ function saveVariant() {
     }
 
     $.ajax({
-        url: `http://localhost:8080/api/product/variant/${sku}`,
+        url: `http://localhost:8080/api/admin/product/variant/${sku}`,
         type: 'PUT',
         data: formData,
         processData: false, // 不要處理數據
         contentType: false, // 不設置內容類型
+        headers: {
+            "Authorization": "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJleHAiOjE3MjA2NjgzODAsImlhdCI6MTcyMDU4MTk4MCwiZW1haWwiOiJiZWFyMjAwODA2QGdtYWlsLmNvbSIsInN0YXR1cyI6IkFETUlOIn0.PBTkXU5CfJSrKirUf_WQ8d7EsFryFPKXjZb5_0nYI44" + ""
+        },
         success: function (response) {
             alert('變體更新成功！');
             $('#variantModal').modal('hide');
@@ -271,8 +286,11 @@ function deleteVariant(productId, sku) {
     if (confirm('你確定要刪除這個變體嗎？')) {
         $.ajax({
             
-            url: `http://localhost:8080/api/product/variant/${sku}`,
+            url: `http://localhost:8080/api/admin/product/variant/${sku}`,
             type: 'DELETE',
+            headers: {
+                "Authorization": "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJleHAiOjE3MjA2NjgzODAsImlhdCI6MTcyMDU4MTk4MCwiZW1haWwiOiJiZWFyMjAwODA2QGdtYWlsLmNvbSIsInN0YXR1cyI6IkFETUlOIn0.PBTkXU5CfJSrKirUf_WQ8d7EsFryFPKXjZb5_0nYI44" + ""
+            },
             success: function (response) {
                 alert('變體刪除成功！');
                 showVariants(productId);
@@ -325,11 +343,14 @@ function saveProductWithVariants() {
     });
 
     $.ajax({
-        url: `http://localhost:8080/api/${categoryName}/product`,
+        url: `http://localhost:8080/api/admin/categories/${categoryName}/product`,
         type: 'POST',
         contentType: false,
         processData: false,
         data: formData,
+        headers: {
+            "Authorization": "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJleHAiOjE3MjA2NjgzODAsImlhdCI6MTcyMDU4MTk4MCwiZW1haWwiOiJiZWFyMjAwODA2QGdtYWlsLmNvbSIsInN0YXR1cyI6IkFETUlOIn0.PBTkXU5CfJSrKirUf_WQ8d7EsFryFPKXjZb5_0nYI44" + ""
+        },
         success: function (response) {
             alert('產品新增成功！');
             $('#addProductModal').modal('hide');
@@ -363,10 +384,13 @@ function saveProduct(type) {
     if (productId) {
         // 更新現有的產品資料
         $.ajax({
-            url: `http://localhost:8080/api/product/${productId}`,
+            url: `http://localhost:8080/api/admin/product/${productId}`,
             type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(productData),
+            headers: {
+                "Authorization": "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJleHAiOjE3MjA2NjgzODAsImlhdCI6MTcyMDU4MTk4MCwiZW1haWwiOiJiZWFyMjAwODA2QGdtYWlsLmNvbSIsInN0YXR1cyI6IkFETUlOIn0.PBTkXU5CfJSrKirUf_WQ8d7EsFryFPKXjZb5_0nYI44" + ""
+            },
             success: function (response) {
                 alert('產品更新成功！');
                 $('#editProductModal').modal('hide');
@@ -379,9 +403,12 @@ function saveProduct(type) {
     } else {
         // 新建產品資料
         $.ajax({
-            url: 'http://localhost:8080/api/product',
+            url: 'http://localhost:8080/api/admin/categories/${categoryName}/product',
             type: 'POST',
             contentType: 'application/json',
+            headers: {
+                "Authorization": "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJleHAiOjE3MjA2NjgzODAsImlhdCI6MTcyMDU4MTk4MCwiZW1haWwiOiJiZWFyMjAwODA2QGdtYWlsLmNvbSIsInN0YXR1cyI6IkFETUlOIn0.PBTkXU5CfJSrKirUf_WQ8d7EsFryFPKXjZb5_0nYI44" + ""
+            },
             data: JSON.stringify(productData),
             success: function (response) {
                 alert('產品新增成功！');
@@ -400,7 +427,7 @@ function saveProduct(type) {
 function deleteProduct(productId) {
     if (confirm('你確定要刪除這個產品嗎？')) {
         $.ajax({
-            url: `http://localhost:8080/api/product/${productId}`,
+            url: `http://localhost:8080/api/public/product/${productId}`,
             type: 'DELETE',
             success: function (response) {
                 alert('產品刪除成功！');
@@ -416,9 +443,12 @@ function deleteProduct(productId) {
 // 編輯產品
 function editProduct(productId) {
     $.ajax({
-        url: `http://localhost:8080/api/product/${productId}`,
+        url: `http://localhost:8080/api/admin/product/${productId}`,
         type: 'GET',
         dataType: 'json',
+        headers: {
+            "Authorization": "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJleHAiOjE3MjA2NjgzODAsImlhdCI6MTcyMDU4MTk4MCwiZW1haWwiOiJiZWFyMjAwODA2QGdtYWlsLmNvbSIsInN0YXR1cyI6IkFETUlOIn0.PBTkXU5CfJSrKirUf_WQ8d7EsFryFPKXjZb5_0nYI44" + ""
+        },
         success: function (product) {
             $('#editProductId').val(product.productId);
             $('#editProductName').val(product.name);
