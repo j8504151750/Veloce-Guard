@@ -11,8 +11,11 @@ $(document).ready(function () {
 // 從API拉取訂單資料
 function fetchOrders(page = 1, pageSize = 10) {
     $.ajax({
-        url: 'http://localhost:8080/api/orders',
+        url: 'http://localhost:8080/api/admin/orders',
         method: 'GET',
+        headers: {
+            "Authorization": "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJleHAiOjE3MjA2NjgzODAsImlhdCI6MTcyMDU4MTk4MCwiZW1haWwiOiJiZWFyMjAwODA2QGdtYWlsLmNvbSIsInN0YXR1cyI6IkFETUlOIn0.PBTkXU5CfJSrKirUf_WQ8d7EsFryFPKXjZb5_0nYI44" + ""
+        },
         success: function (response) {
             console.log('Fetched orders:', response); // 調試輸出
             renderTable(response, page, pageSize); // 傳遞當前頁數和每頁顯示的訂單數
@@ -58,6 +61,9 @@ function showOrderDetails(orderId) {
     $.ajax({
         url: `http://localhost:8080/api/order/${orderId}`,
         method: 'GET',
+        headers: {
+            "Authorization": "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJleHAiOjE3MjA2NjgzODAsImlhdCI6MTcyMDU4MTk4MCwiZW1haWwiOiJiZWFyMjAwODA2QGdtYWlsLmNvbSIsInN0YXR1cyI6IkFETUlOIn0.PBTkXU5CfJSrKirUf_WQ8d7EsFryFPKXjZb5_0nYI44" + ""
+        },
         success: function (order) {
             renderOrderDetails(order);
         },
@@ -131,6 +137,9 @@ function saveOrder() {
     $.ajax({
         url: `http://localhost:8080/api/order/${orderId}`,
         method: 'PUT',
+        headers: {
+            "Authorization": "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJleHAiOjE3MjA2NjgzODAsImlhdCI6MTcyMDU4MTk4MCwiZW1haWwiOiJiZWFyMjAwODA2QGdtYWlsLmNvbSIsInN0YXR1cyI6IkFETUlOIn0.PBTkXU5CfJSrKirUf_WQ8d7EsFryFPKXjZb5_0nYI44" + ""
+        },
         contentType: 'application/json',
         data: JSON.stringify(orderData),
         success: function (response) {
@@ -149,6 +158,9 @@ function editOrder(orderId) {
     $.ajax({
         url: `http://localhost:8080/api/order/${orderId}`,
         method: 'GET',
+        headers: {
+            "Authorization": "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJFdmVudCBTY2hlZHVsZXIiLCJleHAiOjE3MjA2NjgzODAsImlhdCI6MTcyMDU4MTk4MCwiZW1haWwiOiJiZWFyMjAwODA2QGdtYWlsLmNvbSIsInN0YXR1cyI6IkFETUlOIn0.PBTkXU5CfJSrKirUf_WQ8d7EsFryFPKXjZb5_0nYI44" + ""
+        },
         success: function (order) {
             $('#editOrderId').val(order.id); // 使用訂單 ID
             $('#editOrderStatus').val(order.status);
